@@ -49,7 +49,7 @@ int textSize = 20;
 
 void setup() {
   frameRate(300);
-  size(1920, 1080);
+  size(960, 540);
   //size(1000, 480);
 
   background(mainBackgroundColor);

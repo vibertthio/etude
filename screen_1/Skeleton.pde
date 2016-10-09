@@ -378,7 +378,7 @@ class Skeleton {
   boolean soundPose4() {
     //TODO
     if ( s_pose4.getGate() && s_pose4.getState() ) {
-      String head = "/p" + str(id) + "/pose4";
+      String head = "/p" + str(id) +  "/pose4";
       OscMessage osc = new OscMessage(head);
       osc.add(1);
       oscP5.send(osc, myRemoteLocation);
@@ -389,14 +389,14 @@ class Skeleton {
 
   void thereminSignal() {
     //left heand
-    String head = "/p" + str(id) + "/l";
+    String head = "/p" + str(id) +  "/l";
     OscMessage osc = new OscMessage(head);
     osc.add(joints[JointType_HandLeft].getX());
     osc.add(joints[JointType_HandLeft].getY());
     oscP5.send(osc, myRemoteLocation);
 
     //right hand
-    head = "/p" + str(id) + "/r";
+    head = "/p" + str(id) +  "/r";
     osc = new OscMessage(head);
     osc.add(joints[JointType_HandRight].getX());
     osc.add(joints[JointType_HandRight].getY());

@@ -48,6 +48,7 @@ class FileSelector {
 
   //TimeLine
   TimeLine timeLine;
+  int shiftTime = 300;
 
 
   //constructor
@@ -56,7 +57,7 @@ class FileSelector {
     fileList = _fileList;
     numberOfFiles = fileList.length;
     font = createFont (fontType, textSizeSmall, true);
-    timeLine = new TimeLine (200);
+    timeLine = new TimeLine (400);
     dataStorage = new int[maxFrameNumber][numberOfData];
     id = _id;
 

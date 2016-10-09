@@ -1,0 +1,23 @@
+#N canvas 961 82 364 449 12;
+#X text 168 94 （c）畫-參考圓;
+#X text 169 163 （v）畫-星球圓;
+#X text 169 111 （b）畫-多邊形;
+#X text 169 128 （l）畫-參考直線;
+#X text 8 93 （<）運動-碰撞線;
+#X text 8 111 （>）靜止-碰撞線;
+#X text 8 306 （q) 顯示紅圓 （w) 顯示綠圓 （e) 顯示藍圓
+;
+#X text 8 324 （1) 控制紅 （2) 控制綠 （3) 控制藍;
+#X text 16 179 option+(1-5) 特效;
+#X text 14 225 (z)+mouse_right-刪除碰撞線;
+#X text 14 257 (z)畫-碰撞線;
+#X text 14 242 (z)+mouse_center-自由漂移;
+#X text 15 342 (1 \, 2 \, 3)+(tab)-球飄移;
+#X text 12 274 (<)+mouse_pos-boids前進目標;
+#X text 19 384 [特效狀況下，去拉動紅綠藍圓球的大小]
+;
+#X text 21 412 shift+enter= text content;
+#X text 17 202 first(p)+second(space) del grid.png;
+#X text 26 2 shift+z=flyline;
+#X text 27 22 midi stop_btn=fly_tgl;
+#X text 27 45 midi play_btn=fly_target;

@@ -1,5 +1,13 @@
 import oscP5.*;
 import netP5.*;
+import shiffman.box2d.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.joints.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.*;
+
 
 //oscP5
 OscP5 oscP5;
@@ -44,17 +52,38 @@ boolean dragging = false;
 String fontType = "SansSerif";
 int textSize = 20;
 
+/**********box2D***********/
+// A reference to our box2d world
+Box2DProcessing box2d;
+ArrayList boundaries;
+//test
+//Box box;
 
 
 
 void setup() {
   frameRate(300);
-  size(960, 540);
-  //size(1000, 480);
+  //size(1920, 1080);
+  size(1500, 900);
+
+  /**********box2D***********/
+  box2d = new Box2DProcessing(this);
+  box2d.createWorld();
+
+  // Add a bunch of fixed boundaries
+  boundaries = new ArrayList();
+  boundaries.add(new Boundary(width/2,height-5,width,10,0));
+  boundaries.add(new Boundary(width/2,5,width,10,0));
+  boundaries.add(new Boundary(width-5,height/2,10,height,0));
+  boundaries.add(new Boundary(5,height/2,10,height,0));
+  //boundaries.add(new BoundaryCircle(width/2, height/2, 20));
+
+  //test
+  //box = new Box(width/2,height/2);
 
   background(mainBackgroundColor);
   monitors = new Monitor[maxNumberOfMonitors];
-  mChannel = new Monitor(0, 0, 0, 0, -1);
+  mChannel = new Monitor(0, 0, 2, 2, -1);
   mChannel.changingRatio = false;
 
   //text
@@ -65,9 +94,54 @@ void setup() {
   oscP5 = new OscP5(this,9020);
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
 
+
 }
 
-//test for FileSelector
+
+void draw() {
+  background(mainBackgroundColor);
+  drawInfo();
+
+  //println("Global Time Count : " + float(millis())/1000 );
+  for(int i=0; i<numberOfMonitors; i++) {
+
+    if ( monitors[i].dissappear ) {
+      for (int j=i; j<numberOfMonitors - 1; j++) {
+        monitors[j] = monitors[j+1];
+      }
+      numberOfMonitors--;
+    }
+
+    monitors[i].mouseSense(mouseX, mouseY);
+    monitors[i].sendSound();
+    monitors[i].rendor();
+    monitors[i].display();
+    monitors[i].boxUpdate(mouseX, mouseY);
+  }
+
+
+  if (newMonitor) {
+    if (dragging) {
+      draggingDraw();
+    }
+    drawCursorForNewMonitor();
+  }
+
+
+
+  /**********box2D***********/
+  box2d.step();
+  box2d.step();
+
+  for (int i = 0; i < boundaries.size(); i++) {
+    Boundary wall = (Boundary) boundaries.get(i);
+    wall.display();
+  }
+
+
+}
+
+
 void keyPressed() {
   if( key == 'n') {
     newMonitor = ! newMonitor;
@@ -79,36 +153,6 @@ void keyPressed() {
     oscP5.send(osc, myRemoteLocation);
   }
 }
-
-void draw() {
-  background(mainBackgroundColor);
-  drawInfo();
-
-  println("Global Time Count : " + float(millis())/1000 );
-  for(int i=0; i<numberOfMonitors; i++) {
-
-    if ( monitors[i].dissappear ) {
-      for (int j=i; j<numberOfMonitors - 1; j++) {
-        monitors[j] = monitors[j+1];
-      }
-      numberOfMonitors--;
-    }
-    
-    monitors[i].mouseSense(mouseX, mouseY);
-    monitors[i].sendSound();
-    monitors[i].rendor();
-    monitors[i].display();
-  }
-
-
-  if (newMonitor) {
-    if (dragging) {
-      draggingDraw();
-    }
-    drawCursorForNewMonitor();
-  }
-}
-
 
 void mousePressed() {
   //monitor
@@ -140,14 +184,17 @@ void mouseReleased() {
       float y_max = max(ymouse, mouseY);
       float y_min = min(ymouse, mouseY);
 
-      monitors[numberOfMonitors] =
-        new Monitor(x_min, y_min,
-                    int(x_max - x_min),
-                    int(y_max - y_min),
-                    numberOfMonitors);
-      numberOfMonitors++;
-      dragging = false;
+      if ( y_max - y_min > 20) {
+        monitors[numberOfMonitors] =
+          new Monitor(x_min, y_min,
+                      int(x_max - x_min),
+                      int(y_max - y_min),
+                      numberOfMonitors);
+        numberOfMonitors++;
+        newMonitor = false;
+      }
     }
+    dragging = false;
   }
 }
 
@@ -170,6 +217,7 @@ void mouseDragged() {
 }
 
 void draggingDraw() {
+  rectMode(CORNER);
   float x_max = max(xmouse, mouseX);
   float x_min = min(xmouse, mouseX);
   float y_max = max(ymouse, mouseY);

@@ -104,7 +104,7 @@ void setup() {
 void draw() {
   background(mainBackgroundColor);
   noTint();
-  image(backImg, 5, 5, width, height);
+  //image(backImg, 5, 5, width, height);
   drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );

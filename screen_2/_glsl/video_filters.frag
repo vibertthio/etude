@@ -2,6 +2,7 @@ uniform sampler2D tex;
 uniform float vol;
 uniform float time;
 uniform vec2 dimen;
+uniform float alpha; 
 
 void main()
 {
@@ -87,5 +88,5 @@ void main()
   if ( (p.x>0.199 && p.x<.201) || (p.x>.399 && p.x<.401) ||  (p.x>.599&&p.x<.601) ||  (p.x>.799 && p.x<.801)  ){
     col = vec4(1.0);  }
 
-  gl_FragColor = col;
+  gl_FragColor = vec4(col.rgb,alpha);
 }

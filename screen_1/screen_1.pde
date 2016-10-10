@@ -21,6 +21,8 @@ String[] fileList = { "U826190",
                       "U8301538",
                       "U8301559"
                     };
+//background
+PImage backImg;
 
 
 //constant
@@ -56,8 +58,7 @@ int textSize = 20;
 // A reference to our box2d world
 Box2DProcessing box2d;
 ArrayList boundaries;
-//test
-//Box box;
+
 
 
 
@@ -94,12 +95,16 @@ void setup() {
   oscP5 = new OscP5(this,9020);
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
 
+  //back image
+  backImg = loadImage("layout_2.png");
 
 }
 
 
 void draw() {
   background(mainBackgroundColor);
+  noTint();
+  image(backImg, 5, 5, width, height);
   drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );
@@ -131,12 +136,11 @@ void draw() {
 
   /**********box2D***********/
   box2d.step();
-  box2d.step();
 
-  for (int i = 0; i < boundaries.size(); i++) {
-    Boundary wall = (Boundary) boundaries.get(i);
-    wall.display();
-  }
+  // for (int i = 0; i < boundaries.size(); i++) {
+  //   Boundary wall = (Boundary) boundaries.get(i);
+  //   wall.display();
+  // }
 
 
 }

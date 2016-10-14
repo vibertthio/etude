@@ -1,4 +1,4 @@
-#N canvas 561 411 407 306 10;
+#N canvas 213 530 407 306 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 259 56 1129 649 gemwin-main 0;
@@ -140,11 +140,11 @@
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
 #X msg 160 54 1;
-#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 247 95 list;
 #X obj 247 121 s mouseOpen;
-#X obj 328 78 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 328 78 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 326 99 list;
 #X obj 326 120 s mouseOpen;
@@ -257,7 +257,7 @@
 #X obj 462 426 % 40;
 #X obj 716 228 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X msg -71 14 open keyboard 1 \, 1;
+#X msg -71 14 open keyboard 0 \, 1;
 #X connect 0 0 193 0;
 #X connect 0 1 194 0;
 #X connect 0 2 66 0;
@@ -1851,7 +1851,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 54 1;
+-1 -1 5 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;
@@ -3803,7 +3803,7 @@ const 0 \;;
 #X obj 285 373 rectangle 15 2;
 #X obj 287 1 translateXYZ -4.05 -3.25 0;
 #X obj 122 -173 r hid;
-#X obj 122 -69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 122 -69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 122 -149 route key_4;
 #X obj 360 258 text2d;
@@ -4035,7 +4035,7 @@ const 0 \;;
 #X obj 41 -44 r hid;
 #X obj 41 32 sel 1;
 #X obj 41 10 expr if($f1+$f2==2 \, 1 \, 0);
-#X obj 41 53 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+#X obj 41 53 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;
 #X obj 41 -23 route key_44 key_19;
 #X obj 41 291 rectangle 1 4;
@@ -4375,7 +4375,7 @@ const 0 \;;
 #X obj 342 73 loadbang;
 #X msg 342 96 0;
 #X obj 404 24 r hid;
-#X obj 404 160 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 404 160 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 404 48 route key_22;
 #X obj 236 517 loadbang;
@@ -4389,7 +4389,7 @@ const 0 \;;
 #X obj 546 132 v display3;
 #X floatatom 520 155 5 0 0 0 - - -, f 5;
 #X obj 559 -7 r gui-id;
-#X obj 404 75 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 404 75 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 520 -9 sel 1;
 #X obj 404 97 t f f;
@@ -5051,7 +5051,7 @@ const 0 \;;
 #X connect 52 0 7 0;
 #X restore 135 257 pd dot;
 #X obj 306 159 k_cpu;
-#N canvas 116 23 1265 724 GLSL 0;
+#N canvas 116 23 1265 724 GLSL 1;
 #X obj 256 194 glsl_fragment;
 #X obj 256 246 glsl_program;
 #X msg 331 218 link \$1;

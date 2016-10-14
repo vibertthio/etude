@@ -51,6 +51,8 @@
 #X obj 356 583 pack f f;
 #X msg 356 608 pos \$1 \$2;
 #X obj 32 367 k_btn 0 0 1 1;
+#X obj 484 574 loadbang;
+#X msg 486 599 0.5 0.5;
 #X connect 0 0 47 0;
 #X connect 1 0 43 0;
 #X connect 1 0 47 1;
@@ -112,3 +114,5 @@
 #X connect 46 0 35 1;
 #X connect 47 0 35 0;
 #X connect 47 1 2 0;
+#X connect 48 0 49 0;
+#X connect 49 0 46 0;

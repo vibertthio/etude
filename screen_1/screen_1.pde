@@ -63,7 +63,7 @@ ArrayList boundaries;
 
 
 void setup() {
-  frameRate(300);
+  frameRate(100);
   //size(1920, 1080);
   size(1500, 900);
 
@@ -104,7 +104,7 @@ void setup() {
 void draw() {
   background(mainBackgroundColor);
   noTint();
-  image(backImg, 5, 5, width, height);
+  //image(backImg, 5, 5, width, height);
   drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );
@@ -254,6 +254,8 @@ void drawInfo() {
   textSize(textSize);
   text( "Press 'n' to switch mode", 30, 40);
   text( "(New Monitor) & (Adjusting Monitor)", 30, 70);
+  String fr = "frameRate : " + str(frameRate);
+  text(fr, 30, 100);
 
 
   textSize(3*textSize);

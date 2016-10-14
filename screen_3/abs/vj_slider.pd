@@ -1,4 +1,4 @@
-#N canvas 639 35 752 659 10;
+#N canvas 639 35 759 764 10;
 #X msg 63 205 draw line;
 #X obj 63 182 loadbang;
 #X obj 142 232 color 0.7 0.7 0.7;
@@ -33,6 +33,13 @@
 #X obj 82 397 rectangle 1 0.01;
 #X obj 435 192 alpha;
 #X obj 435 170 colorRGB 0.15 0.16 0.15 0.5;
+#X obj 49 717 text2d;
+#X obj 168 715 loadbang;
+#X obj 41 645 color 1 1 1;
+#X obj 48 671 translateXYZ 0 0.4 0;
+#X msg 228 664 text \$1;
+#X msg 166 735 10;
+#X obj 233 631 k_float 100;
 #X connect 0 0 18 0;
 #X connect 1 0 0 0;
 #X connect 2 0 18 0;
@@ -60,6 +67,7 @@
 #X connect 21 0 12 0;
 #X connect 22 0 17 2;
 #X connect 23 0 9 0;
+#X connect 24 0 36 0;
 #X connect 25 0 24 0;
 #X connect 26 0 27 0;
 #X connect 27 0 24 1;
@@ -69,6 +77,13 @@
 #X connect 30 0 29 1;
 #X connect 30 0 2 1;
 #X connect 30 1 20 0;
+#X connect 30 1 40 0;
 #X connect 30 2 24 0;
 #X connect 32 0 19 0;
 #X connect 33 0 32 0;
+#X connect 35 0 39 0;
+#X connect 36 0 37 0;
+#X connect 37 0 34 0;
+#X connect 38 0 34 0;
+#X connect 39 0 34 1;
+#X connect 40 0 38 0;

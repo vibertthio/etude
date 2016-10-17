@@ -33,6 +33,12 @@ int numberOfMonitors = 0;
 int maxNumberOfMonitors = 12;
 
 int maxFrameNumber = 20000;
+
+color etude1 = color(82, 74, 90);
+color etude2 = color(82, 227, 90);
+color etude3 = color(235, 74, 90);
+color etude4 = color(82, 74, 243);
+
 color mainBackgroundColor = color(102, 51, 153);
 color localBackGroundColor = color (34, 49, 63);
 color cursorColor = color (242, 38, 19);
@@ -64,8 +70,12 @@ ArrayList boundaries;
 
 void setup() {
   frameRate(100);
-  //size(1920, 1080);
-  size(1500, 900);
+  size(1920, 1080);
+  //size(1500, 900);
+
+  //color Adjusting
+  mainBackgroundColor = etude1;
+
 
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
@@ -83,6 +93,7 @@ void setup() {
   //box = new Box(width/2,height/2);
 
   background(mainBackgroundColor);
+  backgroundDots();
   monitors = new Monitor[maxNumberOfMonitors];
   mChannel = new Monitor(0, 0, 2, 2, -1);
   mChannel.changingRatio = false;
@@ -103,8 +114,10 @@ void setup() {
 
 void draw() {
   background(mainBackgroundColor);
+  backgroundDots();
   noTint();
-  //image(backImg, 5, 5, width, height);
+  // if(newMonitor)
+  //   image(backImg, 5, 5, width, height);
   drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );
@@ -135,7 +148,7 @@ void draw() {
 
 
   /**********box2D***********/
-  box2d.step();
+  // box2d.step();
 
   // for (int i = 0; i < boundaries.size(); i++) {
   //   Boundary wall = (Boundary) boundaries.get(i);
@@ -268,5 +281,22 @@ void drawInfo() {
   }
 
   text( msg, 30, height - 40);
+}
 
+void backgroundDots() {
+  int sz = 6;
+  int x_offset = 5;
+  int y_offset = 5;
+  int distance = 42;
+  int x_n = 47;
+  int y_n = 28;
+  int trans = 50;
+  color dotsCol = color(255, 255, 255);
+  stroke(dotsCol, trans);
+  strokeWeight(sz);
+  for(int i=0; i<x_n; i++) {
+    for(int j=0; j<y_n; j++) {
+      point(x_offset + i * distance, y_offset + j * distance);
+    }
+  }
 }

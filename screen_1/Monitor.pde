@@ -85,7 +85,7 @@ class Monitor {
     w_display = int(_h_drag * (float(w_rendor) / float(h_rendor)));
     id = _id;
 
-    fileSelector = new FileSelector(canvas, fileList, w_rendor, h_rendor, id); //fileList is global
+    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id); //fileList is global
     skeleton = new Skeleton(canvas, id);
     metro = new Metro(false ,timeSlot);
 
@@ -130,8 +130,6 @@ class Monitor {
 
       loopStartFrame = 0;
       loopEndFrame = fCount;
-      // playing = true;
-      // metro.startPlaying();
     }
   }
   void boxUpdate(float _mX, float _mY) {

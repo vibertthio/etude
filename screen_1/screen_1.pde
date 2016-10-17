@@ -21,6 +21,15 @@ String[] fileList = { "U826190",
                       "U8301538",
                       "U8301559"
                     };
+boolean[] loadedList = { false,
+                         false,
+                         false,
+                         false,
+                         false,
+                         false
+                       };
+dataStorage[]
+
 //background
 PImage backImg;
 

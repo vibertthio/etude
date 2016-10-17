@@ -44,7 +44,7 @@ class FileSelector {
   boolean movingForward = false;
   boolean movingBackward = false;
 
-  String[] fileList;
+  //String[] fileList;
 
   //TimeLine
   TimeLine timeLine;
@@ -52,9 +52,9 @@ class FileSelector {
 
 
   //constructor
-  FileSelector(PGraphics _canvas, String[] _fileList , float w, float h, int _id) {
+  FileSelector(PGraphics _canvas, float w, float h, int _id) {
     canvas = _canvas;
-    fileList = _fileList;
+    //fileList = _fileList;
     numberOfFiles = fileList.length;
     font = createFont (fontType, textSizeSmall, true);
     timeLine = new TimeLine (400);

@@ -1,4 +1,4 @@
-#N canvas 213 530 407 306 10;
+#N canvas 193 349 407 306 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 259 56 1129 649 gemwin-main 0;
@@ -135,7 +135,7 @@
 #X obj 224 147 loadbang;
 #X msg 224 169 0;
 #X obj 134 -20 route key_20 key_26 key_8;
-#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
@@ -939,7 +939,7 @@ cursor 0 \, border 0 \, menubar 1 \, create \, 1;
 #X restore 17 175 pd gemwin-main;
 #X obj 17 249 k_time;
 #X obj 136 237 help;
-#N canvas 0 40 1280 764 meta 0;
+#N canvas 318 219 1280 764 meta 0;
 #X obj 355 483 text2d;
 #X obj 355 429 alpha;
 #X obj 402 698 text2d;
@@ -1851,7 +1851,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 5 1;
+-1 -1 0 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;
@@ -4035,7 +4035,7 @@ const 0 \;;
 #X obj 41 -44 r hid;
 #X obj 41 32 sel 1;
 #X obj 41 10 expr if($f1+$f2==2 \, 1 \, 0);
-#X obj 41 53 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+#X obj 41 53 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #X obj 41 -23 route key_44 key_19;
 #X obj 41 291 rectangle 1 4;
@@ -5051,7 +5051,7 @@ const 0 \;;
 #X connect 52 0 7 0;
 #X restore 135 257 pd dot;
 #X obj 306 159 k_cpu;
-#N canvas 116 23 1265 724 GLSL 1;
+#N canvas 116 23 1265 724 GLSL 0;
 #X obj 256 194 glsl_fragment;
 #X obj 256 246 glsl_program;
 #X msg 331 218 link \$1;

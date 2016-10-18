@@ -46,7 +46,7 @@ class Spring {
   // we attach the spring to an x,y location
   // and the Box object's location
   void bind(float x, float y, Box box) {
-    println("bind");
+    //println("bind");
     // Define the joint
     MouseJointDef md = new MouseJointDef();
     // Body A is just a fake ground body for simplicity (there isn't anything at the mouse)
@@ -73,7 +73,7 @@ class Spring {
     if (mouseJoint != null) {
       box2d.world.destroyJoint(mouseJoint);
       mouseJoint = null;
-      println("mouse joint turn null");
+      //println("mouse joint turn null");
     }
   }
 

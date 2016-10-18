@@ -22,7 +22,7 @@ class FileSelector {
   int fCount = 0;
   int id = -1;
 
-  int[][] dataStorage;
+  //int[][] dataStorage;
 
 
   //color
@@ -58,7 +58,7 @@ class FileSelector {
     numberOfFiles = fileList.length;
     font = createFont (fontType, textSizeSmall, true);
     timeLine = new TimeLine (400);
-    dataStorage = new int[maxFrameNumber][numberOfData];
+    //dataStorage = new int[maxFrameNumber][numberOfData];
     id = _id;
 
     w_rendor = w;
@@ -351,6 +351,10 @@ class FileSelector {
           string2Buffer(pieces[i]); }
       }
     }
+
+    //update the global variables
+    fcount[index] = fCount;
+    loadedList[index] = true;
   }
 
   void string2Buffer (String piece) {
@@ -363,7 +367,7 @@ class FileSelector {
       int data = int(piece);
       //println("piece:" + piece);
       //println("data:" + data);
-      dataStorage[fCount][dataCount] = data;
+      dataStorage[index][fCount][dataCount] = data;
       dataCount++;
 
       if ( dataCount == numberOfData ) {

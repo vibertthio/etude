@@ -15,12 +15,13 @@ class Monitor {
 
   //variable
   int id = -1;
-  int lineCount = 0;
+  int index = -1;
+  //int lineCount = 0;
   int dataCount = 0;
   int fCount = 0;
   int currentFrame = 0;
   int loopStartFrame, loopEndFrame;
-  int[][] dataStorage;
+  //int[][] dataStorage;
 
   boolean changingRatio;
   boolean waitingForFileSelector;
@@ -120,10 +121,16 @@ class Monitor {
 
   void selectFile() {
     if( selectingFile ) {
-      fileSelector.selectFile();
-      fCount = fileSelector.fCount;
-      lineCount = fileSelector.lineCount;
-      dataStorage = fileSelector.dataStorage;
+      index = fileSelector.index;
+      if (!loadedList[index]) {
+        fileSelector.selectFile();
+        fCount = fileSelector.fCount;
+        //dataStorage = fileSelector.dataStorage;
+      }
+      else {
+        fCount = fcount[index];
+      }
+
       selectingFile = false;   //starttimer to make the animation
       fileSelectorFadeOut = true;
       dissolveTimer.startTimer();
@@ -168,7 +175,7 @@ class Monitor {
             dissolveTimer.startTimer();
             playing = true;
             metro.startPlaying();
-            skeleton.set(dataStorage[currentFrame]);
+            skeleton.set(dataStorage[index][currentFrame]);
           }
         }
         else {
@@ -193,7 +200,7 @@ class Monitor {
           skeleton.display();
           barDisplay();
           if(metro.frameCount() > currentFrame) {
-            skeleton.update(dataStorage[currentFrame]);
+            skeleton.update(dataStorage[index][currentFrame]);
             int gap = metro.frameCount() - currentFrame;
             currentFrame++;
             while(gap > 3) {      //the fast rendor

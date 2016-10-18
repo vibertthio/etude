@@ -225,7 +225,7 @@ class Skeleton {
       PVector rElbow = joints[JointType_HandRight].pos.copy();
       rElbow.sub(joints[JointType_ElbowRight].pos);
       float r = degrees ( PVector.angleBetween(rElbow, horizon)) ;
-      print("r = " + str(r) );
+      //print("r = " + str(r) );
       if ( r > TresholdAngle_ElbowIn ) {
         return true;
       }
@@ -233,7 +233,7 @@ class Skeleton {
       PVector lElbow = joints[JointType_HandLeft].pos.copy();
       lElbow.sub(joints[JointType_ElbowLeft].pos);
       float l = degrees ( PVector.angleBetween(lElbow, horizon.mult(-1)) );
-      print("  l = " + str(l) );
+      //print("  l = " + str(l) );
       if ( l > TresholdAngle_ElbowIn ) {
         return true;
       }

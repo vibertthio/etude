@@ -13,6 +13,20 @@ import org.jbox2d.dynamics.*;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 
+
+
+//background
+PImage backImg;
+PImage cursor;
+
+//constant
+int numberOfData = 36;
+int fRate = 20;
+int timeSlot = 1000/fRate;
+int numberOfMonitors = 0;
+int maxNumberOfMonitors = 12;
+int maxFrameNumber = 20000;
+
 //file list
 String[] fileList = { "U826190",
                       "U8301523",
@@ -28,20 +42,9 @@ boolean[] loadedList = { false,
                          false,
                          false
                        };
-dataStorage[]
 
-//background
-PImage backImg;
-
-
-//constant
-int numberOfData = 36;
-int fRate = 20;
-int timeSlot = 1000/fRate;
-int numberOfMonitors = 0;
-int maxNumberOfMonitors = 12;
-
-int maxFrameNumber = 20000;
+int[][][] dataStorage;
+int[] fcount;
 
 color etude1 = color(82, 74, 90);
 color etude2 = color(82, 227, 90);
@@ -84,7 +87,9 @@ void setup() {
 
   //color Adjusting
   mainBackgroundColor = etude1;
-
+  localBackGroundColor = etude4;
+  dataStorage = new int[fileList.length][maxFrameNumber][numberOfData];
+  fcount = new int[fileList.length];
 
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
@@ -117,6 +122,8 @@ void setup() {
 
   //back image
   backImg = loadImage("layout_2.png");
+  cursor = loadImage("paint.png");
+  cursor(cursor);
 
 }
 
@@ -255,7 +262,7 @@ void draggingDraw() {
   fill(localBackGroundColor, 255);
   rect(x_min, y_min, x_max - x_min, y_max - y_min);
   stroke(mChannel.lineColor);
-  strokeWeight(mChannel.lineWeight/2);
+  strokeWeight(mChannel.lineWeight);
   noFill();
   rect(x_min, y_min,  x_max - x_min, y_max - y_min);
   mChannel.w_display = int(x_max - x_min);

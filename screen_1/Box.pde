@@ -73,7 +73,7 @@ class Box {
     // Parameters that affect physics
     fd.density = 1;
     fd.friction = 0.5;
-    fd.restitution = 0.3;
+    fd.restitution = 0.7;
 
     body.createFixture(fd);
     //body.setMassFromShapes();

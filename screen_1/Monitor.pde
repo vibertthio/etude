@@ -15,12 +15,13 @@ class Monitor {
 
   //variable
   int id = -1;
-  int lineCount = 0;
+  int index = -1;
+  //int lineCount = 0;
   int dataCount = 0;
   int fCount = 0;
   int currentFrame = 0;
   int loopStartFrame, loopEndFrame;
-  int[][] dataStorage;
+  //int[][] dataStorage;
 
   boolean changingRatio;
   boolean waitingForFileSelector;
@@ -36,7 +37,8 @@ class Monitor {
   Skeleton skeleton;
 
   //color
-  color backGroundColor = color (34, 49, 63);
+  //color backGroundColor = color (34, 49, 63);
+  color backGroundColor = localBackGroundColor;
   color closeMonitorSignColor = color (242, 38, 19);
 
 
@@ -120,10 +122,16 @@ class Monitor {
 
   void selectFile() {
     if( selectingFile ) {
-      fileSelector.selectFile();
-      fCount = fileSelector.fCount;
-      lineCount = fileSelector.lineCount;
-      dataStorage = fileSelector.dataStorage;
+      index = fileSelector.index;
+      if (!loadedList[index]) {
+        fileSelector.selectFile();
+        fCount = fileSelector.fCount;
+        //dataStorage = fileSelector.dataStorage;
+      }
+      else {
+        fCount = fcount[index];
+      }
+
       selectingFile = false;   //starttimer to make the animation
       fileSelectorFadeOut = true;
       dissolveTimer.startTimer();
@@ -168,7 +176,7 @@ class Monitor {
             dissolveTimer.startTimer();
             playing = true;
             metro.startPlaying();
-            skeleton.set(dataStorage[currentFrame]);
+            skeleton.set(dataStorage[index][currentFrame]);
           }
         }
         else {
@@ -193,7 +201,7 @@ class Monitor {
           skeleton.display();
           barDisplay();
           if(metro.frameCount() > currentFrame) {
-            skeleton.update(dataStorage[currentFrame]);
+            skeleton.update(dataStorage[index][currentFrame]);
             int gap = metro.frameCount() - currentFrame;
             currentFrame++;
             while(gap > 3) {      //the fast rendor
@@ -358,7 +366,7 @@ class Monitor {
     fill(backGroundColor, 255);
     rect(xpos, ypos, w_drag + (w_display - w_drag) * changeRatioTimer.liner(), h_display);
     stroke(lineColor);
-    strokeWeight(lineWeight/2);
+    strokeWeight(lineWeight);
     noFill();
     rect(xpos, ypos, w_drag + (w_display - w_drag)*changeRatioTimer.liner(), h_display);
     controlDotsDisplay();
@@ -442,12 +450,13 @@ class Monitor {
   float heightOfPositionSign = 10;
 
 
-  int lineWeight = 2;
+  int lineWeight = 1;
 
   //color
   color barColor = color (210, 82, 127);
   color dotColor = color (249, 105, 14);
-  color lineColor = color (38, 166, 91);
+  //color lineColor = color (38, 166, 91);
+  color lineColor = color (200, 200, 200);
   color shiftingDotColor = color (38, 166, 91);
 
   //variable
@@ -482,8 +491,7 @@ class Monitor {
   int buttonPosX = 50;
   int buttonPosY = 50;
   int innerButtonRadius = 10;
-  color buttonColor =  color (38, 166, 91);
-
+  color buttonColor =  lineColor;//color (38, 166, 91);
 
 
 

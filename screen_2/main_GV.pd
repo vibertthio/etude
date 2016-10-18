@@ -1,4 +1,4 @@
-#N canvas 193 349 407 306 10;
+#N canvas 442 537 407 306 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 259 56 1129 649 gemwin-main 0;
@@ -135,12 +135,12 @@
 #X obj 224 147 loadbang;
 #X msg 224 169 0;
 #X obj 134 -20 route key_20 key_26 key_8;
-#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
 #X msg 160 54 1;
-#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 247 95 list;
 #X obj 247 121 s mouseOpen;
@@ -771,7 +771,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 697 479 table vol_2 200;
 #X obj 701 503 table vol_3 200;
-#X msg 224 360 708 500 0 0;
+#X msg 224 360 1902 1080 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 0;
@@ -1851,7 +1851,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+-1 -1 5 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;
@@ -4814,7 +4814,7 @@ const 0 \;;
 #X obj 443 84 pack f f;
 #X obj 445 207 / 127;
 #X msg 447 112 \$2 \$1;
-#X obj 145 116 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 145 116 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 104 49 sel 1;
 #X obj 443 137 route 41 42;
@@ -5103,7 +5103,7 @@ const 0 \;;
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 708 500;
+#X msg 325 270 dimen 1902 1080;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -5450,7 +5450,7 @@ const 0 \;;
 #X obj 18 43 scan 1;
 #X obj 144 44 scan 2;
 #X obj 269 44 scan 3;
-#X msg 17 152 708 500 0 0;
+#X msg 17 152 1902 1080 0 0;
 #X connect 0 0 1 0;
 #X connect 8 0 9 0;
 #X connect 8 1 10 0;

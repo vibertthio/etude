@@ -67,4 +67,12 @@ class Metro {
     return false;
   }
 
+  void doubleSpeed() {
+    pause();
+    int fc = frameCount();
+    limit /= 2;
+    localtime = currentTime() - fc * limit;
+    startPlayingAt(fc);
+  }
+
 }

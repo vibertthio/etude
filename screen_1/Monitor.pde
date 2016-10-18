@@ -227,6 +227,10 @@ class Monitor {
         dissappear = true;
       }
     }
+
+    //check the pos
+    checkOutOfScreen();
+
   }
 
   void display() {
@@ -282,7 +286,11 @@ class Monitor {
     }
     else if ( boxCreated ){
       //box.display();
-      //spring.display();
+      spring.display();
+    }
+
+    if (scaling) {
+      hwInfo(xpos, xpos + w_display, ypos, ypos + h_display);
     }
 
 
@@ -421,7 +429,16 @@ class Monitor {
 
   void setXorigin(float x) { xpos = x; }
   void setYorigin(float y) { ypos = y; }
-
+  boolean checkOutOfScreen() {
+    if ( xpos < - w_display || xpos > width || ypos > height || ypos < -h_display ) {
+      dissappear = true;
+      //box.killBody();
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
 
 
@@ -435,7 +452,7 @@ class Monitor {
   int transparencyOfDot = 255;
   int transparencyOfShiftingDot = 255;
 
-  int radiusOfDots = 2;
+  int radiusOfDots = 1;
   int radiusOfTheDot = 10;
   int radiusOfShiftingDot = 10;
   int radiusOfControlDot = 7;
@@ -496,7 +513,6 @@ class Monitor {
 
 
   void barDisplay() {
-
     //frame notation
     canvas.textAlign(RIGHT, CENTER);
     canvas.textSize(textSize);
@@ -534,7 +550,7 @@ class Monitor {
     for(float i = 0; i < numberOfDots ; i++ ) {
       canvas.fill(barColor, transparencyOfBar);
       canvas.ellipse(  (w_rendor - lengthOfBar) / 2 + i * lengthOfBar / (numberOfDots - 1),
-                        h_rendor - heightOfBar, radiusOfDots*2, radiusOfDots*2);
+                        h_rendor - heightOfBar, radiusOfDots*3, radiusOfDots*3);
     }
 
     //head, tail sign
@@ -605,6 +621,8 @@ class Monitor {
                       innerButtonRadius * 2);
     }
     canvas.noStroke();
+
+
   }
 
   float barPosition ( int frameNumber ) {
@@ -843,9 +861,13 @@ class Monitor {
         if ( dist ( _x, _y, buttonPosX, buttonPosY ) < buttonRadius ) {
           theremin = !theremin;
         }
+        else {
+          metro.doubleSpeed();
+        }
       }
 
       // playing/pause
+
 
       // else if (startPlayingAndAdjusting) {
       //   //stop

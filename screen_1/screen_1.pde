@@ -26,6 +26,7 @@ int timeSlot = 1000/fRate;
 int numberOfMonitors = 0;
 int maxNumberOfMonitors = 12;
 int maxFrameNumber = 20000;
+int numericalOrder = 0;
 
 //file list
 String[] fileList = { "U826190",
@@ -67,22 +68,26 @@ Monitor[] monitors;
 Monitor mChannel;
 
 boolean dragging = false;
+boolean drawBar = false;
 
 //text
 String fontType = "SansSerif";
 int textSize = 20;
 
-/**********box2D***********/
+//box2D
 // A reference to our box2d world
 Box2DProcessing box2d;
 ArrayList boundaries;
 
+//timer
+TimeLine cursorTimer;
 
 
-
+//basics
 void setup() {
   frameRate(100);
   size(1920, 1080);
+  noCursor();
   //size(1500, 900);
 
   //color Adjusting
@@ -97,11 +102,6 @@ void setup() {
 
   // Add a bunch of fixed boundaries
   boundaries = new ArrayList();
-  boundaries.add(new Boundary(width/2,height-5,width,10,0));
-  boundaries.add(new Boundary(width/2,5,width,10,0));
-  boundaries.add(new Boundary(width-5,height/2,10,height,0));
-  boundaries.add(new Boundary(5,height/2,10,height,0));
-  //boundaries.add(new BoundaryCircle(width/2, height/2, 20));
 
   //test
   //box = new Box(width/2,height/2);
@@ -123,7 +123,8 @@ void setup() {
   //back image
   backImg = loadImage("layout_2.png");
   cursor = loadImage("paint.png");
-  cursor(cursor);
+  setupCursor();
+
 
 }
 
@@ -154,27 +155,35 @@ void draw() {
   }
 
 
-  if (newMonitor) {
+  //drag draw control
+  if (drawBar) {
+    if (dragging) {
+      dotsLine(xmouse, ymouse, mouseX, mouseY, floor(dist(xmouse, ymouse, mouseX, mouseY))/20);
+    }
+  }
+  else if (newMonitor) {
     if (dragging) {
       draggingDraw();
     }
-    drawCursorForNewMonitor();
   }
+
+  cursorRects();
 
 
 
   /**********box2D***********/
   // box2d.step();
 
-  // for (int i = 0; i < boundaries.size(); i++) {
-  //   Boundary wall = (Boundary) boundaries.get(i);
-  //   wall.display();
-  // }
+  for (int i = 0; i < boundaries.size(); i++) {
+    Line wall = (Line) boundaries.get(i);
+    wall.display();
+  }
 
 
 }
 
 
+//key and mouse events
 void keyPressed() {
   if( key == 'n') {
     newMonitor = ! newMonitor;
@@ -185,27 +194,55 @@ void keyPressed() {
     OscMessage osc = new OscMessage("/test");
     oscP5.send(osc, myRemoteLocation);
   }
+
+  if ( key == 'z') {
+    drawBar = true;
+  }
+}
+
+void keyReleased() {
+  if ( key == 'z') {
+    drawBar = false;
+    dragging = false;
+  }
 }
 
 void mousePressed() {
-  //monitor
-  if(!newMonitor) {
-    for(int i=0; i<numberOfMonitors; i++) {
-      monitors[i].mousePressed(mouseX, mouseY);
-    }
+  if(drawBar) {
+    //
+    dragging = true;
+    xmouse = mouseX;
+    ymouse = mouseY;
   }
-  //new monitor
+
   else {
-    if (numberOfMonitors < maxNumberOfMonitors) {
-      dragging = true;
-      xmouse = mouseX;
-      ymouse = mouseY;
+
+    //monitor
+    if(!newMonitor) {
+      for(int i=0; i<numberOfMonitors; i++) {
+        monitors[i].mousePressed(mouseX, mouseY);
+      }
     }
+    //new monitor
+    else {
+      if (numberOfMonitors < maxNumberOfMonitors) {
+        dragging = true;
+        xmouse = mouseX;
+        ymouse = mouseY;
+      }
+    }
+
   }
+
 }
 
 void mouseReleased() {
-  if(!newMonitor) {
+  if(drawBar) {
+    //
+    boundaries.add(new Line(xmouse,ymouse,mouseX,mouseY));
+    dragging = false;
+  }
+  else if(!newMonitor) {
     for(int i=0; i<numberOfMonitors; i++) {
       monitors[i].mouseReleased(mouseX, mouseY);
     }
@@ -222,8 +259,9 @@ void mouseReleased() {
           new Monitor(x_min, y_min,
                       int(x_max - x_min),
                       int(y_max - y_min),
-                      numberOfMonitors);
+                      numericalOrder);
         numberOfMonitors++;
+        numericalOrder++;
         newMonitor = false;
       }
     }
@@ -241,14 +279,19 @@ void mouseClicked() {
 }
 
 void mouseDragged() {
-  if(!newMonitor) {
+  if (drawBar) {
+    //
+  }
+  else if(!newMonitor) {
     for(int i=0; i<numberOfMonitors; i++) {
       monitors[i].mouseDragged(mouseX, mouseY);
     }
   }
-  else { }
 }
 
+
+
+//other functions
 void draggingDraw() {
   rectMode(CORNER);
   float x_max = max(xmouse, mouseX);
@@ -268,8 +311,9 @@ void draggingDraw() {
   mChannel.w_display = int(x_max - x_min);
   mChannel.h_display = int(y_max - y_min);
   mChannel.controlDotsDisplay();
-}
+  hwInfo(x_min, x_max, y_min, y_max);
 
+}
 void drawCursorForNewMonitor() {
   stroke(cursorColor, 255);
   strokeWeight(mChannel.lineWeight);
@@ -277,10 +321,11 @@ void drawCursorForNewMonitor() {
   ellipse(mouseX, mouseY, mChannel.radiusOfControlDot*2, mChannel.radiusOfControlDot*2);
   noStroke();
 }
-
 void drawInfo() {
   fill(textColor);
   textSize(textSize);
+  textAlign(LEFT, BOTTOM);
+
   text( "Press 'n' to switch mode", 30, 40);
   text( "(New Monitor) & (Adjusting Monitor)", 30, 70);
   String fr = "frameRate : " + str(frameRate);
@@ -298,9 +343,8 @@ void drawInfo() {
 
   text( msg, 30, height - 40);
 }
-
 void backgroundDots() {
-  int sz = 6;
+  int sz = 2;
   int x_offset = 5;
   int y_offset = 5;
   int distance = 42;
@@ -315,4 +359,78 @@ void backgroundDots() {
       point(x_offset + i * distance, y_offset + j * distance);
     }
   }
+}
+void dotsLine(boolean horizon, float start, float end, float shift) {
+  int sz = 1;
+  int numberOfDots = 10;
+  noStroke();
+  fill(255);
+  for(int i=1; i<numberOfDots; i++) {
+    if(horizon) {
+      ellipse( start + (end - start) * i / numberOfDots, shift, sz * 2, sz * 2);
+    }
+    else {
+      ellipse(shift, start + (end - start) * i / numberOfDots, sz * 2, sz * 2);
+    }
+  }
+}
+void dotsLine(float x1, float y1, float x2, float y2) {
+  int sz = 2;
+  int numberOfDots = 10;
+  noStroke();
+  fill(255);
+  for(int i=0; i<=numberOfDots; i++) {
+    ellipse( x1 + ( x2 - x1 ) * i /numberOfDots,
+             y1 + ( y2 - y1 ) * i /numberOfDots, sz * 2, sz * 2);
+  }
+}
+void dotsLine(float x1, float y1, float x2, float y2, int n) {
+  //dist / 20 would be a good choice
+  int sz = 2;
+  int numberOfDots = n;
+  noStroke();
+  fill(255);
+  for(int i=0; i<=numberOfDots; i++) {
+    ellipse( x1 + ( x2 - x1 ) * i /numberOfDots,
+             y1 + ( y2 - y1 ) * i /numberOfDots, sz * 2, sz * 2);
+  }
+}
+void hwInfo(float x_min, float x_max, float y_min, float y_max) {
+  dotsLine(true, x_min, x_max, y_max + 30);
+  dotsLine(false, y_min, y_max, x_min - 30);
+  stroke(255);
+  strokeWeight(1);
+  line(x_min - 30, y_min, x_min - 15, y_min);
+  line(x_min - 30, y_max, x_min - 15, y_max);
+  line(x_min, y_max + 30, x_min, y_max + 15);
+  line(x_max, y_max + 30, x_max, y_max + 15);
+  textSize(20);
+  pushMatrix();
+  translate(x_min - 18, (y_min + y_max) / 2);
+  String t = "[ height : " + str(y_max - y_min) + " ]";
+  textAlign(CENTER, CENTER);
+  rotate(-PI/2);
+  text(t, 0, 0);
+  popMatrix();
+}
+void setupCursor() {
+  cursorTimer = new TimeLine(300);
+  cursorTimer.setLinerRate(1);
+  cursorTimer.setLoop();
+  cursorTimer.startTimer();
+}
+void cursorRects() {
+  color cursorCol = color (254, 240, 53);
+  rectMode(CENTER);
+  imageMode(CENTER);
+  image(cursor, mouseX, mouseY);
+  float d = 16 + 8 * cursorTimer.liner();
+  int l = 6;
+  int w = 3;
+  fill(cursorCol);
+  noStroke();
+  rect(mouseX, mouseY + d, w, l);
+  rect(mouseX, mouseY - d, w, l);
+  rect(mouseX + d, mouseY, l, w);
+  rect(mouseX - d, mouseY, l, w);
 }

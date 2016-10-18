@@ -5,6 +5,7 @@ class TimeLine {
   int elapsedTime;
   int repeatTime = 3;
   boolean breathState = false;
+  boolean loop = false;
 
   float linerRate = 0.8;
 
@@ -21,8 +22,13 @@ class TimeLine {
       elapsedTime = millis() - localtime;
 
       if (elapsedTime>int(limit)) {
-        elapsedTime = int(limit);
-        state=false;
+        if( !loop ) {
+          elapsedTime = int(limit);
+          state=false;
+        }
+        else {
+          startTimer();
+        }
       }
     }
 
@@ -82,4 +88,6 @@ class TimeLine {
   int currentTime() {
     return millis();
   }
+
+  void setLoop() { loop = true; }
 }

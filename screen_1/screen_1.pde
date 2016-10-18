@@ -17,7 +17,7 @@ NetAddress myRemoteLocation;
 
 //background
 PImage backImg;
-
+PImage cursor;
 
 //constant
 int numberOfData = 36;
@@ -87,6 +87,7 @@ void setup() {
 
   //color Adjusting
   mainBackgroundColor = etude1;
+  localBackGroundColor = etude4;
   dataStorage = new int[fileList.length][maxFrameNumber][numberOfData];
   fcount = new int[fileList.length];
 
@@ -121,6 +122,8 @@ void setup() {
 
   //back image
   backImg = loadImage("layout_2.png");
+  cursor = loadImage("paint.png");
+  cursor(cursor);
 
 }
 
@@ -259,7 +262,7 @@ void draggingDraw() {
   fill(localBackGroundColor, 255);
   rect(x_min, y_min, x_max - x_min, y_max - y_min);
   stroke(mChannel.lineColor);
-  strokeWeight(mChannel.lineWeight/2);
+  strokeWeight(mChannel.lineWeight);
   noFill();
   rect(x_min, y_min,  x_max - x_min, y_max - y_min);
   mChannel.w_display = int(x_max - x_min);

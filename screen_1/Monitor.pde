@@ -37,7 +37,8 @@ class Monitor {
   Skeleton skeleton;
 
   //color
-  color backGroundColor = color (34, 49, 63);
+  //color backGroundColor = color (34, 49, 63);
+  color backGroundColor = localBackGroundColor;
   color closeMonitorSignColor = color (242, 38, 19);
 
 
@@ -365,7 +366,7 @@ class Monitor {
     fill(backGroundColor, 255);
     rect(xpos, ypos, w_drag + (w_display - w_drag) * changeRatioTimer.liner(), h_display);
     stroke(lineColor);
-    strokeWeight(lineWeight/2);
+    strokeWeight(lineWeight);
     noFill();
     rect(xpos, ypos, w_drag + (w_display - w_drag)*changeRatioTimer.liner(), h_display);
     controlDotsDisplay();
@@ -449,12 +450,13 @@ class Monitor {
   float heightOfPositionSign = 10;
 
 
-  int lineWeight = 2;
+  int lineWeight = 1;
 
   //color
   color barColor = color (210, 82, 127);
   color dotColor = color (249, 105, 14);
-  color lineColor = color (38, 166, 91);
+  //color lineColor = color (38, 166, 91);
+  color lineColor = color (200, 200, 200);
   color shiftingDotColor = color (38, 166, 91);
 
   //variable
@@ -489,8 +491,7 @@ class Monitor {
   int buttonPosX = 50;
   int buttonPosY = 50;
   int innerButtonRadius = 10;
-  color buttonColor =  color (38, 166, 91);
-
+  color buttonColor =  lineColor;//color (38, 166, 91);
 
 
 

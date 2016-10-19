@@ -87,7 +87,7 @@ ArrayList lines;
 
 //timer
 TimeLine cursorTimer;
-
+TimeLine textTimer;
 
 //basics
 void setup() {
@@ -123,6 +123,7 @@ void setup() {
   //text
   PFont font = createFont (fontType, textSize, true);
   textFont(font, textSize);
+  textTimer = new TimeLine(800);
 
   //oscP5
   oscP5 = new OscP5(this,9020);
@@ -141,9 +142,9 @@ void draw() {
   background(mainBackgroundColor);
   backgroundDots();
   noTint();
-  drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );
+  //monitors
   for(int i=0; i<numberOfMonitors; i++) {
 
     if ( monitors[i].dissappear ) {
@@ -164,7 +165,10 @@ void draw() {
   //drag draw control
   if (drawLine) {
     if (dragging) {
-      dotsDashLine(xmouse, ymouse, mouseX, mouseY, floor(dist(xmouse, ymouse, mouseX, mouseY))/40);
+      dotsDashLine(xmouse, ymouse,
+                   mouseX, mouseY,
+                  floor(dist(xmouse, ymouse,
+                             mouseX, mouseY))/40);
     }
   }
   else if (newMonitor) {
@@ -173,13 +177,14 @@ void draw() {
     }
   }
 
-  cursorRects();
-
+  //lines display
   for (int i = 0; i < lines.size(); i++) {
-    Line wall = (Line) lines.get(i);
-    wall.display();
+    Line line = (Line) lines.get(i);
+    line.display();
   }
 
+  cursorRects();
+  drawInfo();
 
 }
 
@@ -217,6 +222,8 @@ void keyPressed() {
       clearLines();
     }
   }
+
+  textTimer.startTimer();
 }
 
 void keyReleased() {
@@ -371,38 +378,41 @@ void drawCursorForNewMonitor() {
   noStroke();
 }
 void drawInfo() {
-  fill(textColor);
-  textSize(textSize);
-  textAlign(LEFT, BOTTOM);
+  if (textTimer.state) {
+    fill(textColor, 255 * (1 - textTimer.liner()));
+    textSize(textSize);
+    textAlign(CENTER, CENTER);
+    // textAlign(LEFT, BOTTOM);
 
-  text( "Press 'n' to switch mode", 30, 40);
-  text( "(New Monitor) & (Adjusting Monitor)", 30, 70);
-  String fr = "frameRate : " + str(frameRate);
-  text(fr, 30, 100);
+    // text( "Press 'n' to switch mode", 30, 40);
+    // text( "(New Monitor) & (Adjusting Monitor)", 30, 70);
+    // String fr = "frameRate : " + str(frameRate);
+    // text(fr, 30, 100);
 
+    textSize(6*textSize);
+    String msg;
+    if ( newMonitor ) {
+      msg = "Create";
+    }
+    else if (drawLine) {
+      msg = "Draw Line";
+    }
+    else if (removeLine) {
+      msg = "Remove Line";
+    }
+    else if (adjustingSpeed) {
+      msg = "Adjust Speed";
+    }
+    else if (changeColor) {
+      msg = "Change Color";
+    }
+    else {
+      msg = "Edit";
+    }
 
-  textSize(3*textSize);
-  String msg;
-  if ( newMonitor ) {
-    msg = "Create";
+    // text( msg, 30, height - 40);
+    text( msg, width/2, height/2);
   }
-  else if (drawLine) {
-    msg = "Draw Line";
-  }
-  else if (removeLine) {
-    msg = "Remove Line";
-  }
-  else if (adjustingSpeed) {
-    msg = "Adjust Speed";
-  }
-  else if (changeColor) {
-    msg = "Change Color";
-  }
-  else {
-    msg = "Edit";
-  }
-
-  text( msg, 30, height - 40);
 }
 void backgroundDots() {
   int sz = 2;

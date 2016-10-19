@@ -378,9 +378,14 @@ void drawCursorForNewMonitor() {
   noStroke();
 }
 void drawInfo() {
+  fill(textColor);
+  textAlign(CORNER, BOTTOM);
+  textSize(textSize);
+  String fr = "frameRate : " + str(frameRate);
+  text(fr, 30, 100);
   if (textTimer.state) {
+    //textSize(textSize);
     fill(textColor, 255 * (1 - textTimer.liner()));
-    textSize(textSize);
     textAlign(CENTER, CENTER);
     // textAlign(LEFT, BOTTOM);
 

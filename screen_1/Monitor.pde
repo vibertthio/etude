@@ -146,7 +146,6 @@ class Monitor {
       box2d.step();
       Vec2 pos = box2d.getBodyPixelCoord(box.body);
       // Get its angle of rotation
-      float a = box.body.getAngle();
       xpos = pos.x - w_display/2;
       ypos = pos.y - h_display/2;
       spring.update(_mX,_mY);

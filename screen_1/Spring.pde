@@ -35,6 +35,10 @@ class Spring {
       v1 = box2d.coordWorldToPixels(v1);
       v2 = box2d.coordWorldToPixels(v2);
       // And just draw a line
+      fill(255, 50);
+      noStroke();
+      ellipse(v1.x,v1.y, 8, 8);
+      ellipse(v2.x,v2.y, 8, 8);
       dotsLine(v1.x,v1.y,v2.x,v2.y);
     }
   }

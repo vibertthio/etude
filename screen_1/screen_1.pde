@@ -62,15 +62,16 @@ color textColor = color (247, 202, 24);
 
 //UI design
 float xmouse, ymouse;
-boolean newMonitor = true;
 
 Metro metro;
 Monitor[] monitors;
 Monitor mChannel;
 
 //state info
+boolean newMonitor = true;
 boolean dragging = false;
-boolean drawBar = false;
+boolean drawLine = false;
+boolean removeLine = false;
 boolean adjustingSpeed = false;
 boolean changeColor = false;
 
@@ -82,7 +83,7 @@ int textSize = 20;
 //box2D
 // A reference to our box2d world
 Box2DProcessing box2d;
-ArrayList boundaries;
+ArrayList lines;
 
 //timer
 TimeLine cursorTimer;
@@ -107,8 +108,8 @@ void setup() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
 
-  // Add a bunch of fixed boundaries
-  boundaries = new ArrayList();
+  // Add a bunch of fixed lines
+  lines = new ArrayList();
 
   //test
   //box = new Box(width/2,height/2);
@@ -140,8 +141,6 @@ void draw() {
   background(mainBackgroundColor);
   backgroundDots();
   noTint();
-  // if(newMonitor)
-  //   image(backImg, 5, 5, width, height);
   drawInfo();
 
   //println("Global Time Count : " + float(millis())/1000 );
@@ -163,9 +162,9 @@ void draw() {
 
 
   //drag draw control
-  if (drawBar) {
+  if (drawLine) {
     if (dragging) {
-      dotsLine(xmouse, ymouse, mouseX, mouseY, floor(dist(xmouse, ymouse, mouseX, mouseY))/20);
+      dotsDashLine(xmouse, ymouse, mouseX, mouseY, floor(dist(xmouse, ymouse, mouseX, mouseY))/40);
     }
   }
   else if (newMonitor) {
@@ -176,13 +175,8 @@ void draw() {
 
   cursorRects();
 
-
-
-  /**********box2D***********/
-  // box2d.step();
-
-  for (int i = 0; i < boundaries.size(); i++) {
-    Line wall = (Line) boundaries.get(i);
+  for (int i = 0; i < lines.size(); i++) {
+    Line wall = (Line) lines.get(i);
     wall.display();
   }
 
@@ -203,7 +197,11 @@ void keyPressed() {
   }
 
   if ( key == 'z') {
-    drawBar = true;
+    drawLine = true;
+  }
+
+  if ( key == 'r') {
+    removeLine = true;
   }
 
   if ( key == 's') {
@@ -213,12 +211,21 @@ void keyPressed() {
   if ( key == 'c') {
     changeColor = true;
   }
+
+  if ( key == ' ') {
+    if (removeLine) {
+      clearLines();
+    }
+  }
 }
 
 void keyReleased() {
   if ( key == 'z') {
-    drawBar = false;
+    drawLine = false;
     dragging = false;
+  }
+  if ( key == 'r') {
+    removeLine = false;
   }
   if ( key == 's') {
     adjustingSpeed = false;
@@ -229,7 +236,7 @@ void keyReleased() {
 }
 
 void mousePressed() {
-  if(drawBar) {
+  if(drawLine) {
     //
     dragging = true;
     xmouse = mouseX;
@@ -242,6 +249,10 @@ void mousePressed() {
     if(!newMonitor) {
       for(int i=0; i<numberOfMonitors; i++) {
         monitors[i].mousePressed(mouseX, mouseY);
+      }
+      for(int i =0, n=lines.size(); i<n; i++) {
+        Line line = (Line) lines.get(i);
+        line.detect(mouseX, mouseY);
       }
     }
     //new monitor
@@ -258,14 +269,18 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-  if(drawBar) {
+  if(drawLine) {
     //
-    boundaries.add(new Line(xmouse,ymouse,mouseX,mouseY));
+    lines.add(new Line(xmouse,ymouse,mouseX,mouseY));
     dragging = false;
   }
   else if(!newMonitor) {
     for(int i=0; i<numberOfMonitors; i++) {
       monitors[i].mouseReleased(mouseX, mouseY);
+    }
+    for(int i =0, n=lines.size(); i<n; i++) {
+      Line line = (Line) lines.get(i);
+      line.resetDragging();
     }
   }
   else {
@@ -295,17 +310,30 @@ void mouseClicked() {
     for(int i=0; i<numberOfMonitors; i++) {
       monitors[i].mouseClicked(mouseX, mouseY);
     }
+    if (removeLine) {
+      for(int i =0, n=lines.size(); i<n; i++) {
+        Line line = (Line) lines.get(i);
+        if ( line.contains(mouseX, mouseY) != 0 ) {
+          line.killBody();
+          lines.remove(i);
+          break;
+        }
+      }
+    }
   }
-  else { }
 }
 
 void mouseDragged() {
-  if (drawBar) {
+  if (drawLine) {
     //
   }
   else if(!newMonitor) {
     for(int i=0; i<numberOfMonitors; i++) {
       monitors[i].mouseDragged(mouseX, mouseY);
+    }
+    for(int i =0, n=lines.size(); i<n; i++) {
+      Line line = (Line) lines.get(i);
+      line.update(mouseX, mouseY);
     }
   }
 }
@@ -357,6 +385,18 @@ void drawInfo() {
   String msg;
   if ( newMonitor ) {
     msg = "Create";
+  }
+  else if (drawLine) {
+    msg = "Draw Line";
+  }
+  else if (removeLine) {
+    msg = "Remove Line";
+  }
+  else if (adjustingSpeed) {
+    msg = "Adjust Speed";
+  }
+  else if (changeColor) {
+    msg = "Change Color";
   }
   else {
     msg = "Edit";
@@ -416,6 +456,23 @@ void dotsLine(float x1, float y1, float x2, float y2, int n) {
              y1 + ( y2 - y1 ) * i /numberOfDots, sz * 2, sz * 2);
   }
 }
+void dotsDashLine(float x1, float y1, float x2, float y2, int n) {
+  int sz = 2;
+  fill(255);
+  for(float i=0; i<=n; i++) {
+    noStroke();
+    ellipse( x1 + ( x2 - x1 ) * i /n,
+             y1 + ( y2 - y1 ) * i /n, sz * 2, sz * 2);
+    stroke(255);
+    strokeWeight(1);
+    if(i<n){
+      line(x1 + ( x2 - x1 ) * (i+0.25) /n,
+           y1 + ( y2 - y1 ) * (i+0.25) /n,
+           x1 + ( x2 - x1 ) * (i+0.75) /n,
+           y1 + ( y2 - y1 ) * (i+0.75) /n);
+    }
+  }
+}
 void hwInfo(float x_min, float x_max, float y_min, float y_max) {
   dotsLine(true, x_min, x_max, y_max + 30);
   dotsLine(false, y_min, y_max, x_min - 30);
@@ -456,4 +513,11 @@ void cursorRects() {
   rect(mouseX, mouseY - d, w, l);
   rect(mouseX + d, mouseY, l, w);
   rect(mouseX - d, mouseY, l, w);
+}
+void clearLines() {
+  for(int i =0, n=lines.size(); i<n; i++) {
+    Line line = (Line) lines.get(i);
+    line.killBody();
+  }
+  lines.clear();
 }

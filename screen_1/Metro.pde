@@ -82,16 +82,16 @@ class Metro {
   void speedUp() {
     pause();
     int fc = frameCount();
-    if(limit > 25) {
-      limit -= 5;
-    }
+    float fr = 1000.0/limit;
+    limit = int(1000/ ( fr + 5 ));
     localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }
   void speedDown() {
     pause();
     int fc = frameCount();
-    limit += 5;
+    float fr = 1000.0/limit;
+    limit = int(1000/ ( fr -5 ));
     localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }

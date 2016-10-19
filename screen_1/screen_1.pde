@@ -47,10 +47,11 @@ boolean[] loadedList = { false,
 int[][][] dataStorage;
 int[] fcount;
 
-color etude1 = color(82, 74, 90);
-color etude2 = color(82, 227, 90);
-color etude3 = color(235, 74, 90);
-color etude4 = color(82, 74, 243);
+color etudeBack = color(82, 74, 90);
+color[] etudeCircle = { color(82, 227, 90),
+                        color(235, 74, 90),
+                        color(82, 74, 243)
+                      };
 
 color mainBackgroundColor = color(102, 51, 153);
 color localBackGroundColor = color (34, 49, 63);
@@ -67,11 +68,15 @@ Metro metro;
 Monitor[] monitors;
 Monitor mChannel;
 
+//state info
 boolean dragging = false;
 boolean drawBar = false;
+boolean adjustingSpeed = false;
+boolean changeColor = false;
 
 //text
-String fontType = "SansSerif";
+//String fontType = "SansSerif";
+String fontType = "ACaslonPro-BoldItalic";
 int textSize = 20;
 
 //box2D
@@ -85,14 +90,16 @@ TimeLine cursorTimer;
 
 //basics
 void setup() {
+  // String[] fontList = PFont.list();
+  // println(fontList);
+
   frameRate(100);
   size(1920, 1080);
   noCursor();
   //size(1500, 900);
 
   //color Adjusting
-  mainBackgroundColor = etude1;
-  localBackGroundColor = etude4;
+  mainBackgroundColor = etudeBack;
   dataStorage = new int[fileList.length][maxFrameNumber][numberOfData];
   fcount = new int[fileList.length];
 
@@ -198,12 +205,26 @@ void keyPressed() {
   if ( key == 'z') {
     drawBar = true;
   }
+
+  if ( key == 's') {
+    adjustingSpeed = true;
+  }
+
+  if ( key == 'c') {
+    changeColor = true;
+  }
 }
 
 void keyReleased() {
   if ( key == 'z') {
     drawBar = false;
     dragging = false;
+  }
+  if ( key == 's') {
+    adjustingSpeed = false;
+  }
+  if ( key == 'c') {
+    changeColor = false;
   }
 }
 
@@ -405,6 +426,7 @@ void hwInfo(float x_min, float x_max, float y_min, float y_max) {
   line(x_min, y_max + 30, x_min, y_max + 15);
   line(x_max, y_max + 30, x_max, y_max + 15);
   textSize(20);
+  fill(255);
   pushMatrix();
   translate(x_min - 18, (y_min + y_max) / 2);
   String t = "[ height : " + str(y_max - y_min) + " ]";
@@ -413,6 +435,7 @@ void hwInfo(float x_min, float x_max, float y_min, float y_max) {
   text(t, 0, 0);
   popMatrix();
 }
+
 void setupCursor() {
   cursorTimer = new TimeLine(300);
   cursorTimer.setLinerRate(1);

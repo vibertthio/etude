@@ -23,6 +23,10 @@ class Metro {
     }
   }
 
+  float framerate() {
+    return (1000.0/limit);
+  }
+
   void setTime (int fCount) { //input is the frame count
     timeInterval = fCount * limit;
   }
@@ -71,6 +75,23 @@ class Metro {
     pause();
     int fc = frameCount();
     limit /= 2;
+    localtime = currentTime() - fc * limit;
+    startPlayingAt(fc);
+  }
+
+  void speedUp() {
+    pause();
+    int fc = frameCount();
+    if(limit > 25) {
+      limit -= 5;
+    }
+    localtime = currentTime() - fc * limit;
+    startPlayingAt(fc);
+  }
+  void speedDown() {
+    pause();
+    int fc = frameCount();
+    limit += 5;
     localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }

@@ -5,7 +5,8 @@ class FileSelector {
   int numberOfFiles;
   int textSizeLarge = 60;
   int textSizeSmall = 15;
-  String fontType = "SansSerif";
+  //String fontType = "SansSerif";
+  String fontType = "ACaslonPro-BoldItalic";
   int timeConstant = 200;
   int widthOfArrows = 35;
   int correctionOfLarge = 8;

@@ -38,6 +38,7 @@ class Monitor {
 
   //color
   //color backGroundColor = color (34, 49, 63);
+  int colorIndex = 1;
   color backGroundColor = localBackGroundColor;
   color closeMonitorSignColor = color (242, 38, 19);
 
@@ -214,6 +215,7 @@ class Monitor {
             }
           }
           soundReaction();
+          speedReaction();
         }
       }
       canvas.endDraw();
@@ -484,6 +486,7 @@ class Monitor {
   boolean theremin = false;
   boolean springBind = false;
   boolean boxCreated = false;
+  boolean mouseSense = false;
 
   float shiftOffsetX, shiftOffsetY;
 
@@ -518,25 +521,25 @@ class Monitor {
     canvas.textSize(textSize);
     if ( loopStartAdjusting ) {
       canvas.fill(loopStartSignColor);
-      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.6 ,
+      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.2 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
-      canvas.text("[           / " + str(fCount) + " ]",
+      canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
                   h_rendor - heightOfBar - textHeight );
     }
     else if ( loopEndAdjusting ) {
       canvas.fill(loopEndSignColor);
-      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.6 ,
+      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.2 , //2.5
                                 h_rendor - heightOfBar - textHeight);
-      canvas.text("[           / " + str(fCount) + " ]",
+      canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
                   h_rendor - heightOfBar - textHeight );
     }
     else {
       canvas.fill(lineColor);
-      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.6 ,
+      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.2 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
-      canvas.text("[           / " + str(fCount) + " ]",
+      canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
                   h_rendor - heightOfBar - textHeight );
     }
@@ -861,8 +864,16 @@ class Monitor {
         if ( dist ( _x, _y, buttonPosX, buttonPosY ) < buttonRadius ) {
           theremin = !theremin;
         }
-        else {
-          metro.doubleSpeed();
+        else if (mouseSense && adjustingSpeed) {
+          if ( x < w_display/2 ) {
+            metro.speedDown();
+          }
+          else {
+            metro.speedUp();
+          }
+        }
+        else if (mouseSense && changeColor) {
+          changeColor();
         }
       }
 
@@ -900,7 +911,7 @@ class Monitor {
 
     if (x > 0 && x < w_display
        && y > 0 && y < h_display ) {
-
+      mouseSense = true;
       //selecting file
       if ( selectingFile ) {
         if ( !scaling && !shifting) {
@@ -920,10 +931,41 @@ class Monitor {
           }
         }
       }
-
-
+    }
+    else {
+      mouseSense = false;
     }
 
   }
-
+  void speedReaction () {
+    if (adjustingSpeed && mouseSense) {
+      canvas.noStroke();
+      canvas.rectMode(CORNER);
+      canvas.fill(loopStartSignColor,80);
+      canvas.rect(0, 0, w_rendor/2, h_rendor);
+      canvas.fill(loopEndSignColor,80);
+      canvas.rect(w_rendor/2, 0, w_rendor/2, h_rendor);
+      speedInfo();
+    }
+  }
+  void speedInfo() {
+    textSize(20);
+    fill(255);
+    pushMatrix();
+    translate( xpos + w_display / 2, ypos - 18);
+    String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ]";
+    textAlign(CENTER, CENTER);
+    //rotate(-PI/2);
+    text(t, 0, 0);
+    popMatrix();
+  }
+  void changeColor() {
+    if (colorIndex == etudeCircle.length-1 ) {
+      colorIndex = 0;
+    }
+    else {
+      colorIndex++;
+    }
+    backGroundColor = etudeCircle[colorIndex];
+  }
 }

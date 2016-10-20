@@ -26,7 +26,7 @@ int timeSlot = 1000/fRate;
 int numberOfMonitors = 0;
 int maxNumberOfMonitors = 12;
 int maxFrameNumber = 20000;
-int numericalOrder = 0;
+IntList idList;
 
 //file list
 String[] fileList = { "U826190",
@@ -110,6 +110,7 @@ void setup() {
 
   // Add a bunch of fixed lines
   lines = new ArrayList();
+  idList = new IntList();
 
   //test
   //box = new Box(width/2,height/2);
@@ -148,6 +149,7 @@ void draw() {
   for(int i=0; i<numberOfMonitors; i++) {
 
     if ( monitors[i].dissappear ) {
+      idList.append(monitors[i].id);
       for (int j=i; j<numberOfMonitors - 1; j++) {
         monitors[j] = monitors[j+1];
       }
@@ -297,14 +299,21 @@ void mouseReleased() {
       float y_max = max(ymouse, mouseY);
       float y_min = min(ymouse, mouseY);
 
-      if ( y_max - y_min > 20) {
+      if ( y_max - y_min > 30) {
+        int id;
+        if (idList.size() != 0) {
+          id = idList.get(0);
+          idList.remove(0);
+        }
+        else {
+          id = numberOfMonitors;
+        }
         monitors[numberOfMonitors] =
           new Monitor(x_min, y_min,
                       int(x_max - x_min),
                       int(y_max - y_min),
-                      numericalOrder);
+                      id);
         numberOfMonitors++;
-        numericalOrder++;
         newMonitor = false;
       }
     }

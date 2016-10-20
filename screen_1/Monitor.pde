@@ -952,7 +952,9 @@ class Monitor {
     fill(255);
     pushMatrix();
     translate( xpos + w_display / 2, ypos - 18);
-    String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ]";
+    // String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ]";
+    String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ] " + str(id);
+
     textAlign(CENTER, CENTER);
     //rotate(-PI/2);
     text(t, 0, 0);

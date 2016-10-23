@@ -1,15 +1,15 @@
-#N canvas 885 494 1089 772 10;
+#N canvas 882 73 1089 772 10;
 #X obj 395 156 s line\$1;
 #X obj 378 110 route \$1;
 #X obj 378 80 r addline;
 #X obj 378 178 unpack f f f f;
 #X obj 123 256 gemhead;
 #X obj 149 337 translateXYZ;
-#X obj 586 82 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 586 82 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 586 57 r allclose;
 #X msg 499 7 1;
-#X obj 615 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 615 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 613 307 t b b b;
 #N canvas 302 458 823 635 target1 0;
@@ -73,7 +73,7 @@
 #X msg 575 508 0 1 0.3;
 #X msg 609 564 1 0.6 0.2;
 #X msg 593 537 0.4 0.1 1;
-#X obj 186 430 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 186 430 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 186 450 metro 100;
 #X obj 186 472 s \$0-resres;
@@ -288,7 +288,7 @@
 #X connect 61 0 62 0;
 #X connect 63 0 31 0;
 #X restore 632 404 pd target1;
-#N canvas 224 446 805 524 target1 1;
+#N canvas 224 446 805 524 target1 0;
 #X obj 437 345 translateXYZ 0 0 0;
 #X obj 591 232 == 2;
 #X obj 540 274 pack f f;
@@ -550,7 +550,7 @@
 #X obj 735 188 spigot;
 #X obj 735 -53 r mouse_right;
 #X obj 536 209 sel 0;
-#X obj 782 278 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 782 278 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 615 218 0;
 #X msg 536 254 0 0;

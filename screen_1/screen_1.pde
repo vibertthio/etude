@@ -29,20 +29,14 @@ int maxFrameNumber = 20000;
 IntList idList;
 
 //file list
-String[] fileList = { "U826190",
-                      "U8301523",
-                      "U8221233",
-                      "U8301524",
-                      "U8301538",
-                      "U8301559"
+String[] fileList = { "std_UpHand1",
+                      "std_UpHand2",
+                      "std_sideHands",
+                      "std_grab",
+                      "std_LiftLeg",
+                      "U8221233"
                     };
-boolean[] loadedList = { false,
-                         false,
-                         false,
-                         false,
-                         false,
-                         false
-                       };
+boolean[] loadedList;
 
 int[][][] dataStorage;
 int[] fcount;
@@ -95,14 +89,19 @@ void setup() {
   // println(fontList);
 
   frameRate(100);
-  size(1920, 1080);
+  //size(1920, 1080);
   noCursor();
-  //size(1500, 900);
+  size(800, 600);
 
   //color Adjusting
   mainBackgroundColor = etudeBack;
   dataStorage = new int[fileList.length][maxFrameNumber][numberOfData];
   fcount = new int[fileList.length];
+  loadedList = new boolean[fileList.length];
+  for (boolean l : loadedList) {
+    l = false;
+  }
+
 
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
@@ -138,7 +137,6 @@ void setup() {
 
 }
 
-
 void draw() {
   background(mainBackgroundColor);
   backgroundDots();
@@ -163,7 +161,6 @@ void draw() {
     monitors[i].boxUpdate(mouseX, mouseY);
   }
 
-
   //drag draw control
   if (drawLine) {
     if (dragging) {
@@ -185,6 +182,7 @@ void draw() {
     line.display();
   }
 
+  //other information
   cursorRects();
   drawInfo();
 
@@ -391,7 +389,7 @@ void drawInfo() {
   textAlign(CORNER, BOTTOM);
   textSize(textSize);
   String fr = "frameRate : " + str(frameRate);
-  text(fr, 30, 100);
+  text(fr, 30, 40);
   if (textTimer.state) {
     //textSize(textSize);
     fill(textColor, 255 * (1 - textTimer.liner()));

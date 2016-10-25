@@ -23,9 +23,6 @@ class FileSelector {
   int fCount = 0;
   int id = -1;
 
-  //int[][] dataStorage;
-
-
   //color
   color colorOfArrows = color (38, 166, 91);
 

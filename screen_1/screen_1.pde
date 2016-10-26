@@ -375,7 +375,6 @@ void mouseDragged() {
   }
 }
 
-
 //box collision
 void beginContact(Contact cp) {
   // Get both fixtures
@@ -496,7 +495,7 @@ void backgroundDots() {
   int distance = 42;
   int x_n = 47;
   int y_n = 28;
-  int trans = 50;
+  int trans = 200;
   color dotsCol = color(255, 255, 255);
   stroke(dotsCol, trans);
   strokeWeight(sz);

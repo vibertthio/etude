@@ -7,6 +7,7 @@ import org.jbox2d.collision.shapes.*;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.*;
 
 
 //oscP5
@@ -41,10 +42,15 @@ boolean[] loadedList;
 int[][][] dataStorage;
 int[] fcount;
 
-color etudeBack = color(82, 74, 90);
-color[] etudeCircle = { color(82, 227, 90),
-                        color(235, 74, 90),
-                        color(82, 74, 243)
+color etudeBack = color(32, 32, 32);
+color[] etudeCircle = { color(34, 49, 63),
+                        color(94, 127, 226),
+                        color(32, 226, 142),
+                        color(253, 57, 89),
+                        color(108, 65, 156),
+                        color(32, 189, 256),
+                        color(237, 121, 109),
+                        color(32, 32, 32),
                       };
 
 color mainBackgroundColor = color(102, 51, 153);
@@ -68,11 +74,14 @@ boolean drawLine = false;
 boolean removeLine = false;
 boolean adjustingSpeed = false;
 boolean changeColor = false;
+boolean selectingMonitor = false;
 
 //text
 //String fontType = "SansSerif";
 String fontType = "ACaslonPro-BoldItalic";
 int textSize = 20;
+String msg;
+
 
 //box2D
 // A reference to our box2d world
@@ -91,7 +100,7 @@ void setup() {
   frameRate(100);
   //size(1920, 1080);
   noCursor();
-  size(800, 600);
+  size(1080, 720);
 
   //color Adjusting
   mainBackgroundColor = etudeBack;
@@ -106,6 +115,7 @@ void setup() {
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
+  box2d.listenForCollisions();
 
   // Add a bunch of fixed lines
   lines = new ArrayList();
@@ -223,6 +233,14 @@ void keyPressed() {
     }
   }
 
+  if ( key == 'm') {
+    selectingMonitor = true;
+  }
+  if ( key == 'p') {
+    msg = "Trigger";
+    triggerMonitors();
+  }
+
   textTimer.startTimer();
 }
 
@@ -240,6 +258,11 @@ void keyReleased() {
   if ( key == 'c') {
     changeColor = false;
   }
+  if ( key == 'm') {
+    selectingMonitor = false;
+  }
+
+  textTimer.turnOffTimer();
 }
 
 void mousePressed() {
@@ -353,6 +376,29 @@ void mouseDragged() {
 }
 
 
+//box collision
+void beginContact(Contact cp) {
+  // Get both fixtures
+  Fixture f1 = cp.getFixtureA();
+  Fixture f2 = cp.getFixtureB();
+  // Get both bodies
+  Body b1 = f1.getBody();
+  Body b2 = f2.getBody();
+  int id1 = bodyForWhichMonitor(b1);
+  int id2 = bodyForWhichMonitor(b2);
+
+  // Get our objects that reference these bodies
+  // Object o1 = b1.getUserData();
+  // println("o1 userdata : " + o1);
+  println("o1 monitor id  : " + id1);
+  // Object o2 = b2.getUserData();
+  // println("o2 userdata : " + o2);
+  println("o2 monitor id  : " + id2);
+
+  OscMessage osc = new OscMessage("/test");
+  oscP5.send(osc, myRemoteLocation);
+
+}
 
 //other functions
 void draggingDraw() {
@@ -402,7 +448,6 @@ void drawInfo() {
     // text(fr, 30, 100);
 
     textSize(6*textSize);
-    String msg;
     if ( newMonitor ) {
       msg = "Create";
     }
@@ -418,8 +463,12 @@ void drawInfo() {
     else if (changeColor) {
       msg = "Change Color";
     }
+    else if (selectingMonitor) {
+      msg = "Select Monitor";
+    }
     else {
-      msg = "Edit";
+      if (msg != "Trigger")
+        msg = "Edit";
     }
 
     // text( msg, 30, height - 40);
@@ -542,4 +591,20 @@ void clearLines() {
     line.killBody();
   }
   lines.clear();
+}
+void triggerMonitors() {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].selected) {
+      monitors[i].triggerPlay();
+    }
+  }
+}
+int bodyForWhichMonitor( Body body ) {
+  Vec2 pos = box2d.getBodyPixelCoord(body);
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].contain(pos.x, pos.y)) {
+      return (monitors[i].id);
+    }
+  }
+  return -1;
 }

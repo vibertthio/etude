@@ -83,6 +83,7 @@ class TimeLine {
 
   void turnOffTimer() {
     localtime = millis() - limit;
+    state = false;
   }
 
   int currentTime() {

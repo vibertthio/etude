@@ -38,8 +38,8 @@ class Monitor {
 
   //color
   //color backGroundColor = color (34, 49, 63);
-  int colorIndex = 1;
-  color backGroundColor = localBackGroundColor;
+  int colorIndex = 0;
+  color backGroundColor = etudeCircle[colorIndex];
   color closeMonitorSignColor = color (242, 38, 19);
 
 
@@ -198,7 +198,10 @@ class Monitor {
           canvas.background(mainBackgroundColor);
           canvas.fill(backGroundColor, 255);
           canvas.rectMode(CORNER);
-          canvas.rect(1, 1, w_rendor, h_rendor);
+          canvas.rect(0, 0, w_rendor, h_rendor);
+          if (selected) {
+            selectedDisplay();
+          }
           skeleton.display();
           barDisplay();
           if(metro.frameCount() > currentFrame) {
@@ -454,7 +457,7 @@ class Monitor {
   int transparencyOfDot = 255;
   int transparencyOfShiftingDot = 255;
 
-  int radiusOfDots = 1;
+  int radiusOfDots = 2;
   int radiusOfTheDot = 10;
   int radiusOfShiftingDot = 10;
   int radiusOfControlDot = 7;
@@ -487,6 +490,7 @@ class Monitor {
   boolean springBind = false;
   boolean boxCreated = false;
   boolean mouseSense = false;
+  boolean selected = false;
 
   float shiftOffsetX, shiftOffsetY;
 
@@ -553,7 +557,7 @@ class Monitor {
     for(float i = 0; i < numberOfDots ; i++ ) {
       canvas.fill(barColor, transparencyOfBar);
       canvas.ellipse(  (w_rendor - lengthOfBar) / 2 + i * lengthOfBar / (numberOfDots - 1),
-                        h_rendor - heightOfBar, radiusOfDots*3, radiusOfDots*3);
+                        h_rendor - heightOfBar, radiusOfDots, radiusOfDots);
     }
 
     //head, tail sign
@@ -843,14 +847,6 @@ class Monitor {
       //selectingFile
       if ( selectingFile ) {
         if ( !scaling && !shifting) {
-        //   float _y = y * h_rendor / h_display;
-        //   if (  _y < h_rendor / 3) {
-        //     fileSelector.previousFile(); }
-        //   else if ( _y < h_rendor * 2 / 3 ) {
-        //     selectFile();
-        //   }
-        //   else if ( _y < h_rendor ) {
-        //     fileSelector.nextFile(); }
           if ( y > h_display / 3 &&
                y < h_display * 2 / 3 ) {
             selectFile();
@@ -863,6 +859,9 @@ class Monitor {
         float _y = y * h_rendor / h_display;
         if ( dist ( _x, _y, buttonPosX, buttonPosY ) < buttonRadius ) {
           theremin = !theremin;
+        }
+        else if (selectingMonitor) {
+          selected = !selected;
         }
         else if (mouseSense && adjustingSpeed) {
           if ( x < w_display/2 ) {
@@ -969,5 +968,23 @@ class Monitor {
       colorIndex++;
     }
     backGroundColor = etudeCircle[colorIndex];
+  }
+
+  void triggerPlay() {
+    currentFrame = loopStartFrame;
+    metro.startPlayingAt(loopStartFrame);
+  }
+  void selectedDisplay() {
+    canvas.fill(255,255,255, 150);
+    canvas.rectMode(CORNER);
+    canvas.rect(0, 0, w_rendor, h_rendor);
+  }
+  boolean contain(float _mX, float _mY) {
+    float x = _mX - xpos;
+    float y = _mY - ypos;
+
+    if (x > 0 && x < w_display
+       && y > 0 && y < h_display ) { return true; }
+    else { return false; }
   }
 }

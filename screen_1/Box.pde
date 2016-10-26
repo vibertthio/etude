@@ -20,6 +20,7 @@ class Box {
     h = h_;
     // Add the box to the box2d world
     makeBody(new Vec2(x,y),w,h);
+    //body.setUserData(this);
   }
 
   // This function removes the particle from the box2d world

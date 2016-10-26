@@ -387,15 +387,29 @@ void beginContact(Contact cp) {
   int id1 = bodyForWhichMonitor(b1);
   int id2 = bodyForWhichMonitor(b2);
 
-  // Get our objects that reference these bodies
-  // Object o1 = b1.getUserData();
-  // println("o1 userdata : " + o1);
   println("o1 monitor id  : " + id1);
-  // Object o2 = b2.getUserData();
-  // println("o2 userdata : " + o2);
   println("o2 monitor id  : " + id2);
 
-  OscMessage osc = new OscMessage("/test");
+  String m;
+  if ( id1 != -1 ) {
+    m = "/p" + str(id1);
+    if (id2 != -1 ) {
+      m += "/frame";
+    }
+    else {
+      m += "/edge";
+      Line l = (Line) b2.getUserData();
+      l.blink();
+    }
+  }
+  else {
+    m = "/p" + str(id2) + "/edge";
+    Line l = (Line) b1.getUserData();
+    l.blink();
+  }
+
+  OscMessage osc = new OscMessage(m);
+  osc.add(1);
   oscP5.send(osc, myRemoteLocation);
 
 }
@@ -535,6 +549,23 @@ void dotsDashLine(float x1, float y1, float x2, float y2, int n) {
     ellipse( x1 + ( x2 - x1 ) * i /n,
              y1 + ( y2 - y1 ) * i /n, sz * 2, sz * 2);
     stroke(255);
+    strokeWeight(1);
+    if(i<n){
+      line(x1 + ( x2 - x1 ) * (i+0.25) /n,
+           y1 + ( y2 - y1 ) * (i+0.25) /n,
+           x1 + ( x2 - x1 ) * (i+0.75) /n,
+           y1 + ( y2 - y1 ) * (i+0.75) /n);
+    }
+  }
+}
+void dotsDashLine(float x1, float y1, float x2, float y2, int n, color col, float transparency) {
+  int sz = 2;
+  fill(col, transparency);
+  for(float i=0; i<=n; i++) {
+    noStroke();
+    ellipse( x1 + ( x2 - x1 ) * i /n,
+             y1 + ( y2 - y1 ) * i /n, sz * 2, sz * 2);
+    stroke(col, transparency);
     strokeWeight(1);
     if(i<n){
       line(x1 + ( x2 - x1 ) * (i+0.25) /n,

@@ -142,8 +142,6 @@ class Skeleton {
 
   }
 
-
-
   void drawJoint(int jointType) {
     joints[jointType].display();
   }

@@ -108,6 +108,7 @@ ArrayList lines;
 //timer
 TimeLine cursorTimer;
 TimeLine textTimer;
+TimeLine backgroundDotsVibrationTimer = new TimeLine(600);
 
 //basics
 void setup() {
@@ -152,6 +153,8 @@ void setup() {
   PFont font = createFont (fontType, textSize, true);
   textFont(font, textSize);
   textTimer = new TimeLine(800);
+  backgroundDotsVibrationTimer.elapsedTime = backgroundDotsVibrationTimer.limit;
+
 
   //oscP5
   oscP5 = new OscP5(this,9020);
@@ -559,7 +562,8 @@ void backgroundDots() {
   strokeWeight(sz);
   for(int i=0; i<x_n; i++) {
     for(int j=0; j<y_n; j++) {
-      point(x_offset + i * distance, y_offset + j * distance);
+      point(x_offset + i * distance + random(-4, 4) * (1-backgroundDotsVibrationTimer.liner())
+            , y_offset + j * distance + random(-4, 4) * (1-backgroundDotsVibrationTimer.liner()));
     }
   }
 }
@@ -659,7 +663,7 @@ void setupCursor() {
   cursorTimer.startTimer();
 }
 void cursorRects() {
-  color cursorCol = color (254, 240, 53);
+  color cursorCol = color (255, 255, 255);
   rectMode(CENTER);
   imageMode(CENTER);
   image(cursor, mouseX, mouseY);

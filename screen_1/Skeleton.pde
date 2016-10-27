@@ -209,6 +209,7 @@ class Skeleton {
       OscMessage osc = new OscMessage(head);
       osc.add(1);
       oscP5.send(osc, myRemoteLocation);
+      backgroundDotsVibrationTimer.startTimer();
       return true;
     }
     return false;

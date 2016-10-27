@@ -1,4 +1,4 @@
-#N canvas 966 169 419 379 10;
+#N canvas 467 481 418 310 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 259 56 1129 649 gemwin-main 0;
@@ -7,7 +7,7 @@
 #X obj 72 301 sel 0 1;
 #X obj 18 520 udpsend;
 #X msg 18 493 connect localhost 9999;
-#X obj 18 543 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 18 543 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 108 436 r net;
 #X obj 108 461 spigot;
@@ -68,7 +68,7 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 6900 1;
+-1 -1 0 1;
 #X obj 22 245 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -97,7 +97,7 @@
 #X connect 11 0 4 4;
 #X connect 12 0 4 0;
 #X restore 21 187 pd mask;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -267,10 +267,10 @@
 #X obj 695 454 table vol_1 200;
 #X obj 697 479 table vol_2 200;
 #X obj 701 503 table vol_3 200;
-#X msg 224 360 885 500 0 0;
+#X msg 224 360 855 500 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
+-1 -1 1;
 #X text 615 198 2 screen mode;
 #X text 614 212 Red / Green mode;
 #X text 615 182 off;
@@ -317,8 +317,12 @@
 #X msg 355 339 \$1 \$2;
 #X msg 224 318 set \$1 \$2 \$3 \$4;
 #X obj 208 121 del 100;
+#X obj 631 494 loadbang;
+#X obj 631 516 del 3000;
+#X msg 631 541 gem_main;
+#X obj 631 563 print;
 #X msg 224 416 reset \, dimen \$1 \$2 \, FSAA 8 \, offset \$3 \$4 \,
-color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
+color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 \, 1;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
@@ -340,7 +344,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X connect 16 0 11 0;
 #X connect 17 0 2 0;
 #X connect 17 0 55 0;
-#X connect 18 0 115 0;
+#X connect 18 0 119 0;
 #X connect 18 1 112 0;
 #X connect 18 2 112 0;
 #X connect 22 0 21 0;
@@ -428,11 +432,13 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X connect 112 0 9 0;
 #X connect 113 0 68 0;
 #X connect 114 0 106 0;
-#X connect 115 0 0 0;
+#X connect 115 0 116 0;
+#X connect 116 0 117 0;
+#X connect 117 0 118 0;
+#X connect 119 0 0 0;
 #X coords 0 -1 1 1 110 70 1 100 100;
 #X restore 17 175 pd gemwin-main;
 #X obj 17 249 k_time;
-#X obj 136 237 help;
 #N canvas 648 160 669 657 boids 0;
 #X obj 109 116 tgl 30 0 empty empty empty 17 7 0 10 -233017 -1 -262144
 0 1;
@@ -594,117 +600,6 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X connect 69 0 68 0;
 #X coords 0 -1 1 1 80 50 1 100 100;
 #X restore 135 158 pd boids;
-#N canvas 510 93 1000 603 dot 0;
-#X obj 161 423 i \$0;
-#X obj 134 399 t a b;
-#X msg 174 451 color \$1red \$1red \$1red \$1alpha;
-#X msg 161 482 position \$1grid_x \$1grid_y \$1grid_z;
-#X obj 134 376 alpha 1;
-#X obj 295 175 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 270 391 tabwrite \$0grid_z;
-#X obj 295 255 f;
-#X obj 323 253 + 1;
-#X obj 295 282 t b f;
-#X obj 540 120 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 540 173 f;
-#X obj 568 171 + 1;
-#X obj 540 96 loadbang;
-#X obj 652 440 unpack f f;
-#X obj 439 301 tabwrite \$0grid_x;
-#X obj 457 388 tabwrite \$0grid_y;
-#X obj 652 473 tabwrite \$0red;
-#X obj 766 474 tabwrite \$0alpha;
-#X obj 657 299 t f f f;
-#X obj 652 388 sel 0;
-#X obj 655 330 + 0;
-#X obj 540 201 t f f f f f f f f;
-#X obj 670 272 % 2;
-#X obj 654 363 % 2;
-#X msg 652 416 1 0.7;
-#X msg 697 416 1 0.4;
-#X obj 344 77 r voll;
-#X obj 344 99 t f f;
-#X floatatom 295 152 5 0 0 0 - - -, f 5;
-#X obj 270 322 randomF 0.1;
-#X obj 344 141 / 400;
-#X obj 295 130 > 80;
-#X obj 134 555 gemvertexbuffer 2000;
-#X obj 540 143 repeat 2000;
-#X obj 597 173 % 2000;
-#X obj 440 244 % 60;
-#X obj 458 341 expr int($f1/60)%30;
-#X obj 670 250 expr int($f1/60)%30;
-#X obj 44 51 table \$0grid_x 2000;
-#X obj 45 76 table \$0grid_y 2000;
-#X obj 45 122 table \$0red 2000;
-#X obj 45 145 table \$0alpha 2000;
-#X obj 352 255 % 2000;
-#X obj 134 515 GEMglPointSize 1;
-#X obj 295 198 metro 30;
-#X obj 295 225 repeat 1000;
-#X text 440 423 comment;
-#X text 443 466 47 28;
-#X obj 439 270 k_range 0 60 -8 8;
-#X obj 457 364 k_range 0 30 -4 4;
-#X obj 135 347 gemhead 1;
-#X obj 45 100 table \$0grid_z 2000;
-#X connect 0 0 3 0;
-#X connect 0 0 2 0;
-#X connect 1 0 44 0;
-#X connect 1 1 0 0;
-#X connect 2 0 33 0;
-#X connect 3 0 33 0;
-#X connect 4 0 1 0;
-#X connect 5 0 45 0;
-#X connect 7 0 8 0;
-#X connect 7 0 9 0;
-#X connect 8 0 43 0;
-#X connect 9 0 30 0;
-#X connect 9 1 6 1;
-#X connect 10 0 34 0;
-#X connect 11 0 12 0;
-#X connect 11 0 22 0;
-#X connect 12 0 35 0;
-#X connect 13 0 10 0;
-#X connect 14 0 17 0;
-#X connect 14 1 18 0;
-#X connect 19 0 21 0;
-#X connect 19 1 17 1;
-#X connect 19 2 18 1;
-#X connect 20 0 25 0;
-#X connect 20 1 26 0;
-#X connect 21 0 24 0;
-#X connect 22 0 36 0;
-#X connect 22 1 37 0;
-#X connect 22 3 15 1;
-#X connect 22 4 16 1;
-#X connect 22 6 19 0;
-#X connect 22 7 38 0;
-#X connect 23 0 21 1;
-#X connect 24 0 20 0;
-#X connect 25 0 14 0;
-#X connect 26 0 14 0;
-#X connect 27 0 28 0;
-#X connect 28 0 31 0;
-#X connect 28 1 32 0;
-#X connect 29 0 5 0;
-#X connect 31 0 30 1;
-#X connect 32 0 29 0;
-#X connect 34 0 11 0;
-#X connect 35 0 11 1;
-#X connect 36 0 49 0;
-#X connect 37 0 50 0;
-#X connect 38 0 23 0;
-#X connect 43 0 7 1;
-#X connect 44 0 33 0;
-#X connect 45 0 46 0;
-#X connect 46 0 7 0;
-#X connect 49 0 15 0;
-#X connect 50 0 16 0;
-#X connect 51 0 4 0;
-#X restore 135 257 pd dot;
 #X obj 306 159 k_cpu;
 #N canvas 116 23 1265 724 GLSL 0;
 #X obj 256 194 glsl_fragment;
@@ -758,7 +653,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 885 500;
+#X msg 325 270 dimen 855 500;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1105,8 +1000,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X obj 18 43 scan 1;
 #X obj 144 44 scan 2;
 #X obj 269 44 scan 3;
-#X msg 17 152 885 500 0 0;
-#N canvas 225 23 1280 747 mouseIn 0;
+#N canvas 103 169 1280 747 mouseIn 0;
 #X obj 504 -29 gemmouse 1 1;
 #X obj 499 208 pack f f;
 #X obj 544 141 expr ($f1*-8)+4;
@@ -1230,7 +1124,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
 #X msg 160 54 1;
-#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 247 95 list;
 #X obj 247 121 s mouseOpen;
@@ -1352,7 +1246,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 #X obj -21 -24 sel 1;
 #X obj 61 -6 t f f;
 #X msg -21 20 open keyboard \$1 \, 1;
-#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X connect 0 0 190 0;
 #X connect 0 1 191 0;
@@ -1617,17 +1511,13 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 1 \, menubar 1 \, create
 ;
 #X obj 220 224 loadbang;
 #X obj 136 215 etude_meta;
-#X obj 136 281 notein;
-#X floatatom 136 303 5 0 0 0 - - -, f 5;
-#X floatatom 155 321 5 0 0 0 - - -, f 5;
-#X floatatom 175 303 5 0 0 0 - - -, f 5;
+#X obj 137 265 vj_cursor;
+#X obj 136 236 vj_griddot;
+#X msg 17 152 855 500 0 0;
 #X connect 0 0 1 0;
-#X connect 7 0 8 0;
-#X connect 7 1 9 0;
-#X connect 7 2 10 0;
-#X connect 11 0 0 0;
-#X connect 13 0 12 0;
-#X connect 14 0 13 0;
-#X connect 16 0 17 0;
-#X connect 16 1 18 0;
-#X connect 16 2 19 0;
+#X connect 5 0 6 0;
+#X connect 5 1 7 0;
+#X connect 5 2 8 0;
+#X connect 10 0 9 0;
+#X connect 11 0 10 0;
+#X connect 15 0 0 0;

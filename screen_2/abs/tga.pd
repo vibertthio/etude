@@ -1,4 +1,4 @@
-#N canvas 200 446 524 568 10;
+#N canvas 593 407 524 568 10;
 #X obj 130 -33 init \$1;
 #X obj 130 -5 t f f;
 #X obj 128 104 pack f f;
@@ -9,7 +9,7 @@
 1;
 #X obj 69 245 change;
 #X msg 239 96 set \$1 \$2;
-#X msg 241 117 -7 4;
+#X msg 241 117 -7.08 4;
 #X obj 127 -57 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 52 103 r mouse;
@@ -26,11 +26,11 @@
 #X obj 69 357 + 0.2;
 #X obj 69 336 * 0.8;
 #X obj 169 -4 expr int($f1/34);
-#X obj 130 20 % 34;
-#X obj 130 41 k_range 0 33 -7 7;
+#X obj 130 41 k_range 0 33 -7.08 7.08;
 #X obj 167 65 k_range 0 19 4 -4;
+#X obj 130 20 % 34;
 #X connect 0 0 1 0;
-#X connect 1 0 25 0;
+#X connect 1 0 27 0;
 #X connect 1 1 24 0;
 #X connect 2 0 8 0;
 #X connect 2 0 12 1;
@@ -54,7 +54,7 @@
 #X connect 20 0 17 0;
 #X connect 22 0 3 0;
 #X connect 23 0 22 0;
-#X connect 24 0 27 0;
-#X connect 25 0 26 0;
-#X connect 26 0 2 0;
-#X connect 27 0 2 1;
+#X connect 24 0 26 0;
+#X connect 25 0 2 0;
+#X connect 26 0 2 1;
+#X connect 27 0 25 0;

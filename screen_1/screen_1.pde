@@ -99,9 +99,9 @@ void setup() {
   // println(fontList);
 
   frameRate(100);
-  //size(1920, 1080);
-  noCursor();
+  // size(1920, 1080);
   size(1080, 720);
+  noCursor();
 
   //color Adjusting
   mainBackgroundColor = etudeBack;

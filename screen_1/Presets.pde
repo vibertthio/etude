@@ -4,8 +4,8 @@ class Presets {
   //-----------------------x----y----w----h-fi---l---s---e----c
   Preset p0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60);
   Preset p1 = new Preset(600, 100, 0, 200, 1, 50, 50, 100, 60);
-  Preset p2 = new Preset(100, 600, 0, 200, 2, 50, 50, 100, 60);
-  Preset p3 = new Preset(600, 600, 0, 200, 4, 50, 50, 100, 60);
+  Preset p2 = new Preset(100, 400, 0, 200, 2, 50, 50, 100, 60);
+  Preset p3 = new Preset(600, 400, 0, 200, 4, 50, 50, 100, 60);
 
   Presets() {
     list = new ArrayList<Preset>();

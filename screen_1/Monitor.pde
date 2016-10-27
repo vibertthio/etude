@@ -160,10 +160,10 @@ class Monitor {
     //setting for preset
     index = pre.fileIndex;
     fileSelector.index = pre.fileIndex;
-    selectFile();
+    // selectFile();
     loopStartFrame = pre.startFrameCount;
     loopEndFrame = pre.endFrameCount;
-    //currentFrame = pre.currentFrame;
+    currentFrame = pre.currentFrame;
   }
 
   void selectFile() {
@@ -172,7 +172,6 @@ class Monitor {
     if (!loadedList[index]) {
       fileSelector.selectFile();
       fCount = fileSelector.fCount;
-      //dataStorage = fileSelector.dataStorage;
     }
     else {
       fCount = fcount[index];
@@ -288,8 +287,14 @@ class Monitor {
       if(changeRatioTimer.liner() >= 1) {
         waitingForFileSelectorStartTime = millis();
         changingRatio = false;
+
+        // regulat
         if ( !loadPreset ) {
           waitingForFileSelector = true;
+        }
+        // preset
+        else {
+          selectFile();
         }
       }
     }
@@ -328,6 +333,7 @@ class Monitor {
       fadeOutControlDotDisplay();
     }
 
+    //OTHER DISPLAY FUNCTION
     //box2D
     if ( dissappear && boxCreated ) {
       box.killBody();
@@ -338,6 +344,7 @@ class Monitor {
       spring.display();
     }
 
+    //scaling info
     if (scaling) {
       hwInfo(xpos, xpos + w_display, ypos, ypos + h_display);
     }

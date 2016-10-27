@@ -660,7 +660,7 @@ int getId() {
 }
 
 void loadPreset() {
-  for( int i = 0, n = presets.preList.size(); i < n; i++) {
+  for( int i = 0, n = presets.list.size(); i < n; i++) {
     if (numberOfMonitors < maxNumberOfMonitors) {
       int id = getId();
       monitors[numberOfMonitors] =

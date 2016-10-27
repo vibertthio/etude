@@ -118,7 +118,7 @@ class Monitor {
     soundReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
   }
-  Monitor(Vpreset pre, int _id) {
+  Monitor(Preset pre, int _id) {
     canvas = createGraphics(w_rendor, h_rendor);
     xpos = pre.x;
     ypos = pre.y;
@@ -158,6 +158,7 @@ class Monitor {
     changeRatioTimer.startTimer();
 
     //setting for preset
+    index = pre.fileIndex;
     fileSelector.index = pre.fileIndex;
     selectFile();
     loopStartFrame = pre.startFrameCount;
@@ -166,7 +167,8 @@ class Monitor {
   }
 
   void selectFile() {
-    index = fileSelector.index;
+    if (!loadPreset)
+      index = fileSelector.index;
     if (!loadedList[index]) {
       fileSelector.selectFile();
       fCount = fileSelector.fCount;
@@ -179,10 +181,14 @@ class Monitor {
     selectingFile = false;   //starttimer to make the animation
     if (!loadPreset) {
       fileSelectorFadeOut = true;
-      dissolveTimer.startTimer();
       loopStartFrame = 0;
       loopEndFrame = fCount;
+      dissolveTimer.startTimer();
     }
+    else {
+      startPlaySkeleton();
+    }
+
   }
   void boxUpdate(float _mX, float _mY) {
     if (startPlayingAndAdjusting) {
@@ -301,7 +307,6 @@ class Monitor {
         displayChangingRatio();
         tint(255,  255 * (1-dissolveTimer.liner()));
       }
-
       image(canvas, xpos, ypos, w_display, h_display);
       if (!fadeOut) { noTint(); }
 
@@ -487,7 +492,7 @@ class Monitor {
     skeletonFadeIn = true;
     dissolveTimer.startTimer();
     playing = true;
-    metro.startPlaying();
+    metro.startPlayingAt(currentFrame);
     skeleton.set(dataStorage[index][currentFrame]);
   }
 

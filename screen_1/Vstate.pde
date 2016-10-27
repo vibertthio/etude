@@ -105,5 +105,4 @@ class Vstate {
   int lowDuration() {
     return ( millis() - low_time );
   }
-
 }

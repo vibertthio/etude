@@ -23,6 +23,7 @@ class Monitor {
   int loopStartFrame, loopEndFrame;
   //int[][] dataStorage;
 
+  boolean loadPreset;
   boolean changingRatio;
   boolean waitingForFileSelector;
   boolean selectingFile;
@@ -77,7 +78,7 @@ class Monitor {
   Spring spring;
 
 
-  //constructor
+  //constructor ( regular and preset )
   Monitor(float _xpos, float _ypos, int _w_drag, int _h_drag, int _id) {
     canvas = createGraphics(w_rendor, h_rendor);
     xpos = _xpos;
@@ -93,6 +94,7 @@ class Monitor {
     metro = new Metro(false ,timeSlot);
 
     //status variable
+    loadPreset = false;
     changingRatio = true;
     selectingFile = false;
     waitingForFileSelector = false;  //use dissolveTimer
@@ -114,32 +116,78 @@ class Monitor {
     soundReactionTimer = new TimeLine(soundReactionTime);
     soundReactionTimer.setLinerRate(soundReactionTimerRate);
     soundReactionTimer.turnOffTimer();
+    changeRatioTimer.startTimer();
+  }
+  Monitor(Preset pre, int _id) {
+    canvas = createGraphics(w_rendor, h_rendor);
+    xpos = pre.x;
+    ypos = pre.y;
+    h_drag = pre.h;
+    w_drag = pre.w;
+    h_display = pre.h;
+    w_display = int(h_drag * (float(w_rendor) / float(h_rendor)));
+    id = _id;
 
+    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id); //fileList is global
+    skeleton = new Skeleton(canvas, id);
+    metro = new Metro(false ,pre.limit);
+
+    //status variable
+    loadPreset = true;
+    changingRatio = true;
+    selectingFile = false;
+    waitingForFileSelector = false;  //use dissolveTimer
+    fileSelectorFadeOut = false;     //use dissolveTimer
+    skeletonFadeIn = false;          //use dissolveTimer
+    startPlayingAndAdjusting = false;
+    fadeOut = false;
+    dissappear = false;
+
+    //TimeLine
+    changeRatioTimer = new TimeLine(changeRatioTime);
+    changeRatioTimer.setLinerRate(changeRatioTimeRate);
+    dissolveTimer = new TimeLine(dissolveTime);
+    dissolveTimer.setLinerRate(dissolveTimeRate);
+    transientTimer = new TimeLine(transientTime);
+    transientTimer.setLinerRate(transientTimerRate);
+    fadeOutTimer = new TimeLine(dissolveTime);
+    fadeOutTimer.setLinerRate(dissolveTimeRate);
+    soundReactionTimer = new TimeLine(soundReactionTime);
+    soundReactionTimer.setLinerRate(soundReactionTimerRate);
+    soundReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
 
-
-    //box = new Box(width/2,height/2, 100, 100);
+    //setting for preset
+    index = pre.fileIndex;
+    fileSelector.index = pre.fileIndex;
+    // selectFile();
+    loopStartFrame = pre.startFrameCount;
+    loopEndFrame = pre.endFrameCount;
+    currentFrame = pre.currentFrame;
   }
 
   void selectFile() {
-    if( selectingFile ) {
+    if (!loadPreset)
       index = fileSelector.index;
-      if (!loadedList[index]) {
-        fileSelector.selectFile();
-        fCount = fileSelector.fCount;
-        //dataStorage = fileSelector.dataStorage;
-      }
-      else {
-        fCount = fcount[index];
-      }
+    if (!loadedList[index]) {
+      fileSelector.selectFile();
+      fCount = fileSelector.fCount;
+    }
+    else {
+      fCount = fcount[index];
+    }
 
-      selectingFile = false;   //starttimer to make the animation
+    selectingFile = false;   //starttimer to make the animation
+    if (!loadPreset) {
       fileSelectorFadeOut = true;
-      dissolveTimer.startTimer();
-
       loopStartFrame = 0;
       loopEndFrame = fCount;
+      dissolveTimer.startTimer();
     }
+    else {
+      startPlaySkeleton();
+    }
+
   }
   void boxUpdate(float _mX, float _mY) {
     if (startPlayingAndAdjusting) {
@@ -173,11 +221,7 @@ class Monitor {
         else if (fileSelectorFadeOut) {
           if (dissolveTimer.liner() >= 1) {
             fileSelectorFadeOut = false;
-            skeletonFadeIn = true;
-            dissolveTimer.startTimer();
-            playing = true;
-            metro.startPlaying();
-            skeleton.set(dataStorage[index][currentFrame]);
+            startPlaySkeleton();
           }
         }
         else {
@@ -224,8 +268,6 @@ class Monitor {
       canvas.endDraw();
     }
 
-
-
     if ( fadeOut ) {
       if ( fadeOutTimer.liner() >= 1) {
         fadeOut = false;
@@ -245,7 +287,15 @@ class Monitor {
       if(changeRatioTimer.liner() >= 1) {
         waitingForFileSelectorStartTime = millis();
         changingRatio = false;
-        waitingForFileSelector = true;
+
+        // regulat
+        if ( !loadPreset ) {
+          waitingForFileSelector = true;
+        }
+        // preset
+        else {
+          selectFile();
+        }
       }
     }
 
@@ -262,7 +312,6 @@ class Monitor {
         displayChangingRatio();
         tint(255,  255 * (1-dissolveTimer.liner()));
       }
-
       image(canvas, xpos, ypos, w_display, h_display);
       if (!fadeOut) { noTint(); }
 
@@ -284,6 +333,7 @@ class Monitor {
       fadeOutControlDotDisplay();
     }
 
+    //OTHER DISPLAY FUNCTION
     //box2D
     if ( dissappear && boxCreated ) {
       box.killBody();
@@ -294,6 +344,7 @@ class Monitor {
       spring.display();
     }
 
+    //scaling info
     if (scaling) {
       hwInfo(xpos, xpos + w_display, ypos, ypos + h_display);
     }
@@ -444,7 +495,13 @@ class Monitor {
       return false;
     }
   }
-
+  void startPlaySkeleton() {
+    skeletonFadeIn = true;
+    dissolveTimer.startTimer();
+    playing = true;
+    metro.startPlayingAt(currentFrame);
+    skeleton.set(dataStorage[index][currentFrame]);
+  }
 
 
 
@@ -864,11 +921,20 @@ class Monitor {
           selected = !selected;
         }
         else if (mouseSense && adjustingSpeed) {
-          if ( x < w_display/2 ) {
+          if ( x < w_display / 5 ) {
+            metro.adjustSpeed(0.5);
+          }
+          else if ( x < w_display * 2 / 5){
             metro.speedDown();
           }
-          else {
+          else if ( x < w_display * 3 / 5){
+            metro.setLimit(timeSlot);
+          }
+          else if ( x < w_display * 4 / 5){
             metro.speedUp();
+          }
+          else {
+            metro.adjustSpeed(2);
           }
         }
         else if (mouseSense && changeColor) {
@@ -937,13 +1003,15 @@ class Monitor {
 
   }
   void speedReaction () {
+    int n = 5;
     if (adjustingSpeed && mouseSense) {
       canvas.noStroke();
       canvas.rectMode(CORNER);
-      canvas.fill(loopStartSignColor,80);
-      canvas.rect(0, 0, w_rendor/2, h_rendor);
-      canvas.fill(loopEndSignColor,80);
-      canvas.rect(w_rendor/2, 0, w_rendor/2, h_rendor);
+      for (int i = 0; i < n; i++) {
+        color c = (loopStartSignColor * i / n) + (loopEndSignColor * (n-i) / n);
+        canvas.fill(c,80);
+        canvas.rect(w_rendor * i / n, 0, w_rendor/n, h_rendor);
+      }
       speedInfo();
     }
   }

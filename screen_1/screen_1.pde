@@ -61,11 +61,12 @@ color textColor = color (247, 202, 24);
 
 
 //UI design
+Presets presets;
 float xmouse, ymouse;
-
 Metro metro;
 Monitor[] monitors;
 Monitor mChannel;
+
 
 //state info
 boolean newMonitor = true;
@@ -98,9 +99,9 @@ void setup() {
   // println(fontList);
 
   frameRate(100);
-  //size(1920, 1080);
-  noCursor();
+  // size(1920, 1080);
   size(1080, 720);
+  noCursor();
 
   //color Adjusting
   mainBackgroundColor = etudeBack;
@@ -111,6 +112,7 @@ void setup() {
     l = false;
   }
 
+  presets = new Presets();
 
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
@@ -199,6 +201,7 @@ void draw() {
 }
 
 
+
 //key and mouse events
 void keyPressed() {
   if( key == 'n') {
@@ -239,6 +242,10 @@ void keyPressed() {
   if ( key == 'p') {
     msg = "Trigger";
     triggerMonitors();
+  }
+
+  if ( key == 'l') {
+    loadPreset();
   }
 
   textTimer.startTimer();
@@ -637,4 +644,28 @@ int bodyForWhichMonitor( Body body ) {
     }
   }
   return -1;
+}
+
+//Preset
+int getId() {
+  int id;
+  if (idList.size() != 0) {
+    id = idList.get(0);
+    idList.remove(0);
+  }
+  else {
+    id = numberOfMonitors;
+  }
+  return id;
+}
+
+void loadPreset() {
+  for( int i = 0, n = presets.list.size(); i < n; i++) {
+    if (numberOfMonitors < maxNumberOfMonitors) {
+      int id = getId();
+      monitors[numberOfMonitors] =
+        new Monitor( presets.get(i), id);
+      numberOfMonitors++;
+    }
+  }
 }

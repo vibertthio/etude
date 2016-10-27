@@ -8,7 +8,7 @@ class Line {
   // But we also have to make a body for box2d to know about it
   Body body;
   float d;
-  int diameter = 20;
+  int diameter = 10;
 
   //color
   color boundColor = color (255, 255, 255);
@@ -82,10 +82,10 @@ class Line {
   }
 
   int contains(float mX, float mY) {
-    if ( dist(mX, mY, x1, y1) < diameter / 2 ) {
+    if ( dist(mX, mY, x1, y1) < 15 ) {
       return 1;
     }
-    else if ( dist(mX, mY, x2, y2) < diameter / 2 ) {
+    else if ( dist(mX, mY, x2, y2) < 15 ) {
       return 2;
     }
     return 0;

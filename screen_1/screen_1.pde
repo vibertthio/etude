@@ -37,6 +37,13 @@ String[] fileList = { "std_UpHand1",
                       "std_LiftLeg",
                       "U8221233"
                     };
+String[] dateList = { "2016.1.23",
+                      "2015.12.20",
+                      "2015.2.5",
+                      "2016.3.1",
+                      "2016.5.10",
+                      "2016.7.23"
+                    };
 boolean[] loadedList;
 
 int[][][] dataStorage;
@@ -108,8 +115,8 @@ void setup() {
   // println(fontList);
 
   frameRate(100);
-  // size(1920, 1080);
-  size(1080, 720);
+  size(1920, 1080);
+  // size(1080, 720);
   noCursor();
 
   //color Adjusting

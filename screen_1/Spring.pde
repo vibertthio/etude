@@ -37,8 +37,8 @@ class Spring {
       // And just draw a line
       fill(255, 50);
       noStroke();
-      ellipse(v1.x,v1.y, 8, 8);
-      ellipse(v2.x,v2.y, 8, 8);
+      ellipse(v1.x,v1.y, 20, 20);
+      ellipse(v2.x,v2.y, 20, 20);
       dotsLine(v1.x,v1.y,v2.x,v2.y);
     }
   }

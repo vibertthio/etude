@@ -194,7 +194,7 @@ class Monitor {
   }
   void boxUpdate(float _mX, float _mY) {
     if (startPlayingAndAdjusting) {
-      if( id%3!=2 && physicsWork )
+      if( id%3 != 2 && id < 8 && physicsWork )
         box2d.step();
       Vec2 pos = box2d.getBodyPixelCoord(box.body);
       // Get its angle of rotation
@@ -266,6 +266,7 @@ class Monitor {
           }
           soundReaction();
           speedReaction();
+          dateInfo();
         }
       }
       canvas.endDraw();
@@ -1029,6 +1030,16 @@ class Monitor {
 
     textAlign(CENTER, CENTER);
     //rotate(-PI/2);
+    text(t, 0, 0);
+    popMatrix();
+  }
+  void dateInfo() {
+    textSize(20);
+    fill(255);
+    pushMatrix();
+    translate( xpos , ypos + h_display + 18);
+    String t = "date : " + dateList[index];
+    textAlign(LEFT, CENTER);
     text(t, 0, 0);
     popMatrix();
   }

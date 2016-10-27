@@ -665,5 +665,6 @@ void loadPresetToMain() {
       monitors[numberOfMonitors] =
         new Monitor( presets.get(i), id);
       numberOfMonitors++;
+    }
   }
 }

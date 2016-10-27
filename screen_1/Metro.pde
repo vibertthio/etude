@@ -71,19 +71,28 @@ class Metro {
     return false;
   }
 
-  void doubleSpeed() {
+  void adjustSpeed(float ratio) {
     pause();
     int fc = frameCount();
-    limit /= 2;
+    limit /= ratio;
     localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }
 
+  void setLimit(int l) {
+    pause();
+    int fc = frameCount();
+    limit = l;
+    localtime = currentTime() - fc * limit;
+    startPlayingAt(fc);
+  }
+
+  float step = 0.5;
   void speedUp() {
     pause();
     int fc = frameCount();
     float fr = 1000.0/limit;
-    limit = int(1000/ ( fr + 5 ));
+    limit = int(1000/ ( fr + step ));
     localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }
@@ -91,8 +100,10 @@ class Metro {
     pause();
     int fc = frameCount();
     float fr = 1000.0/limit;
-    limit = int(1000/ ( fr -5 ));
-    localtime = currentTime() - fc * limit;
+    if (fr > step) {
+      limit = int(1000/ ( fr - step ));
+      localtime = currentTime() - fc * limit;
+    }
     startPlayingAt(fc);
   }
 

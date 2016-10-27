@@ -66,6 +66,8 @@ float xmouse, ymouse;
 Metro metro;
 Monitor[] monitors;
 Monitor mChannel;
+Presets presets;
+
 
 //state info
 boolean newMonitor = true;
@@ -111,6 +113,7 @@ void setup() {
     l = false;
   }
 
+  presets = new Presets();
 
   /**********box2D***********/
   box2d = new Box2DProcessing(this);
@@ -239,6 +242,10 @@ void keyPressed() {
   if ( key == 'p') {
     msg = "Trigger";
     triggerMonitors();
+  }
+
+  if ( key == 'l') {
+    loadPreset();
   }
 
   textTimer.startTimer();
@@ -637,4 +644,26 @@ int bodyForWhichMonitor( Body body ) {
     }
   }
   return -1;
+}
+
+//Preset
+int getId() {
+  int id;
+  if (idList.size() != 0) {
+    id = idList.get(0);
+    idList.remove(0);
+  }
+  else {
+    id = numberOfMonitors;
+  }
+  return id;
+}
+void loadPreset() {
+  for( int i = 0, n = presets.list.size(); i < n; i++) {
+    if (numberOfMonitors < maxNumberOfMonitors) {
+      int id = getId();
+      monitors[numberOfMonitors] =
+        new Monitor( presets.get(i), id);
+      numberOfMonitors++;
+  }
 }

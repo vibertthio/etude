@@ -944,6 +944,16 @@ class Monitor {
         else if (mouseSense && changeColor) {
           changeColor();
         }
+        else {
+          if(playing) {
+            metro.pause();
+            playing = false;
+          }
+          else {
+            playing = true;
+            metro.startPlaying();
+          }
+        }
       }
 
       // playing/pause

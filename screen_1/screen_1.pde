@@ -43,15 +43,19 @@ int[][][] dataStorage;
 int[] fcount;
 
 color etudeBack = color(32, 32, 32);
-color[] etudeCircle = { color(34, 49, 63),
-                        color(94, 127, 226),
-                        color(32, 226, 142),
-                        color(253, 57, 89),
-                        color(108, 65, 156),
-                        color(32, 189, 256),
-                        color(237, 121, 109),
-                        color(32, 32, 32),
+color[] etudeCircle = { color(163, 64, 82),  //red
+                        //color(53, 163, 116),
+                        color(1, 152, 117),  //green(adj)
+                        color(83, 103, 157), //blue
+                        color(34, 49, 63),
                       };
+color[] etudeLine = { color(217, 156, 69),
+                      color(32, 189, 256),
+                      color(108, 65, 156),
+                      color(255, 255, 255),
+                    };
+int backGroundColorIndex = 3;
+int backGroundAlpha = 100;
 
 color mainBackgroundColor = color(102, 51, 153);
 color localBackGroundColor = color (34, 49, 63);
@@ -76,6 +80,11 @@ boolean removeLine = false;
 boolean adjustingSpeed = false;
 boolean changeColor = false;
 boolean selectingMonitor = false;
+boolean firstColor = false;
+boolean secondColor = false;
+boolean thirdColor = false;
+boolean physicsWork = true;
+
 
 //text
 //String fontType = "SansSerif";
@@ -204,51 +213,69 @@ void draw() {
 
 //key and mouse events
 void keyPressed() {
-  if( key == 'n') {
-    newMonitor = ! newMonitor;
-  }
+  boolean bang = false;
 
-  if (key == 't') {
+  if ( key == 'n') {
+    newMonitor = ! newMonitor;
+    bang = true;
+  }
+  if ( key == 't') {
     print("check");
     OscMessage osc = new OscMessage("/test");
     oscP5.send(osc, myRemoteLocation);
   }
-
   if ( key == 'z') {
     drawLine = true;
+    bang = true;
   }
-
   if ( key == 'r') {
     removeLine = true;
+    bang = true;
   }
-
   if ( key == 's') {
     adjustingSpeed = true;
+    bang = true;
   }
-
   if ( key == 'c') {
     changeColor = true;
+    bang = true;
   }
-
   if ( key == ' ') {
     if (removeLine) {
       clearLines();
     }
   }
-
   if ( key == 'm') {
     selectingMonitor = true;
+    bang = true;
   }
   if ( key == 'p') {
     msg = "Trigger";
     triggerMonitors();
   }
-
   if ( key == 'l') {
     loadPreset();
   }
-
-  textTimer.startTimer();
+  if ( key == 'q') {
+    firstColor = true;
+    backGroundColorIndex = 0;
+    localBackGroundColor = etudeCircle[0];
+  }
+  if ( key == 'w') {
+    secondColor = true;
+    backGroundColorIndex = 1;
+    localBackGroundColor = etudeCircle[1];
+  }
+  if ( key == 'e') {
+    thirdColor = true;
+    backGroundColorIndex = 2;
+    localBackGroundColor = etudeCircle[2];
+  }
+  if ( key == 'b') {
+    physicsWork = !physicsWork;
+  }
+  if (bang)
+    textTimer.startTimer();
 }
 
 void keyReleased() {
@@ -268,6 +295,22 @@ void keyReleased() {
   if ( key == 'm') {
     selectingMonitor = false;
   }
+  if ( key == 'q') {
+    firstColor = false;
+    backGroundColorIndex = 3;
+    localBackGroundColor = color (34, 49, 63);
+  }
+  if ( key == 'w') {
+    secondColor = false;
+    backGroundColorIndex = 3;
+    localBackGroundColor = color (34, 49, 63);
+  }
+  if ( key == 'e') {
+    thirdColor = false;
+    backGroundColorIndex = 3;
+    localBackGroundColor = color (34, 49, 63);
+  }
+
 
   textTimer.turnOffTimer();
 }
@@ -294,6 +337,7 @@ void mousePressed() {
     }
     //new monitor
     else {
+      mChannel.changeColor(backGroundColorIndex);
       if (numberOfMonitors < maxNumberOfMonitors) {
         dragging = true;
         xmouse = mouseX;

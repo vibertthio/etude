@@ -24,8 +24,9 @@ class FileSelector {
   int id = -1;
 
   //color
-  color colorOfArrows = color (38, 166, 91);
-
+  //color colorOfArrows = color (38, 166, 91);
+  color colorOfArrows = etudeLine[3];
+  color fileSelectorBackgroundColorIndex = 3;
 
   float w_rendor = 512;
   float h_rendor = 424;
@@ -50,7 +51,7 @@ class FileSelector {
 
 
   //constructor
-  FileSelector(PGraphics _canvas, float w, float h, int _id) {
+  FileSelector(PGraphics _canvas, float w, float h, int _id, int c) {
     canvas = _canvas;
     //fileList = _fileList;
     numberOfFiles = fileList.length;
@@ -61,12 +62,13 @@ class FileSelector {
 
     w_rendor = w;
     h_rendor = h;
+    fileSelectorBackgroundColorIndex = c;
   }
 
 
 
   void display() {
-    canvas.background(localBackGroundColor);
+    canvas.background(etudeCircle[fileSelectorBackgroundColorIndex]);
 
     //arrows
     canvas.stroke(colorOfArrows, 255);

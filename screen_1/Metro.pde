@@ -87,23 +87,23 @@ class Metro {
     startPlayingAt(fc);
   }
 
-  float step = 0.5;
+  float step = 1;
   void speedUp() {
     pause();
     int fc = frameCount();
     float fr = 1000.0/limit;
-    limit = int(1000/ ( fr + step ));
-    localtime = currentTime() - fc * limit;
+    if (limit > step) {
+      limit -= step;
+      localtime = currentTime() - fc * limit;
+    }
     startPlayingAt(fc);
   }
   void speedDown() {
     pause();
     int fc = frameCount();
     float fr = 1000.0/limit;
-    if (fr > step) {
-      limit = int(1000/ ( fr - step ));
-      localtime = currentTime() - fc * limit;
-    }
+    limit += step;
+    localtime = currentTime() - fc * limit;
     startPlayingAt(fc);
   }
 

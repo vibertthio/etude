@@ -88,8 +88,9 @@ class Monitor {
     h_display = _h_drag;
     w_display = int(_h_drag * (float(w_rendor) / float(h_rendor)));
     id = _id;
+    initBackGroundColor();
 
-    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id); //fileList is global
+    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id, colorIndex); //fileList is global
     skeleton = new Skeleton(canvas, id);
     metro = new Metro(false ,timeSlot);
 
@@ -117,6 +118,7 @@ class Monitor {
     soundReactionTimer.setLinerRate(soundReactionTimerRate);
     soundReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
+
   }
   Monitor(Preset pre, int _id) {
     canvas = createGraphics(w_rendor, h_rendor);
@@ -128,7 +130,8 @@ class Monitor {
     w_display = int(h_drag * (float(w_rendor) / float(h_rendor)));
     id = _id;
 
-    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id); //fileList is global
+    changeColor(pre.colorIndex);
+    fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id, colorIndex); //fileList is global
     skeleton = new Skeleton(canvas, id);
     metro = new Metro(false ,pre.limit);
 
@@ -191,7 +194,7 @@ class Monitor {
   }
   void boxUpdate(float _mX, float _mY) {
     if (startPlayingAndAdjusting) {
-      if(id%3!=2)
+      if( id%3!=2 && physicsWork )
         box2d.step();
       Vec2 pos = box2d.getBodyPixelCoord(box.body);
       // Get its angle of rotation
@@ -1002,6 +1005,7 @@ class Monitor {
     }
 
   }
+
   void speedReaction () {
     int n = 5;
     if (adjustingSpeed && mouseSense) {
@@ -1028,6 +1032,13 @@ class Monitor {
     text(t, 0, 0);
     popMatrix();
   }
+  void initBackGroundColor() {
+    int i = 3;
+    if (firstColor) { i = 0; }
+    else if (secondColor) { i = 1; }
+    else if (thirdColor) { i = 2; }
+    changeColor(i);
+  }
   void changeColor() {
     if (colorIndex == etudeCircle.length-1 ) {
       colorIndex = 0;
@@ -1037,7 +1048,10 @@ class Monitor {
     }
     backGroundColor = etudeCircle[colorIndex];
   }
-
+  void changeColor (int i) {
+    colorIndex = i;
+    backGroundColor = etudeCircle[colorIndex];
+  }
   void triggerPlay() {
     currentFrame = loopStartFrame;
     metro.startPlayingAt(loopStartFrame);

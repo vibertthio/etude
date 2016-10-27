@@ -23,7 +23,7 @@ class Monitor {
   int loopStartFrame, loopEndFrame;
   //int[][] dataStorage;
 
-  boolena loadPreset;
+  boolean loadPreset;
   boolean changingRatio;
   boolean waitingForFileSelector;
   boolean selectingFile;
@@ -118,7 +118,7 @@ class Monitor {
     soundReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
   }
-  Monitor(Preset pre, int _id) {
+  Monitor(Vpreset pre, int _id) {
     canvas = createGraphics(w_rendor, h_rendor);
     xpos = pre.x;
     ypos = pre.y;

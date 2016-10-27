@@ -1,4 +1,4 @@
-class Preset {
+class Vpreset {
   float x;
   float y;
   int w;
@@ -10,7 +10,7 @@ class Preset {
   int endFrameCount;
   int currentFrame;
 
-  Preset(float _x, float _y, int _w, int _h,
+  Vpreset(float _x, float _y, int _w, int _h,
          int fi, int l, int s, int e, int c) {
     x = _x;
     y = _y;
@@ -22,7 +22,7 @@ class Preset {
     endFrameCount = e;
     currentFrame = c;
   }
-  Preset(float _x, float _y, int _w, int _h,
+  Vpreset(float _x, float _y, int _w, int _h,
          String fn, int l, int s, int e, int c) {
     x = _x;
     y = _y;

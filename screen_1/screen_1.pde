@@ -61,6 +61,7 @@ color textColor = color (247, 202, 24);
 
 
 //UI design
+Presets presets;
 float xmouse, ymouse;
 Metro metro;
 Monitor[] monitors;
@@ -658,8 +659,8 @@ int getId() {
   return id;
 }
 
-void loadPresetToMain() {
-  for( int i = 0, n = presets.list.size(); i < n; i++) {
+void loadPreset() {
+  for( int i = 0, n = presets.preList.size(); i < n; i++) {
     if (numberOfMonitors < maxNumberOfMonitors) {
       int id = getId();
       monitors[numberOfMonitors] =

@@ -106,4 +106,3 @@ class Vstate {
     return ( millis() - low_time );
   }
 }
-}

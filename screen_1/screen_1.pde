@@ -62,11 +62,9 @@ color textColor = color (247, 202, 24);
 
 //UI design
 float xmouse, ymouse;
-
 Metro metro;
 Monitor[] monitors;
 Monitor mChannel;
-Presets presets;
 
 
 //state info
@@ -200,6 +198,7 @@ void draw() {
   drawInfo();
 
 }
+
 
 
 //key and mouse events
@@ -658,7 +657,8 @@ int getId() {
   }
   return id;
 }
-void loadPreset() {
+
+void loadPresetToMain() {
   for( int i = 0, n = presets.list.size(); i < n; i++) {
     if (numberOfMonitors < maxNumberOfMonitors) {
       int id = getId();

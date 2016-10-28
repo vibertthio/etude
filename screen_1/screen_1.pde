@@ -13,7 +13,7 @@ import org.jbox2d.dynamics.contacts.*;
 //oscP5
 OscP5 oscP5;
 NetAddress myRemoteLocation;
-
+eCircleClient client;
 
 
 //background
@@ -116,8 +116,8 @@ void setup() {
   // println(fontList);
 
   frameRate(100);
-  size(1920, 1080);
-  // size(1080, 720);
+  //size(1920, 1080);
+  size(885, 500);
   noCursor();
 
   //color Adjusting
@@ -157,8 +157,9 @@ void setup() {
 
 
   //oscP5
-  oscP5 = new OscP5(this,9020);
+  oscP5 = new OscP5(this,9999);
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  client = new eCircleClient();
 
   //back image
   backImg = loadImage("layout_2.png");
@@ -170,6 +171,7 @@ void setup() {
 
 void draw() {
   background(mainBackgroundColor);
+  client.display();
   backgroundDots();
   noTint();
 
@@ -722,5 +724,16 @@ void loadPreset() {
         new Monitor( presets.get(i), id);
       numberOfMonitors++;
     }
+  }
+}
+
+//ocs events
+void oscEvent(OscMessage theOscMessage) {
+  // print("### received an osc message.");
+  // print(" addrpattern: "+theOscMessage.addrPattern());
+  // println(" typetag: "+theOscMessage.typetag());
+  String pat = theOscMessage.addrPattern();
+  if (pat.contains("circle")) {
+    client.messageEvent(theOscMessage);
   }
 }

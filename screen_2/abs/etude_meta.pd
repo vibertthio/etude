@@ -2490,7 +2490,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 87 1;
+-1 -1 49 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;

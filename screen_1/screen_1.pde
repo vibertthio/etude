@@ -171,6 +171,7 @@ void setup() {
 
 void draw() {
   background(mainBackgroundColor);
+  client.display();
   backgroundDots();
   noTint();
 
@@ -728,24 +729,11 @@ void loadPreset() {
 
 //ocs events
 void oscEvent(OscMessage theOscMessage) {
-  print("### received an osc message.");
-  print(" addrpattern: "+theOscMessage.addrPattern());
-  println(" typetag: "+theOscMessage.typetag());
+  // print("### received an osc message.");
+  // print(" addrpattern: "+theOscMessage.addrPattern());
+  // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
   if (pat.contains("circle")) {
     client.messageEvent(theOscMessage);
-    // float x = theOscMessage.get(0).floatValue();
-    // float y = theOscMessage.get(1).floatValue();
-    // float sz = theOscMessage.get(2).floatValue();
-    // float alpha = theOscMessage.get(3).floatValue();
-    // int colId = theOscMessage.get(4).intValue();
-    // int trg = theOscMessage.get(5).intValue();
-    //
-    // println("x : " + str(x));
-    // println("y : " + str(y));
-    // println("sz : " + str(sz));
-    // println("alpha : " + str(alpha));
-    // println("colId : " + str(colId));
-    // println("trg : " + str(trg));
   }
 }

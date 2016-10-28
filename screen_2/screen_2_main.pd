@@ -1,4 +1,4 @@
-#N canvas 467 481 418 310 10;
+#N canvas 457 501 418 310 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 259 56 1129 649 gemwin-main 0;
@@ -7,7 +7,7 @@
 #X obj 72 301 sel 0 1;
 #X obj 18 520 udpsend;
 #X msg 18 493 connect localhost 9999;
-#X obj 18 543 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 18 543 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 108 436 r net;
 #X obj 108 461 spigot;
@@ -68,7 +68,7 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
+-1 -1 6900 1;
 #X obj 22 245 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -97,7 +97,7 @@
 #X connect 11 0 4 4;
 #X connect 12 0 4 0;
 #X restore 21 187 pd mask;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -267,7 +267,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 697 479 table vol_2 200;
 #X obj 701 503 table vol_3 200;
-#X msg 224 360 855 500 0 0;
+#X msg 224 360 885 500 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 1;
@@ -479,7 +479,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 #X obj 443 84 pack f f;
 #X obj 445 207 / 127;
 #X msg 447 112 \$2 \$1;
-#X obj 145 116 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 145 116 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 104 49 sel 1;
 #X obj 443 137 route 41 42;
@@ -653,7 +653,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 855 500;
+#X msg 325 270 dimen 885 500;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1119,7 +1119,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 #X obj 224 147 loadbang;
 #X msg 224 169 0;
 #X obj 134 -20 route key_20 key_26 key_8;
-#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 134 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
@@ -1246,7 +1246,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 #X obj -21 -24 sel 1;
 #X obj 61 -6 t f f;
 #X msg -21 20 open keyboard \$1 \, 1;
-#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X connect 0 0 190 0;
 #X connect 0 1 191 0;
@@ -1513,7 +1513,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, border 0 \, menubar 1 \, create
 #X obj 136 215 etude_meta;
 #X obj 137 265 vj_cursor;
 #X obj 136 236 vj_griddot;
-#X msg 17 152 855 500 0 0;
+#X msg 17 152 885 500 0 0;
 #X connect 0 0 1 0;
 #X connect 5 0 6 0;
 #X connect 5 1 7 0;

@@ -91,4 +91,5 @@ class TimeLine {
   }
 
   void setLoop() { loop = true; }
+  void set1() { elapsedTime = limit; }
 }

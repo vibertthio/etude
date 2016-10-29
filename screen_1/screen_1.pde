@@ -14,6 +14,7 @@ import org.jbox2d.dynamics.contacts.*;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 eCircleClient client;
+eBackgroundClient bClient;
 
 
 //background
@@ -160,6 +161,7 @@ void setup() {
   oscP5 = new OscP5(this,9999);
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
   client = new eCircleClient();
+  bClient = new eBackgroundClient();
 
   //back image
   backImg = loadImage("layout_2.png");
@@ -172,7 +174,8 @@ void setup() {
 void draw() {
   background(mainBackgroundColor);
   client.display();
-  backgroundDots();
+  //backgroundDots();
+  bClient.display();
   noTint();
 
   //println("Global Time Count : " + float(millis())/1000 );
@@ -556,8 +559,8 @@ void backgroundDots() {
   int x_offset = 5;
   int y_offset = 5;
   int distance = 42;
-  int x_n = 47;
-  int y_n = 28;
+  int x_n = 32;
+  int y_n = 20;
   int trans = 200;
   color dotsCol = color(255, 255, 255);
   stroke(dotsCol, trans);
@@ -733,7 +736,14 @@ void oscEvent(OscMessage theOscMessage) {
   // print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
-  if (pat.contains("circle")) {
+  if ( pat.contains("circle") ) {
     client.messageEvent(theOscMessage);
   }
+  else if ( pat.contains("rundot") ) {
+    bClient.messageEvent(theOscMessage);
+  }
+}
+
+float lengthPd2Processing ( float l ) {
+  return ( l * height / 8 );
 }

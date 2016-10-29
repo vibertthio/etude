@@ -21,11 +21,11 @@ class eCircle {
 
   void display() {
     if ( trg == 1 ) {
-      if ( (x > (2 * width - sz)) &&
-           (x < (3 * width)) ) {
+      if ( (x > (0 - sz)) &&
+           (x < (width + sz)) ) {
         noStroke();
         fill(colorOfCircles[colId], alpha);
-        ellipse(x - 2*width, y, sz*2, sz*2);
+        ellipse(x, y, sz*2, sz*2);
       }
     }
   }
@@ -51,10 +51,6 @@ class eCircleClient {
     }
   }
 
-  boolean signalFilter() {
-    return true;
-  }
-
   void display() {
     for(int i=0; i<numberOfeCircles; i++) {
       eCircles[i].display();
@@ -70,15 +66,15 @@ class eCircleClient {
     int colId = msg.get(5).intValue();
     int trg = msg.get(6).intValue();
 
-    x = map(x, -7.08, 35.4, 0, 3 * width);
-    y = map(y, -4, 4, 0, height);
+    x = map(x, -21.24, 21.24, 0, 3 * width);
+    y = map(y, -4, 4, height, 0);
     sz = map(sz, 0, 4, 0, height/2);
     alpha = map(alpha, 0, 1, 127, 255);
-    print("id[" + circleId + "]  ");
-    print("x : " + str(x));
-    print(" y : " + str(y));
-    print(" sz : " + str(sz));
-    print(" alpha : " + str(alpha) + "\n");
+    // print("id[" + circleId + "]  ");
+    // print("x : " + str(x));
+    // print(" y : " + str(y));
+    // print(" sz : " + str(sz));
+    // print(" alpha : " + str(alpha) + "\n");
 
     eCircles[circleId].update(x, y, sz, alpha, colId, trg);
   }

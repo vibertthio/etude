@@ -1,11 +1,11 @@
-#N canvas 674 363 770 624 10;
+#N canvas -1 136 770 624 10;
 #X obj 335 5 r addCircle;
 #X obj 335 36 route \$1;
 #X floatatom 288 178 5 0 0 0 - - -, f 5;
 #X obj 37 485 circle 0.1;
 #X obj 335 141 unpack f f f;
 #X obj 112 71 r tgl-circle;
-#X obj 112 114 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 112 114 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 358 85 1;
 #X obj 408 267 f;
@@ -39,7 +39,7 @@
 #X floatatom 167 167 5 0 0 0 - - -, f 5;
 #X obj 167 29 inlet;
 #X obj 136 515 outlet;
-#X obj 136 469 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 136 469 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 30 367 t f f;
 #X obj 136 489 change;
@@ -187,15 +187,22 @@
 #X obj 108 406 + 0.5;
 #X text 533 369 x y size alpha colorid tgl;
 #X msg 273 540 send /circle \$1 \$2 \$3 \$4 \$5 \$6 \$7;
-#X obj 229 436 pack f f f f f f f;
+#X obj 237 446 pack f f f f f f f;
 #X msg 273 504 set send /circle \, adddollar 1 \, adddollar 2 \, adddollar
 3 \, adddollar 4 \, adddollar 5 \, adddollar 6 \, adddollar 7;
-#X obj 243 369 f \$1;
+#X obj 244 333 f \$1;
 #X obj 273 477 loadbang;
-#X floatatom 243 320 5 0 0 0 - - -, f 5;
+#X floatatom 244 284 5 0 0 0 - - -, f 5;
 #X obj 37 452 spigot;
 #X obj 37 137 spigot;
-#X obj 243 339 t b f b;
+#X obj 244 303 t b f b;
+#X obj 243 383 int;
+#X obj 271 362 k_float 100;
+#X obj 283 397 k_float 100;
+#X obj 303 340 k_float 100;
+#X obj 409 409 int;
+#X obj 337 422 int;
+#X obj 437 354 k_float 100;
 #X connect 0 0 1 0;
 #X connect 1 0 16 0;
 #X connect 2 0 30 1;
@@ -230,32 +237,39 @@
 #X connect 26 0 45 0;
 #X connect 27 0 37 0;
 #X connect 28 0 25 0;
-#X connect 28 1 40 4;
+#X connect 28 1 54 0;
 #X connect 29 0 31 1;
 #X connect 30 0 19 1;
 #X connect 30 0 44 0;
 #X connect 30 1 45 1;
 #X connect 31 0 19 2;
-#X connect 31 0 40 2;
+#X connect 31 0 50 0;
 #X connect 32 0 3 1;
-#X connect 32 1 40 3;
+#X connect 32 1 51 0;
 #X connect 32 2 13 0;
 #X connect 32 3 30 2;
 #X connect 33 0 26 0;
-#X connect 33 1 40 5;
+#X connect 33 1 53 0;
 #X connect 34 0 22 0;
 #X connect 34 1 8 0;
 #X connect 35 0 36 0;
-#X connect 35 2 40 6;
+#X connect 35 2 52 0;
 #X connect 36 0 44 0;
 #X connect 37 0 33 1;
 #X connect 39 0 21 0;
 #X connect 40 0 39 0;
 #X connect 41 0 39 0;
-#X connect 42 0 40 0;
+#X connect 42 0 48 0;
 #X connect 43 0 41 0;
 #X connect 44 0 47 0;
 #X connect 45 0 3 0;
 #X connect 46 0 18 0;
 #X connect 47 0 42 0;
-#X connect 47 1 40 1;
+#X connect 47 1 49 0;
+#X connect 48 0 40 0;
+#X connect 49 0 40 1;
+#X connect 50 0 40 2;
+#X connect 51 0 40 3;
+#X connect 52 0 40 6;
+#X connect 53 0 40 5;
+#X connect 54 0 40 4;

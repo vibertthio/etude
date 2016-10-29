@@ -116,7 +116,7 @@ void setup() {
   // String[] fontList = PFont.list();
   // println(fontList);
 
-  frameRate(100);
+  frameRate(40);
   //size(1920, 1080);
   size(885, 500);
   noCursor();

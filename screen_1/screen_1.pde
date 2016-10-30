@@ -738,9 +738,12 @@ void oscEvent(OscMessage theOscMessage) {
   String pat = theOscMessage.addrPattern();
   if ( pat.contains("circle") ) {
     client.messageEvent(theOscMessage);
+    //println(" addrpattern: "+theOscMessage.addrPattern());
+    println(" typetag: "+theOscMessage.typetag());
   }
   else if ( pat.contains("rundot") ) {
     bClient.messageEvent(theOscMessage);
+    println(" typetag: "+theOscMessage.typetag());
   }
 }
 

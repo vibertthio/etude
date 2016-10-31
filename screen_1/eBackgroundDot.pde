@@ -88,7 +88,7 @@ class eBackgroundClient {
   boolean maxTrig = false;
   boolean minTrig = false;
   int startTime = 0;
-  int timeOffset = 600;
+  int timeOffset = 0;//600;
   int timeGap = 1500;
 
   eBackgroundClient() {
@@ -126,6 +126,12 @@ class eBackgroundClient {
         eBackgroundDots[i][j].display();
       }
     }
+    strokeWeight(1);
+    noFill();
+    stroke(255, 0, 0);
+    ellipse(xCenter, yCenter, maxSize()*2, maxSize()*2);
+    stroke(0, 0, 255);
+    ellipse(xCenter, yCenter, minSize()*2, minSize()*2);
     // println("maxSize:" + maxSize());
     // println("minSize:" + minSize());
 

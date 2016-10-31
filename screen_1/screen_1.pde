@@ -736,14 +736,16 @@ void oscEvent(OscMessage theOscMessage) {
   // print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
+  println("------------------------");
+  println("pattern : " + pat);
   if ( pat.contains("circle") ) {
+    println("typetag: "+theOscMessage.typetag());
     client.messageEvent(theOscMessage);
     //println(" addrpattern: "+theOscMessage.addrPattern());
-    println(" typetag: "+theOscMessage.typetag());
   }
   else if ( pat.contains("rundot") ) {
+    println("typetag: "+theOscMessage.typetag());
     bClient.messageEvent(theOscMessage);
-    println(" typetag: "+theOscMessage.typetag());
   }
 }
 

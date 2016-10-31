@@ -119,6 +119,7 @@ class eBackgroundClient {
       minTrig = true;
       minTimer.startTimer();
     }
+
     for(int i = 0; i < xNo; i++) {
       for (int j = 0; j < yNo; j++) {
         eBackgroundDots[i][j].update(xCenter, yCenter, maxSize(), minSize());
@@ -148,7 +149,8 @@ class eBackgroundClient {
 
     print("background dots:  ");
     print("x : " + str(x));
-    print("  y : " + str(y) + "\n");
+    print("  y : " + str(y) );
+    print("  time: " + millis() + "\n");
 
     //maxTimer.startTimer();
     minTrig = false;

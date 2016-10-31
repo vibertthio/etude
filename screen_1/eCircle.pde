@@ -42,7 +42,7 @@ class eCircle {
 
 class eCircleClient {
   eCircle[] eCircles;
-  int numberOfeCircles = 40;
+  int numberOfeCircles = 1;
 
   eCircleClient() {
     eCircles = new eCircle[numberOfeCircles];
@@ -75,9 +75,10 @@ class eCircleClient {
     print(" y : " + str(y));
     print(" sz : " + str(sz));
     print(" alpha : " + str(alpha) + "\n");
-    print(" col : " + str(colId));
-    print(" trg : " + str(trg) + "\n");
-
+    print("col : " + str(colId));
+    print(" trg : " + str(trg));
+    print(" time: " + millis() + "\n");
+    // println("------------------------");
 
     eCircles[circleId].update(x, y, sz, alpha, colId, trg);
   }

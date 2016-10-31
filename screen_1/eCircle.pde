@@ -42,7 +42,7 @@ class eCircle {
 
 class eCircleClient {
   eCircle[] eCircles;
-  int numberOfeCircles = 1;
+  int numberOfeCircles = 40;
 
   eCircleClient() {
     eCircles = new eCircle[numberOfeCircles];
@@ -59,7 +59,14 @@ class eCircleClient {
 
   void messageEvent(OscMessage msg) {
     int circleId = msg.get(0).intValue();
-    float x = msg.get(1).floatValue();
+    // float x = msg.get(1).floatValue();
+    float x;
+    try {
+      x = msg.get(1).floatValue();
+    } catch(NumberFormatException e) {
+      int x_buf = msg.get(1).intValue();
+      x = float(x_buf);
+    }
     float y = msg.get(2).floatValue();
     float sz = msg.get(3).floatValue();
     float alpha = msg.get(4).floatValue();

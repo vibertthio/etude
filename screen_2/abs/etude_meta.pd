@@ -1,4 +1,4 @@
-#N canvas 618 315 709 418 10;
+#N canvas 652 203 709 418 10;
 #X obj 491 205 gemhead;
 #X obj 491 228 s gemhead;
 #X obj 436 326 table rr 100;
@@ -2489,7 +2489,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 5 1;
+-1 -1 87 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;
@@ -2795,8 +2795,8 @@ const 0 \;;
 #X connect 42 0 19 0;
 #X connect 43 0 18 0;
 #X restore 183 222 pd gui-radio;
-#X obj 317 255 clone 40 drawline;
 #X obj 317 230 clone 40 c-circle;
+#X obj 317 255 clone 30 drawline;
 #X connect 0 0 1 0;
 #X connect 6 0 7 0;
 #X connect 8 0 9 0;

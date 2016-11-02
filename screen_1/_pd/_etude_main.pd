@@ -15,7 +15,7 @@
 #X connect 4 0 5 0;
 #X connect 5 0 2 1;
 #X restore 18 125 pd testsound;
-#N canvas 366 248 723 420 sound 0;
+#N canvas 216 369 723 420 sound 1;
 #X obj 17 61 table kick;
 #X obj 17 85 table snare_1;
 #X obj 17 107 table snare_2;
@@ -37,8 +37,8 @@
 #X obj 434 43 st-compressor /ccc;
 #X obj 128 61 loadbang;
 #X msg 128 86 \; pd dsp 1;
-#X obj 120 145 table frame;
-#X obj 180 167 table edge;
+#X obj 17 38 table frame;
+#X obj 17 16 table edge;
 #X msg 119 218 read -resize sound/clap.wav clap \, read -resize sound/hihat.wav
 hihat \, read -resize sound/kick.wav kick \, read -resize sound/snare_1.wav
 snare_1 \, read -resize sound/snare_2.wav snare_2 \, read -resize sound/frame.wav

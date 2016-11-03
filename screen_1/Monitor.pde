@@ -1077,6 +1077,9 @@ class Monitor {
     currentFrame = loopStartFrame;
     metro.startPlayingAt(loopStartFrame);
   }
+  void pause() {
+    metro.pause();
+  }
   void selectedDisplay() {
     canvas.fill(255,255,255, 150);
     canvas.rectMode(CORNER);

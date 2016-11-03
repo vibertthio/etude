@@ -118,7 +118,8 @@ void setup() {
 
   frameRate(40);
   //size(1920, 1080);
-  size(885, 500);
+  //size(885, 500);
+  size(1422, 800);
   noCursor();
 
   //color Adjusting
@@ -268,6 +269,12 @@ void keyPressed() {
     msg = "Trigger";
     triggerMonitors();
   }
+
+  if ( key == 'o') {
+    msg = "Pause";
+    pauseMonitor();
+  }
+
   if ( key == 'l') {
     loadPreset();
   }
@@ -693,6 +700,14 @@ void triggerMonitors() {
   for (int i=0; i<numberOfMonitors; i++) {
     if (monitors[i].selected) {
       monitors[i].triggerPlay();
+    }
+  }
+}
+
+void pauseMonitor() {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].selected) {
+      monitors[i].pause();
     }
   }
 }

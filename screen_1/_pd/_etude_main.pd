@@ -1,4 +1,4 @@
-#N canvas 15 341 802 318 10;
+#N canvas 296 606 802 318 10;
 #X obj 18 43 udpreceive 9020;
 #X obj 18 68 unpackOSC;
 #N canvas 306 200 450 300 testsound 0;
@@ -15,36 +15,38 @@
 #X connect 4 0 5 0;
 #X connect 5 0 2 1;
 #X restore 18 125 pd testsound;
-#N canvas 216 369 723 420 sound 1;
+#N canvas 626 522 846 511 sound 1;
 #X obj 17 61 table kick;
 #X obj 17 85 table snare_1;
 #X obj 17 107 table snare_2;
 #X obj 16 129 table clap;
 #X obj 16 152 table hihat;
-#X obj 14 297 soundfiler;
+#X obj 11 468 soundfiler;
 #X obj 14 187 loadbang;
-#X obj 434 15 catch~ all;
-#X obj 434 362 dac~;
-#X obj 434 263 st-pureverb /mixer;
-#X obj 434 337 *~;
-#X obj 607 338 *~;
-#X obj 625 184 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 525 37 catch~ all;
+#X obj 540 397 dac~;
+#X obj 537 284 st-pureverb /mixer;
+#X obj 540 372 *~;
+#X obj 713 373 *~;
+#X obj 716 206 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X msg 625 204 \$1 2000;
-#X obj 625 226 line~;
-#X obj 625 154 loadbang;
-#X obj 458 150 k_vol~;
-#X obj 434 43 st-compressor /ccc;
+#X msg 716 226 \$1 2000;
+#X obj 716 248 line~;
+#X obj 716 176 loadbang;
+#X obj 549 172 k_vol~;
+#X obj 525 65 st-compressor /ccc;
 #X obj 128 61 loadbang;
 #X msg 128 86 \; pd dsp 1;
 #X obj 17 38 table frame;
 #X obj 17 16 table edge;
-#X msg 119 218 read -resize sound/clap.wav clap \, read -resize sound/hihat.wav
+#X msg 150 349 read -resize sound/clap.wav clap \, read -resize sound/hihat.wav
 hihat \, read -resize sound/kick.wav kick \, read -resize sound/snare_1.wav
 snare_1 \, read -resize sound/snare_2.wav snare_2 \, read -resize sound/frame.wav
 frame \, read -resize sound/edge.wav edge \,;
 #X obj 13 205 t b b;
-#X msg 11 229 \; frame normalize \; edge normalize;
+#X msg 11 229 \; frame normalize \; edge normalize \; kick normalize
+\; snare_1 normalize \; snare_2 normalize \; clap normalize \; hihat
+normalize;
 #X connect 6 0 23 0;
 #X connect 7 0 17 0;
 #X connect 7 0 17 1;

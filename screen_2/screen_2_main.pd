@@ -1,12 +1,12 @@
 #N canvas 875 446 418 310 10;
 #X declare -path abs;
 #X declare -path abs_other;
-#N canvas 201 23 1200 698 gemwin-main 0;
+#N canvas 201 23 1200 698 gemwin-main 1;
 #X obj 225 451 gemwin;
 #X msg 171 407 destroy;
 #X obj 72 301 sel 0 1;
 #X obj 95 559 udpsend;
-#X obj 95 582 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 95 582 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 118 426 r net;
 #X obj 118 451 spigot;
@@ -66,7 +66,7 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 6900 1;
+-1 -1 0 1;
 #X obj 22 245 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -95,7 +95,7 @@
 #X connect 11 0 4 4;
 #X connect 12 0 4 0;
 #X restore 21 187 pd mask;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -318,7 +318,7 @@
 #X msg 697 405 gem_main;
 #X obj 697 427 print;
 #X obj 337 599 udpsend;
-#X obj 337 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 337 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 299 552 disconnect;
 #X obj 299 524 sel 0 1;
@@ -327,7 +327,7 @@
 #X msg 224 416 reset \, dimen \$1 \$2 \, FSAA 8 \, offset \$3 \$4 \,
 color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 1 \, create \, 1;
-#X msg 95 532 connect 10.0.1.3 10001;
+#X msg 95 532 connect localhost 10001;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 2 1 65 0;

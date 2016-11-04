@@ -83,20 +83,8 @@ class eBackgroundClient {
   float maxsize = lengthPd2Processing(12);
   float minsize = lengthPd2Processing(13);
 
-  TimeLine maxTimer;
-  TimeLine minTimer;
-  boolean maxTrig = false;
-  boolean minTrig = false;
-  int startTime = 0;
-  int timeOffset = 0;//600;
-  int timeGap = 1500;
-
   eBackgroundClient() {
     eBackgroundDots = new eBackgroundDot[xNo][yNo];
-    maxTimer = new TimeLine(5000);
-    minTimer = new TimeLine(4000);
-    maxTimer.setLinerRate(1);
-    minTimer.setLinerRate(1);
 
     for(int i = 0; i < xNo; i++) {
       for (int j = 0; j < yNo; j++) {
@@ -108,18 +96,6 @@ class eBackgroundClient {
   }
 
   void display() {
-    if ((millis() - startTime) > timeOffset && !maxTrig) {
-      maxTimer.startTimer();
-      println("maxTimer trigger!");
-      maxTrig = true;
-    }
-    if (maxTimer.state && (millis() - startTime) > (timeGap + timeOffset) && !minTrig ) {
-      println("minTimer trigger!");
-      println("time:" + millis());
-      minTrig = true;
-      minTimer.startTimer();
-    }
-
     for(int i = 0; i < xNo; i++) {
       for (int j = 0; j < yNo; j++) {
         eBackgroundDots[i][j].update(xCenter, yCenter, maxSize(), minSize());
@@ -132,38 +108,135 @@ class eBackgroundClient {
     // ellipse(xCenter, yCenter, maxSize()*2, maxSize()*2);
     // stroke(0, 0, 255);
     // ellipse(xCenter, yCenter, minSize()*2, minSize()*2);
-    
+
     // println("maxSize:" + maxSize());
     // println("minSize:" + minSize());
 
   }
 
   float maxSize() {
-    return maxsize * maxTimer.liner();
+    return maxsize;
   }
   float minSize() {
-    return minsize * minTimer.liner();
+    return minsize;
   }
 
   void messageEvent(OscMessage msg) {
     float x = msg.get(0).floatValue();
     float y = msg.get(1).floatValue();
+    float max = msg.get(2).floatValue();
+    float min = msg.get(3).floatValue();
+
 
     x = map(x, -21.24, 21.24, 0, 3 * width);
     y = map(y, -4, 4, height, 0);
     xCenter = x;
     yCenter = y;
+    maxsize = lengthPd2Processing(max);
+    minsize = lengthPd2Processing(min);
 
     print("background dots:  ");
     print("x : " + str(x));
     print("  y : " + str(y) );
+    print("  min : " + str(min) );
+    print("  max : " + str(max) );
     print("  time: " + millis() + "\n");
 
-    //maxTimer.startTimer();
-    minTrig = false;
-    maxTrig = false;
-    startTime = millis();
-    println("start time:" + millis());
   }
 
 }
+
+
+// class eBackgroundClient {
+//   eBackgroundDot[][] eBackgroundDots;
+//   int xNo = 34;
+//   int yNo = 20;
+//   float xCenter = 0;
+//   float yCenter = 0;
+//   float maxsize = lengthPd2Processing(12);
+//   float minsize = lengthPd2Processing(13);
+//
+//   TimeLine maxTimer;
+//   TimeLine minTimer;
+//   boolean maxTrig = false;
+//   boolean minTrig = false;
+//   int startTime = 0;
+//   int timeOffset = 0;//600;
+//   int timeGap = 1500;
+//
+//   eBackgroundClient() {
+//     eBackgroundDots = new eBackgroundDot[xNo][yNo];
+//     maxTimer = new TimeLine(5000);
+//     minTimer = new TimeLine(4000);
+//     maxTimer.setLinerRate(1);
+//     minTimer.setLinerRate(1);
+//
+//     for(int i = 0; i < xNo; i++) {
+//       for (int j = 0; j < yNo; j++) {
+//         float x = map(i, 0, xNo-1, 0, width);
+//         float y = map(j, 0, yNo-1, 0, height);
+//         eBackgroundDots[i][j] = new eBackgroundDot(x, y);
+//       }
+//     }
+//   }
+//
+//   void display() {
+//     if ((millis() - startTime) > timeOffset && !maxTrig) {
+//       maxTimer.startTimer();
+//       println("maxTimer trigger!");
+//       maxTrig = true;
+//     }
+//     if (maxTimer.state && (millis() - startTime) > (timeGap + timeOffset) && !minTrig ) {
+//       println("minTimer trigger!");
+//       println("time:" + millis());
+//       minTrig = true;
+//       minTimer.startTimer();
+//     }
+//
+//     for(int i = 0; i < xNo; i++) {
+//       for (int j = 0; j < yNo; j++) {
+//         eBackgroundDots[i][j].update(xCenter, yCenter, maxSize(), minSize());
+//         eBackgroundDots[i][j].display();
+//       }
+//     }
+//     // strokeWeight(1);
+//     // noFill();
+//     // stroke(255, 0, 0);
+//     // ellipse(xCenter, yCenter, maxSize()*2, maxSize()*2);
+//     // stroke(0, 0, 255);
+//     // ellipse(xCenter, yCenter, minSize()*2, minSize()*2);
+//
+//     // println("maxSize:" + maxSize());
+//     // println("minSize:" + minSize());
+//
+//   }
+//
+//   float maxSize() {
+//     return maxsize * maxTimer.liner();
+//   }
+//   float minSize() {
+//     return minsize * minTimer.liner();
+//   }
+//
+//   void messageEvent(OscMessage msg) {
+//     float x = msg.get(0).floatValue();
+//     float y = msg.get(1).floatValue();
+//
+//     x = map(x, -21.24, 21.24, 0, 3 * width);
+//     y = map(y, -4, 4, height, 0);
+//     xCenter = x;
+//     yCenter = y;
+//
+//     print("background dots:  ");
+//     print("x : " + str(x));
+//     print("  y : " + str(y) );
+//     print("  time: " + millis() + "\n");
+//
+//     //maxTimer.startTimer();
+//     minTrig = false;
+//     maxTrig = false;
+//     startTime = millis();
+//     println("start time:" + millis());
+//   }
+//
+// }

@@ -1,4 +1,4 @@
-#N canvas 296 606 802 318 10;
+#N canvas 8 620 802 318 10;
 #X obj 18 43 udpreceive 9020;
 #X obj 18 68 unpackOSC;
 #N canvas 306 200 450 300 testsound 0;
@@ -15,7 +15,7 @@
 #X connect 4 0 5 0;
 #X connect 5 0 2 1;
 #X restore 18 125 pd testsound;
-#N canvas 626 522 846 511 sound 1;
+#N canvas 626 522 846 511 sound 0;
 #X obj 17 61 table kick;
 #X obj 17 85 table snare_1;
 #X obj 17 107 table snare_2;
@@ -81,8 +81,10 @@ normalize;
 #X obj 599 151 synth 9;
 #X obj 659 151 synth 10;
 #X obj 723 151 synth 11;
+#X obj 179 31 print;
 #X connect 0 0 1 0;
 #X connect 1 0 5 0;
+#X connect 1 0 17 0;
 #X connect 5 0 2 0;
 #X connect 5 1 4 0;
 #X connect 5 2 6 0;

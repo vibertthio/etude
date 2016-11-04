@@ -121,7 +121,8 @@ void setup() {
   frameRate(40);
   //size(1920, 1080);
   //size(885, 500);
-  size(1422, 800);
+  //size(1422, 800);
+  size(708, 400);
   noCursor();
 
   //color Adjusting
@@ -161,13 +162,13 @@ void setup() {
 
 
   //oscP5
-  oscP5 = new OscP5(this,9999);
+  oscP5 = new OscP5(this,10001);
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
   client = new eCircleClient();
   bClient = new eBackgroundClient();
 
   //back image
-  backImg = loadImage("layout_2.png");
+  // backImg = loadImage("layout_2.png");
   cursor = loadImage("paint.png");
   setupCursor();
 
@@ -769,7 +770,7 @@ void loadPreset(int index) {
 //ocs events
 void oscEvent(OscMessage theOscMessage) {
   // print("### received an osc message.");
-  // print(" addrpattern: "+theOscMessage.addrPattern());
+  print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
   println("------------------------");

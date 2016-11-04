@@ -31,13 +31,24 @@ int maxFrameNumber = 20000;
 IntList idList;
 
 //file list
-String[] fileList = { "std_UpHand1",
-                      "std_UpHand2",
-                      "std_sideHands",
-                      "std_grab",
-                      "std_LiftLeg",
-                      "U8221233",
-                      "poseA/60(tripple)",
+String[] fileList = { "std_UpHand1",       //0
+                      "std_UpHand2",       //1
+                      "std_sideHands",     //2
+                      "std_grab",          //3
+                      "std_LiftLeg",       //4
+                      "U8221233",          //5
+                      "A/60",              //6
+                      "A/100",             //7
+                      "A/random",          //8
+                      "B/60",              //9
+                      "B/random",          //10
+                      "C/120_l",           //11
+                      "C/240_r",           //12
+                      "C/random(1)",       //13
+                      "D/random",          //14
+                      "ABCD/tempo",        //15
+                      "ABCD/random(1)",    //16
+                      "ABCD/random(2)",    //17
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
@@ -45,6 +56,15 @@ String[] dateList = { "2016.1.23",
                       "2016.3.1",
                       "2016.5.10",
                       "2016.7.23",
+                      "2016.7.23",
+                      "2015.12.20",
+                      "2015.2.5",
+                      "2016.3.1",
+                      "2016.5.10",
+                      "2016.7.23",
+                      "2016.5.10",
+                      "2016.7.23",
+                      "2016.5.10",
                       "2016.7.23",
                     };
 boolean[] loadedList;
@@ -119,10 +139,10 @@ void setup() {
   // println(fontList);
 
   frameRate(40);
-  //size(1920, 1080);
-  //size(885, 500);
+  // size(1920, 1080);
+  size(885, 500);
   //size(1422, 800);
-  size(708, 400);
+  // size(708, 400);
   noCursor();
 
   //color Adjusting
@@ -163,7 +183,10 @@ void setup() {
 
   //oscP5
   oscP5 = new OscP5(this,10001);
-  myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  //test
+  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  myRemoteLocation = new NetAddress("10.0.1.3",12000);
+
   client = new eCircleClient();
   bClient = new eBackgroundClient();
 
@@ -278,12 +301,6 @@ void keyPressed() {
     pauseMonitor();
   }
 
-  if ( key == 'l') {
-    loadPreset(0);
-  }
-  if ( key == 'k') {
-    loadPreset(1);
-  }
   if ( key == 'q') {
     firstColor = true;
     backGroundColorIndex = 0;
@@ -302,6 +319,21 @@ void keyPressed() {
   if ( key == 'b') {
     physicsWork = !physicsWork;
   }
+
+  //PRESETS
+  if ( key == 'h') {
+    loadPreset(0);
+  }
+  if ( key == 'j') {
+    loadPreset(1);
+  }
+  if ( key == 'k') {
+    loadPreset(2);
+  }
+  if ( key == 'l') {
+    loadPreset(3);
+  }
+
   if (bang)
     textTimer.startTimer();
 }
@@ -741,36 +773,28 @@ int getId() {
 }
 
 void loadPreset(int index) {
-  if (index == 0) {
-    ArrayList<Preset> list = presets.list0;
-    for( int i = 0, n = list.size(); i < n; i++) {
-      if (numberOfMonitors < maxNumberOfMonitors) {
-        int id = getId();
-        monitors[numberOfMonitors] =
-          new Monitor( list.get(i), id);
-        numberOfMonitors++;
-      }
-    }
-  }
-  else if (index == 1) {
-    ArrayList<Preset> list = presets.list1;
-    for( int i = 0, n = list.size(); i < n; i++) {
-      if (numberOfMonitors < maxNumberOfMonitors) {
-        int id = getId();
-        monitors[numberOfMonitors] =
-          new Monitor( list.get(i), id);
-        numberOfMonitors++;
-      }
-    }
-  }
+  ArrayList<Preset> list;
+  if (index == 0) { list = presets.list0; }
+  else if (index == 1) { list = presets.list1; }
+  else if (index == 2) { list = presets.list2; }
+  else if (index == 3) { list = presets.list3; }
+  else { list = presets.list0; }
 
+  for( int i = 0, n = list.size(); i < n; i++) {
+    if (numberOfMonitors < maxNumberOfMonitors) {
+      int id = getId();
+      monitors[numberOfMonitors] =
+        new Monitor( list.get(i), id);
+      numberOfMonitors++;
+    }
+  }
 
 }
 
 //ocs events
 void oscEvent(OscMessage theOscMessage) {
   // print("### received an osc message.");
-  print(" addrpattern: "+theOscMessage.addrPattern());
+  // print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
   println("------------------------");

@@ -734,15 +734,26 @@ int getId() {
   return id;
 }
 
-void loadPreset() {
-  for( int i = 0, n = presets.list.size(); i < n; i++) {
-    if (numberOfMonitors < maxNumberOfMonitors) {
-      int id = getId();
-      monitors[numberOfMonitors] =
-        new Monitor( presets.get(i), id);
-      numberOfMonitors++;
-    }
+void loadPreset(int index) {
+  switch(index) {
+    case 1 :
+      ArrayList<Preset> list = presets.list1;
+      for( int i = 0, n = list.size(); i < n; i++) {
+        if (numberOfMonitors < maxNumberOfMonitors) {
+          int id = getId();
+          monitors[numberOfMonitors] =
+            new Monitor( list.get(i), id);
+          numberOfMonitors++;
+        }
+      }
+      break;
+    case 2 :
+
+      break;
+    default:
+      break;
   }
+
 }
 
 //ocs events

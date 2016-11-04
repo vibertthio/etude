@@ -36,14 +36,16 @@ String[] fileList = { "std_UpHand1",
                       "std_sideHands",
                       "std_grab",
                       "std_LiftLeg",
-                      "U8221233"
+                      "U8221233",
+                      "poseA/60(tripple)",
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
                       "2015.2.5",
                       "2016.3.1",
                       "2016.5.10",
-                      "2016.7.23"
+                      "2016.7.23",
+                      "2016.7.23",
                     };
 boolean[] loadedList;
 
@@ -276,7 +278,10 @@ void keyPressed() {
   }
 
   if ( key == 'l') {
-    loadPreset();
+    loadPreset(0);
+  }
+  if ( key == 'k') {
+    loadPreset(1);
   }
   if ( key == 'q') {
     firstColor = true;
@@ -735,24 +740,29 @@ int getId() {
 }
 
 void loadPreset(int index) {
-  switch(index) {
-    case 1 :
-      ArrayList<Preset> list = presets.list1;
-      for( int i = 0, n = list.size(); i < n; i++) {
-        if (numberOfMonitors < maxNumberOfMonitors) {
-          int id = getId();
-          monitors[numberOfMonitors] =
-            new Monitor( list.get(i), id);
-          numberOfMonitors++;
-        }
+  if (index == 0) {
+    ArrayList<Preset> list = presets.list0;
+    for( int i = 0, n = list.size(); i < n; i++) {
+      if (numberOfMonitors < maxNumberOfMonitors) {
+        int id = getId();
+        monitors[numberOfMonitors] =
+          new Monitor( list.get(i), id);
+        numberOfMonitors++;
       }
-      break;
-    case 2 :
-
-      break;
-    default:
-      break;
+    }
   }
+  else if (index == 1) {
+    ArrayList<Preset> list = presets.list1;
+    for( int i = 0, n = list.size(); i < n; i++) {
+      if (numberOfMonitors < maxNumberOfMonitors) {
+        int id = getId();
+        monitors[numberOfMonitors] =
+          new Monitor( list.get(i), id);
+        numberOfMonitors++;
+      }
+    }
+  }
+
 
 }
 

@@ -1,22 +1,58 @@
 class Presets {
   //constant
-  ArrayList<Preset> list;
-  Preset p0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
-  Preset p1 = new Preset(600, 100, 0, 200, 1, 50, 50, 100, 60, 1);
-  Preset p2 = new Preset(100, 400, 0, 200, 2, 50, 50, 100, 60, 2);
-  Preset p3 = new Preset(600, 400, 0, 200, 4, 50, 50, 100, 60, 3);
+  // int
+  ArrayList<Preset> list1;
+  ArrayList<Preset> list2;
+  ArrayList<Preset> list3;
+  ArrayList<Preset> list4;
+
+  Preset p0_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
+  Preset p0_1 = new Preset(600, 100, 0, 200, 1, 50, 50, 100, 60, 1);
+  Preset p0_2 = new Preset(100, 400, 0, 200, 2, 50, 50, 100, 60, 2);
+  Preset p0_3 = new Preset(600, 400, 0, 200, 3, 50, 50, 100, 60, 3);
+  
+  Preset p1_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
+  Preset p1_1 = new Preset(600, 100, 0, 200, 2, 50, 50, 100, 60, 1);
+  Preset p1_2 = new Preset(100, 400, 0, 200, 3, 50, 50, 100, 60, 2);
+  Preset p1_3 = new Preset(600, 400, 0, 200, 4, 50, 50, 100, 60, 3);
+
+  // Preset p2_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
+  // Preset p2_1 = new Preset(600, 100, 0, 200, 2, 50, 50, 100, 60, 1);
+  // Preset p2_2 = new Preset(100, 400, 0, 200, 3, 50, 50, 100, 60, 2);
+  // Preset p2_3 = new Preset(600, 400, 0, 200, 4, 50, 50, 100, 60, 3);
+  //
+  // Preset p3_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
+  // Preset p3_1 = new Preset(600, 100, 0, 200, 2, 50, 50, 100, 60, 1);
+  // Preset p3_2 = new Preset(100, 400, 0, 200, 3, 50, 50, 100, 60, 2);
+  // Preset p3_3 = new Preset(600, 400, 0, 200, 4, 50, 50, 100, 60, 3);
+
 
   Presets() {
     list = new ArrayList<Preset>();
-    list.add(p0);
-    list.add(p1);
-    list.add(p2);
-    list.add(p3);
+    list1.add(p0_0);
+    list1.add(p0_1);
+    list1.add(p0_2);
+    list1.add(p0_3);
+
+    list2.add(p1_0);
+    list2.add(p1_1);
+    list2.add(p1_2);
+    list2.add(p1_3);
+    list2.add(p2_0);
+
+    list3.add(p2_1);
+    list3.add(p2_2);
+    list3.add(p2_3);
+    list3.add(p3_0);
+
+    list4.add(p3_1);
+    list4.add(p3_2);
+    list4.add(p3_3);
   }
 
-  Preset get(int i) {
-    return list.get(i);
-  }
+  // Preset get(int i) {
+  //   return list.get(i);
+  // }
 }
 
 class Preset {

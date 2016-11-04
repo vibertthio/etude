@@ -118,7 +118,8 @@ void setup() {
 
   frameRate(40);
   //size(1920, 1080);
-  size(885, 500);
+  //size(885, 500);
+  size(1422, 800);
   noCursor();
 
   //color Adjusting
@@ -268,6 +269,12 @@ void keyPressed() {
     msg = "Trigger";
     triggerMonitors();
   }
+
+  if ( key == 'o') {
+    msg = "Pause";
+    pauseMonitor();
+  }
+
   if ( key == 'l') {
     loadPreset();
   }
@@ -696,6 +703,14 @@ void triggerMonitors() {
     }
   }
 }
+
+void pauseMonitor() {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].selected) {
+      monitors[i].pause();
+    }
+  }
+}
 int bodyForWhichMonitor( Body body ) {
   Vec2 pos = box2d.getBodyPixelCoord(body);
   for (int i=0; i<numberOfMonitors; i++) {
@@ -719,15 +734,26 @@ int getId() {
   return id;
 }
 
-void loadPreset() {
-  for( int i = 0, n = presets.list.size(); i < n; i++) {
-    if (numberOfMonitors < maxNumberOfMonitors) {
-      int id = getId();
-      monitors[numberOfMonitors] =
-        new Monitor( presets.get(i), id);
-      numberOfMonitors++;
-    }
+void loadPreset(int index) {
+  switch(index) {
+    case 1 :
+      ArrayList<Preset> list = presets.list1;
+      for( int i = 0, n = list.size(); i < n; i++) {
+        if (numberOfMonitors < maxNumberOfMonitors) {
+          int id = getId();
+          monitors[numberOfMonitors] =
+            new Monitor( list.get(i), id);
+          numberOfMonitors++;
+        }
+      }
+      break;
+    case 2 :
+
+      break;
+    default:
+      break;
   }
+
 }
 
 //ocs events

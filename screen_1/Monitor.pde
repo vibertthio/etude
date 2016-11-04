@@ -703,6 +703,10 @@ class Monitor {
   }
 
   void controlDotsDisplay() {
+    //layer
+    pushMatrix();
+    translate(0, 0, 1);
+
     stroke(lineColor, 255);
     strokeWeight(lineWeight);
     fill(backGroundColor);
@@ -719,6 +723,8 @@ class Monitor {
       stroke(closeMonitorSignColor, 255);
       ellipse(xpos + w_display, ypos, radiusOfControlDot*2, radiusOfControlDot*2);
     }
+
+    popMatrix();
   }
 
   void fadeOutControlDotDisplay() {

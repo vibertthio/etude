@@ -26,7 +26,7 @@ int numberOfData = 36;
 int fRate = 20;
 int timeSlot = 1000/fRate;
 int numberOfMonitors = 0;
-int maxNumberOfMonitors = 12;
+int maxNumberOfMonitors = 20;
 int maxFrameNumber = 20000;
 IntList idList;
 
@@ -66,6 +66,8 @@ String[] dateList = { "2016.1.23",
                       "2016.7.23",
                       "2016.5.10",
                       "2016.7.23",
+                      "2016.3.1",
+                      "2016.5.10",
                     };
 boolean[] loadedList;
 
@@ -139,8 +141,8 @@ void setup() {
   // println(fontList);
 
   frameRate(40);
-  // size(1920, 1080);
-  size(885, 500);
+  size(1920, 1080, P3D);
+  // size(885, 500);
   //size(1422, 800);
   // size(708, 400);
   noCursor();
@@ -184,8 +186,8 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this,10001);
   //test
-  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  myRemoteLocation = new NetAddress("10.0.1.3",12000);
+  myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  // myRemoteLocation = new NetAddress("10.0.1.3",12000);
 
   client = new eCircleClient();
   bClient = new eBackgroundClient();
@@ -541,9 +543,14 @@ void draggingDraw() {
   strokeWeight(mChannel.lineWeight);
   noFill();
   rect(x_min, y_min,  x_max - x_min, y_max - y_min);
+
+  // pushMatrix();
+  // translate(0, 0, 1);
   mChannel.w_display = int(x_max - x_min);
   mChannel.h_display = int(y_max - y_min);
   mChannel.controlDotsDisplay();
+  // popMatrix();
+
   hwInfo(x_min, x_max, y_min, y_max);
 
 }
@@ -713,6 +720,8 @@ void setupCursor() {
   cursorTimer.startTimer();
 }
 void cursorRects() {
+  pushMatrix();
+  translate(0, 0, 2);
   color cursorCol = color (255, 255, 255);
   rectMode(CENTER);
   imageMode(CENTER);
@@ -726,6 +735,7 @@ void cursorRects() {
   rect(mouseX, mouseY - d, w, l);
   rect(mouseX + d, mouseY, l, w);
   rect(mouseX - d, mouseY, l, w);
+  popMatrix();
 }
 void clearLines() {
   for(int i =0, n=lines.size(); i<n; i++) {
@@ -777,7 +787,7 @@ void loadPreset(int index) {
   if (index == 0) { list = presets.list0; }
   else if (index == 1) { list = presets.list1; }
   else if (index == 2) { list = presets.list2; }
-  else if (index == 3) { list = presets.list3; }
+  else if (index == 3) { list = presets.list4; }
   else { list = presets.list0; }
 
   for( int i = 0, n = list.size(); i < n; i++) {

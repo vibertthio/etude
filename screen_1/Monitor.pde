@@ -194,8 +194,8 @@ class Monitor {
   }
   void boxUpdate(float _mX, float _mY) {
     if (startPlayingAndAdjusting) {
-      if( id%3 != 2 && id < 8 && physicsWork )
-        box2d.step();
+      // if( id%3 != 2 && id < 8 && physicsWork )
+      //   box2d.step();
       Vec2 pos = box2d.getBodyPixelCoord(box.body);
       // Get its angle of rotation
       xpos = pos.x - w_display/2;

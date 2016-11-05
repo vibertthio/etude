@@ -8,6 +8,7 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
+import themidibus.*;
 
 
 //oscP5
@@ -16,6 +17,8 @@ NetAddress myRemoteLocation;
 eCircleClient client;
 eBackgroundClient bClient;
 
+//midi bus
+MidiBus midi;
 
 //background
 PImage backImg;
@@ -26,7 +29,7 @@ int numberOfData = 36;
 int fRate = 20;
 int timeSlot = 1000/fRate;
 int numberOfMonitors = 0;
-int maxNumberOfMonitors = 20;
+int maxNumberOfMonitors = 25;
 int maxFrameNumber = 20000;
 IntList idList;
 
@@ -49,6 +52,7 @@ String[] fileList = { "std_UpHand1",       //0
                       "ABCD/tempo",        //15
                       "ABCD/random(1)",    //16
                       "ABCD/random(2)",    //17
+                      "D/120",             //18
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
@@ -68,6 +72,7 @@ String[] dateList = { "2016.1.23",
                       "2016.7.23",
                       "2016.3.1",
                       "2016.5.10",
+                      "2016.7.23",
                     };
 boolean[] loadedList;
 
@@ -129,6 +134,7 @@ String msg;
 // A reference to our box2d world
 Box2DProcessing box2d;
 ArrayList lines;
+int boxStepTime;
 
 //timer
 TimeLine cursorTimer;
@@ -139,13 +145,15 @@ TimeLine backgroundDotsVibrationTimer = new TimeLine(600);
 void setup() {
   // String[] fontList = PFont.list();
   // println(fontList);
-
+  MidiBus.list();
   frameRate(40);
-  size(1920, 1080, P3D);
-  // size(885, 500);
-  //size(1422, 800);
-  // size(708, 400);
+  //size(1920, 1080, P3D);
+
+  //size(885, 500, P3D);
+  size(1422, 800, P3D);
+  // size(708, 400, P3D);
   noCursor();
+  midi = new MidiBus(this, 0, -1);
 
   //color Adjusting
   mainBackgroundColor = etudeBack;
@@ -187,7 +195,7 @@ void setup() {
   oscP5 = new OscP5(this,10001);
   //test
   myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  // myRemoteLocation = new NetAddress("10.0.1.3",12000);
+  // myRemoteLocation = new NetAddress("10.0.1.4",12000);
 
   client = new eCircleClient();
   bClient = new eBackgroundClient();
@@ -202,10 +210,19 @@ void setup() {
 
 void draw() {
   background(mainBackgroundColor);
+  blendMode(ADD);
   client.display();
-  //backgroundDots();
+  blendMode(BLEND);
   bClient.display();
   noTint();
+  if (numberOfMonitors > 0) {
+    boxStepTime = min( floor ( log ( numberOfMonitors ) / log( 2 ) ) + 1, 3);
+  }
+  else {
+    boxStepTime = 0;
+  }
+
+  // println(boxStepTime);
 
   //println("Global Time Count : " + float(millis())/1000 );
   //monitors
@@ -217,6 +234,12 @@ void draw() {
         monitors[j] = monitors[j+1];
       }
       numberOfMonitors--;
+    }
+
+    //step
+    if(physicsWork && boxStepTime > 0) {
+      box2d.step();
+      boxStepTime--;
     }
 
     monitors[i].mouseSense(mouseX, mouseY);
@@ -323,18 +346,18 @@ void keyPressed() {
   }
 
   //PRESETS
-  if ( key == 'h') {
-    loadPreset(0);
-  }
-  if ( key == 'j') {
-    loadPreset(1);
-  }
-  if ( key == 'k') {
-    loadPreset(2);
-  }
-  if ( key == 'l') {
-    loadPreset(3);
-  }
+  // if ( key == 'h') {
+  //   loadPreset(0);
+  // }
+  // if ( key == 'j') {
+  //   loadPreset(1);
+  // }
+  // if ( key == 'k') {
+  //   loadPreset(2);
+  // }
+  // if ( key == 'l') {
+  //   loadPreset(3);
+  // }
 
   if (bang)
     textTimer.startTimer();
@@ -499,8 +522,8 @@ void beginContact(Contact cp) {
   int id1 = bodyForWhichMonitor(b1);
   int id2 = bodyForWhichMonitor(b2);
 
-  println("o1 monitor id  : " + id1);
-  println("o2 monitor id  : " + id2);
+  // println("o1 monitor id  : " + id1);
+  // println("o2 monitor id  : " + id2);
 
   String m;
   if ( id1 != -1 ) {
@@ -782,44 +805,90 @@ int getId() {
   return id;
 }
 
-void loadPreset(int index) {
-  ArrayList<Preset> list;
-  if (index == 0) { list = presets.list0; }
-  else if (index == 1) { list = presets.list1; }
-  else if (index == 2) { list = presets.list2; }
-  else if (index == 3) { list = presets.list4; }
-  else { list = presets.list0; }
-
-  for( int i = 0, n = list.size(); i < n; i++) {
-    if (numberOfMonitors < maxNumberOfMonitors) {
-      int id = getId();
-      monitors[numberOfMonitors] =
-        new Monitor( list.get(i), id);
-      numberOfMonitors++;
-    }
-  }
-
-}
-
 //ocs events
 void oscEvent(OscMessage theOscMessage) {
   // print("### received an osc message.");
   // print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
-  println("------------------------");
-  println("pattern : " + pat);
+  // println("------------------------");
+  // println("pattern : " + pat);
   if ( pat.contains("circle") ) {
-    println("typetag: "+theOscMessage.typetag());
+    // println("typetag: "+theOscMessage.typetag());
     client.messageEvent(theOscMessage);
     //println(" addrpattern: "+theOscMessage.addrPattern());
   }
   else if ( pat.contains("rundot") ) {
-    println("typetag: "+theOscMessage.typetag());
+    // println("typetag: "+theOscMessage.typetag());
     bClient.messageEvent(theOscMessage);
   }
 }
 
 float lengthPd2Processing ( float l ) {
   return ( l * height / 8 );
+}
+
+
+//midi bus
+void noteOn(int channel, int pitch, int velocity) {
+  // println();
+  // println("Note On:");
+  // println("--------");
+  // println("Channel:"+channel);
+  println("Pitch:"+pitch);
+  // println("Velocity:"+velocity);
+  if ( channel == 0 ) {
+    loadFilePreset(pitch);
+  }
+  else if (channel == 9 ) {
+    loadPreset( (pitch - 36) );
+  }
+}
+// void noteOff(int channel, int pitch, int velocity) {
+//   // Receive a noteOff
+//   println();
+//   println("Note Off:");
+//   println("--------");
+//   println("Channel:"+channel);
+//   println("Pitch:"+pitch);
+//   println("Velocity:"+velocity);
+// }
+// void controllerChange(int channel, int number, int value) {
+//   // Receive a controllerChange
+//   println();
+//   println("Controller Change:");
+//   println("--------");
+//   println("Channel:"+channel);
+//   println("Number:"+number);
+//   println("Value:"+value);
+// }
+
+void loadPreset(int index) {
+  Preset[] list;
+  if (index < (presets.lists).size()) {
+    list = (presets.lists).get(index);
+    for( int i = 0, n = list.length; i < n; i++) {
+      if (numberOfMonitors < maxNumberOfMonitors) {
+        int id = getId();
+        monitors[numberOfMonitors] =
+          new Monitor( list[i], id);
+        numberOfMonitors++;
+      }
+    }
+  }
+  // else {
+  //   list = (presets.lists).get(0);
+  // }
+
+
+}
+void loadFilePreset(int index) {
+  if (index < fileList.length) {
+    if (numberOfMonitors < maxNumberOfMonitors) {
+      int id = getId();
+      monitors[numberOfMonitors] =
+        new Monitor( (presets.files)[index], id);
+      numberOfMonitors++;
+    }
+  }
 }

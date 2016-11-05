@@ -135,12 +135,12 @@ class eBackgroundClient {
     maxsize = lengthPd2Processing(max);
     minsize = lengthPd2Processing(min);
 
-    print("background dots:  ");
-    print("x : " + str(x));
-    print("  y : " + str(y) );
-    print("  min : " + str(min) );
-    print("  max : " + str(max) );
-    print("  time: " + millis() + "\n");
+    // print("background dots:  ");
+    // print("x : " + str(x));
+    // print("  y : " + str(y) );
+    // print("  min : " + str(min) );
+    // print("  max : " + str(max) );
+    // print("  time: " + millis() + "\n");
 
   }
 

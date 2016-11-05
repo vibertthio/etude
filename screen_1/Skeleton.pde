@@ -392,14 +392,14 @@ class Skeleton {
     OscMessage osc = new OscMessage(head);
     osc.add(joints[JointType_HandLeft].getX());
     osc.add(joints[JointType_HandLeft].getY());
-    oscP5.send(osc, myRemoteLocation);
+    oscP5.send(osc, myRemoteLocation2);
 
     //right hand
     head = "/p" + str(id) +  "/r";
     osc = new OscMessage(head);
     osc.add(joints[JointType_HandRight].getX());
     osc.add(joints[JointType_HandRight].getY());
-    oscP5.send(osc, myRemoteLocation);
+    oscP5.send(osc, myRemoteLocation2);
   }
 
 

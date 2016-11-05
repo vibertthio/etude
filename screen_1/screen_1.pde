@@ -14,6 +14,7 @@ import themidibus.*;
 //oscP5
 OscP5 oscP5;
 NetAddress myRemoteLocation;
+NetAddress myRemoteLocation2;
 eCircleClient client;
 eBackgroundClient bClient;
 
@@ -147,10 +148,10 @@ void setup() {
   // println(fontList);
   MidiBus.list();
   frameRate(40);
-  //size(1920, 1080, P3D);
+  size(1920, 1080, P3D);
 
   //size(885, 500, P3D);
-  size(1422, 800, P3D);
+  // size(1422, 800, P3D);
   // size(708, 400, P3D);
   noCursor();
   midi = new MidiBus(this, 0, -1);
@@ -194,8 +195,10 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this,10001);
   //test
-  myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  // myRemoteLocation = new NetAddress("10.0.1.4",12000);
+  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  myRemoteLocation = new NetAddress("10.0.1.4",12000);
+  myRemoteLocation2 = new NetAddress("10.0.1.4",12001);
+
 
   client = new eCircleClient();
   bClient = new eBackgroundClient();
@@ -821,6 +824,10 @@ void oscEvent(OscMessage theOscMessage) {
   else if ( pat.contains("rundot") ) {
     // println("typetag: "+theOscMessage.typetag());
     bClient.messageEvent(theOscMessage);
+  }
+  else if ( pat.contains("beat") ) {
+    println("typetag: "+theOscMessage.typetag());
+    println("value : "+theOscMessage.get(0));
   }
 }
 

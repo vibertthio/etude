@@ -32,7 +32,7 @@ int pd[5] = {7, 25, 20, 1, 2} ;
 //訊號4.特定
 //訊號5.兩軌同步
 
-int pd_temp[5]  ;
+float pd_temp[5]  ;
 
 int t1 = 0;
 float t2 = 0;
@@ -44,7 +44,7 @@ float pos[NUM_LEDS];
 
 void setup() {
   FastLED.addLeds<WS2811, DATA_PIN_1, RGB>(leds[0], NUM_LEDS);
-  Serial.begin(9600);
+  Serial.begin(57600);
 }
 
 void loop() {
@@ -56,7 +56,7 @@ void loop() {
     if (now >= 4) {
       now = 0;
       for (int i = 0; i < 5; i++) {
-        pd[i] = pd_temp[i];
+        pd[i] = int(pd_temp[i]);
       }
     } else {
       now++;

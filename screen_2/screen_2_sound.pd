@@ -1,4 +1,4 @@
-#N canvas 893 538 303 308 10;
+#N canvas 1077 645 303 308 10;
 #X declare -path abs;
 #N canvas 507 145 888 607 s-main 0;
 #X obj 219 511 dac~;
@@ -136,7 +136,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X floatatom 136 152 5 0 0 0 - - -, f 5;
 #X obj -4 244 spigot~;
 #X obj 55 243 spigot~;
-#X obj 128 242 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 128 242 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 129 217 == 1;
 #X obj 205 -25 s a1-size;
@@ -386,7 +386,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X obj 43 163 expr ($f1/0.6)/5+0.1;
 #X obj 6 254 spigot~;
 #X obj 75 281 spigot~;
-#X obj 130 226 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 130 226 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 131 201 == 1;
 #X obj 178 3 s a2-size;
@@ -615,7 +615,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X obj 28 170 expr ($f1/0.6)/5+0.1;
 #X obj 16 264 spigot~;
 #X obj 75 263 spigot~;
-#X obj 133 226 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 133 226 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 134 201 == 1;
 #X obj 181 1 s a3-size;
@@ -930,7 +930,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X connect 66 0 28 0;
 #X restore 12 -74 pd deformed;
 #X obj 162 186 hsl 170 15 0 1 0 0 empty empty vol=1 5 8 0 10 -228856
--1 -1 0 1;
+-1 -1 16900 1;
 #X obj 7 383 t f f;
 #X obj 7 409 expr int($f1*100)/100;
 #X obj 438 162 sig~ 1;
@@ -1176,14 +1176,14 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X msg 21 119 \$1 500;
 #X obj 21 143 line;
 #X floatatom 21 94 5 0 0 0 - - -, f 5;
-#X obj 111 149 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 111 149 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 549 433 sel 0 1;
 #X msg 549 456 disconnect;
 #X msg 572 480 connect localhost 9998;
 #X obj 549 506 udpsend;
 #X obj 461 388 spigot;
-#X obj 549 529 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 549 529 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 461 241 env~;
 #X obj 549 241 env~;
@@ -1206,7 +1206,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X obj 18 401 +~;
 #X obj 33 346 *~;
 #X obj 105 118 hsl 100 15 0.02 0.98 0 0 empty empty WIDTH 0 8 0 10
--262144 -1 -1 0 1;
+-262144 -1 -1 5400 1;
 #X obj 196 254 expr 1-$f1;
 #X floatatom 238 295 5 0 0 0 - - -, f 5;
 #X floatatom 196 279 5 0 0 0 - - -, f 5;
@@ -1290,7 +1290,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X obj -118 219 netsend~ 3;
 #X msg -94 155 disconnect;
 #X obj -118 125 sel 1 0;
-#X obj 109 193 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 109 193 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 20 -127 *~ 1;
 #X obj 616 -141 clone 40 ss;

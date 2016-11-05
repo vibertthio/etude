@@ -1,14 +1,14 @@
-#N canvas 875 446 418 310 10;
+#N canvas 436 646 418 310 10;
 #X declare -path abs;
 #X declare -path abs_other;
-#N canvas 201 23 1200 698 gemwin-main 1;
+#N canvas 206 23 1200 698 gemwin-main 0;
 #X obj 225 451 gemwin;
 #X msg 171 407 destroy;
 #X obj 72 301 sel 0 1;
 #X obj 95 559 udpsend;
 #X obj 95 582 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 118 426 r net;
+#X obj 541 469 r net;
 #X obj 118 451 spigot;
 #X msg 57 512 disconnect;
 #X obj 356 359 s W_H;
@@ -66,7 +66,7 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
+-1 -1 3771 1;
 #X obj 22 245 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -263,7 +263,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 696 479 table vol_2 200;
 #X obj 696 503 table vol_3 200;
-#X msg 224 360 708 400 0 0;
+#X msg 224 360 1920 1080 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 1;
@@ -323,11 +323,18 @@
 #X msg 299 552 disconnect;
 #X obj 299 524 sel 0 1;
 #X obj 360 523 spigot;
-#X msg 337 572 connect localhost 10000;
 #X msg 224 416 reset \, dimen \$1 \$2 \, FSAA 8 \, offset \$3 \$4 \,
 color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 1 \, create \, 1;
-#X msg 95 532 connect localhost 10001;
+#X obj 558 599 udpsend;
+#X obj 558 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 520 552 disconnect;
+#X obj 520 524 sel 0 1;
+#X obj 581 523 spigot;
+#X msg 558 572 connect localhost 9999;
+#X msg 337 572 connect 10.0.1.4 10000;
+#X msg 95 532 connect 10.0.1.2 10001;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 2 1 65 0;
@@ -336,10 +343,11 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X connect 4 0 43 0;
 #X connect 5 0 6 0;
 #X connect 5 0 120 0;
+#X connect 5 0 126 0;
 #X connect 6 0 3 0;
 #X connect 7 0 3 0;
 #X connect 9 0 7 0;
-#X connect 9 1 123 0;
+#X connect 9 1 129 0;
 #X connect 10 0 0 0;
 #X connect 11 0 13 0;
 #X connect 12 0 11 0;
@@ -347,9 +355,10 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X connect 14 0 36 0;
 #X connect 14 0 9 0;
 #X connect 14 0 119 0;
+#X connect 14 0 125 0;
 #X connect 15 0 2 0;
 #X connect 15 0 52 0;
-#X connect 16 0 122 0;
+#X connect 16 0 121 0;
 #X connect 16 1 109 0;
 #X connect 16 2 109 0;
 #X connect 20 0 19 0;
@@ -444,11 +453,18 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X connect 117 0 120 1;
 #X connect 118 0 116 0;
 #X connect 119 0 118 0;
-#X connect 119 1 121 0;
+#X connect 119 1 128 0;
 #X connect 120 0 116 0;
-#X connect 121 0 116 0;
-#X connect 122 0 0 0;
-#X connect 123 0 3 0;
+#X connect 121 0 0 0;
+#X connect 122 0 123 0;
+#X connect 123 0 126 1;
+#X connect 124 0 122 0;
+#X connect 125 0 124 0;
+#X connect 125 1 127 0;
+#X connect 126 0 122 0;
+#X connect 127 0 122 0;
+#X connect 128 0 116 0;
+#X connect 129 0 3 0;
 #X coords 0 -1 1 1 110 70 1 100 100;
 #X restore 17 175 pd gemwin-main;
 #X obj 17 249 k_time;
@@ -666,7 +682,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 708 400;
+#X msg 325 270 dimen 1920 1080;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1259,7 +1275,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj -21 -24 sel 1;
 #X obj 61 -6 t f f;
 #X msg -21 20 open keyboard \$1 \, 1;
-#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X connect 0 0 190 0;
 #X connect 0 1 191 0;
@@ -1526,7 +1542,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 136 215 etude_meta;
 #X obj 137 265 vj_cursor;
 #X obj 136 236 vj_griddot;
-#X msg 17 152 708 400 0 0;
+#X msg 17 152 1920 1080 0 0;
 #X connect 0 0 1 0;
 #X connect 5 0 6 0;
 #X connect 5 1 7 0;

@@ -118,7 +118,7 @@
 #X connect 55 0 54 0;
 #X restore 33 78 pd dot&array;
 #X msg 32 103 destroy \, reset \, dimen 700 700 \, create \, 1;
-#N canvas 232 124 631 440 comport 0;
+#N canvas 232 124 631 440 comport 1;
 #X obj 117 121 r net;
 #X msg 52 186 devices;
 #X msg 216 164 open 1 9600;
@@ -147,7 +147,7 @@
 #X obj 362 47 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 362 12 loadbang;
-#X obj 362 71 metro 55;
+#X obj 362 71 metro 100;
 #X connect 0 0 8 0;
 #X connect 1 0 4 0;
 #X connect 2 0 4 0;
@@ -177,7 +177,7 @@
 #X obj 33 13 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;
 #N canvas 432 101 795 696 2.run 0;
-#X obj 103 118 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 0
+#X obj 103 118 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
 1;
 #X obj 143 317 + 1;
 #X obj 177 317 % 192;
@@ -222,9 +222,9 @@
 #X obj 276 244 % 360;
 #X obj 213 266 / 360;
 #X obj 125 139 hsl 80 15 0 1 0 0 empty empty speed 10 8 0 10 -262144
--1 -1 790 1;
+-1 -1 5790 1;
 #X obj 125 118 hsl 80 15 0 1 0 0 empty empty width 10 8 0 10 -262144
--1 -1 790 1;
+-1 -1 6290 1;
 #X obj 273 339 f;
 #X floatatom 291 315 5 0 0 0 - - -, f 5;
 #X obj 111 496 expr atan2($f2 \, $f1);
@@ -488,7 +488,7 @@
 #X coords 0 -1 1 1 130 80 1 100 100;
 #X restore 24 221 pd 12.rainbow;
 #N canvas 589 101 502 648 1.wihte&back 0;
-#X obj 105 118 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 0
+#X obj 105 118 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
 1;
 #X obj 295 285 + 1;
 #X obj 329 285 % 192;
@@ -497,7 +497,7 @@
 #X obj 152 42 loadbang;
 #X msg 152 75 0.1;
 #X obj 127 118 hsl 80 15 0 1 0 0 empty empty bright 10 8 0 10 -262144
--1 -1 1890 1;
+-1 -1 4290 1;
 #X obj 29 221 spigot;
 #X obj 29 184 r gobalbang;
 #X obj 29 270 t b b;
@@ -740,7 +740,7 @@
 #X obj 256 126 hsl 80 15 0 1 0 0 empty empty speed 10 8 0 10 -262144
 -1 -1 6320 1;
 #X obj 125 118 hsl 80 15 0 1 0 0 empty empty step 10 8 0 10 -262144
--1 -1 6320 1;
+-1 -1 4400 1;
 #X msg 253 169 \$1 500;
 #X obj 253 191 line;
 #X obj 253 248 * 20;
@@ -883,7 +883,7 @@
 #X obj 71 334 repeat 192;
 #X obj 152 42 loadbang;
 #X obj 125 118 hsl 80 15 0 1 0 0 empty empty num 10 8 0 10 -262144
--1 -1 3950 1;
+-1 -1 5450 1;
 #X obj 324 320 int;
 #X floatatom 324 344 5 0 0 0 - - -, f 5;
 #X obj 114 237 spigot;
@@ -975,12 +975,12 @@
 1;
 #X obj 153 42 loadbang;
 #X obj 125 139 hsl 80 15 0 1 0 0 empty empty right 10 8 0 10 -262144
--1 -1 4000 1;
+-1 -1 3950 1;
 #X obj 125 118 hsl 80 15 0 1 0 0 empty empty left 10 8 0 10 -262144
--1 -1 7600 1;
+-1 -1 3950 1;
 #X obj 6 379 s net;
 #X obj 125 159 hsl 80 15 0 1 0 0 empty empty bright 10 8 0 10 -262144
--1 -1 2400 1;
+-1 -1 3160 1;
 #X obj 6 147 spigot;
 #X obj 6 110 r gobalbang;
 #X floatatom 6 304 5 0 0 0 - - -, f 5;
@@ -1038,12 +1038,12 @@
 1;
 #X obj 153 42 loadbang;
 #X obj 125 139 hsl 80 15 0 1 0 0 empty empty right 10 8 0 10 -262144
--1 -1 3400 1;
+-1 -1 3950 1;
 #X obj 125 118 hsl 80 15 0 1 0 0 empty empty left 10 8 0 10 -262144
--1 -1 5950 1;
+-1 -1 3950 1;
 #X obj 6 379 s net;
 #X obj 125 159 hsl 80 15 0 1 0 0 empty empty bright 10 8 0 10 -262144
--1 -1 4360 1;
+-1 -1 3160 1;
 #X obj 3 147 spigot;
 #X obj 3 110 r gobalbang;
 #X floatatom 6 304 5 0 0 0 - - -, f 5;

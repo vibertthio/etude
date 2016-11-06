@@ -1,6 +1,7 @@
 #include "FastLED.h"
 #define NUM_LEDS 192
 #define DATA_PIN_1 5
+//#define DATA_PIN_2 6
 
 const byte dim_curve[] = {
   0,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   3,   3,
@@ -23,9 +24,9 @@ const byte dim_curve[] = {
 
 CRGB leds[1][NUM_LEDS];
 int values[1][NUM_LEDS * 3];
-int pd[5] = {7, 25, 20, 1, 2} ;
+//int pd[5] = {7, 25, 5, 1, 2} ;
 //int pd[5] = {20, 35, 30, 180, 2} ;
-//int pd[5] = {18, 85, 20, 130, 2} ;
+int pd[5] = {18, 85, 20, 130, 2} ;
 //訊號1.選擇圖案
 //訊號2.控制訊號
 //訊號3.亮度
@@ -44,7 +45,8 @@ float pos[NUM_LEDS];
 
 void setup() {
   FastLED.addLeds<WS2811, DATA_PIN_1, RGB>(leds[0], NUM_LEDS);
-  Serial.begin(57600);
+  //FastLED.addLeds<WS2811, DATA_PIN_2, RGB>(leds[0], NUM_LEDS);
+  Serial.begin(9600);
 }
 
 void loop() {

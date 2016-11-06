@@ -1,6 +1,0 @@
-#N canvas 479 254 450 300 12;
-#X obj 118 53 udpreceive 10005;
-#X obj 118 78 unpackOSC;
-#X obj 118 103 route /;
-#X connect 0 0 1 0;
-#X connect 1 0 2 0;

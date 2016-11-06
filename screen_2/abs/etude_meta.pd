@@ -432,7 +432,7 @@
 #X obj 342 73 loadbang;
 #X msg 342 96 0;
 #X obj 404 24 r hid;
-#X obj 404 160 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 404 160 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 404 48 route key_22;
 #X obj 236 517 loadbang;
@@ -446,7 +446,7 @@
 #X obj 546 132 v display3;
 #X floatatom 520 155 5 0 0 0 - - -, f 5;
 #X obj 559 -7 r gui-id;
-#X obj 404 75 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 404 75 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 520 -9 sel 1;
 #X obj 404 97 t f f;
@@ -718,7 +718,7 @@
 #X obj 285 373 rectangle 15 2;
 #X obj 371 17 translateXYZ -4.05 -3.25 0;
 #X obj 122 -173 r hid;
-#X obj 122 -69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 122 -69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 122 -149 route key_4;
 #X obj 360 258 text2d;
@@ -2489,7 +2489,7 @@ const 0 \;;
 #X obj 601 42 line;
 #X obj 581 -109 sel 0 1;
 #X obj 650 88 hsl 30 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 85 1;
+-1 -1 0 1;
 #X floatatom 647 64 5 0 0 0 - - -, f 5;
 #X msg 606 -31 0 \, 1 1000;
 #X msg 630 -1 1 \, 0 1000;
@@ -2796,8 +2796,7 @@ const 0 \;;
 #X connect 43 0 18 0;
 #X restore 183 222 pd gui-radio;
 #X obj 317 230 clone 40 c-circle;
-#X obj 317 255 clone 30 drawline;
-#N canvas 336 231 612 442 speed_ctl 1;
+#N canvas 336 231 612 442 speed_ctl 0;
 #X obj 145 3 r hid;
 #X obj 145 90 route key_36 key_37 key_38 key_39;
 #X obj 221 58 route key_30 key_31 key_32;
@@ -2882,6 +2881,7 @@ const 0 \;;
 #X connect 34 0 21 0;
 #X connect 35 0 21 0;
 #X restore 61 279 pd speed_ctl;
+#X obj 317 255 clone 30 drawline;
 #X connect 0 0 1 0;
 #X connect 6 0 7 0;
 #X connect 8 0 9 0;

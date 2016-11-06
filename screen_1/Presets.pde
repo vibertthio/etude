@@ -29,6 +29,10 @@ class Presets {
   Preset[] list3;
   Preset[] list4;
   Preset[] list5;
+  Preset[] list6;
+  Preset[] list7;
+  Preset[] list8;
+
 
   Preset p0_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
   Preset p0_1 = new Preset(500, 200, 0, 200, 1, 50, 50, 100, 60, 1);
@@ -58,15 +62,32 @@ class Presets {
   Preset p4_7 = new Preset(400, 400, 0, 200, 16, 25, 0, 100, 60, 1);
   Preset p4_8 = new Preset(700, 400, 0, 200, 17, 25, 0, 100, 60, 1);
 
-  Preset p5_0 = new Preset(100, 100, 0, 200, 18, 50, 440, 480, 440, 0);
-  Preset p5_1 = new Preset(400, 100, 0, 200, 18, 50, 440, 480, 445, 1);
-  Preset p5_2 = new Preset(700, 100, 0, 200, 18, 50, 440, 480, 450, 2);
-  Preset p5_3 = new Preset(1000, 100, 0, 200, 18, 50, 440, 480, 455, 3);
-  Preset p5_4 = new Preset(100, 400, 0, 200, 18, 50, 440, 480, 460, 1);
-  Preset p5_5 = new Preset(400, 400, 0, 200, 18, 50, 440, 480, 465, 1);
-  Preset p5_6 = new Preset(700, 400, 0, 200, 18, 50, 440, 480, 470, 1);
-  Preset p5_7 = new Preset(1000, 400, 0, 200, 18, 50, 440, 480, 475, 1);
+  Preset p5_0 = new Preset(100, 100, 0, 200, 18, 25, 440, 480, 440, 0);
+  Preset p5_1 = new Preset(400, 100, 0, 200, 18, 25, 440, 480, 445, 1);
+  Preset p5_2 = new Preset(700, 100, 0, 200, 18, 25, 440, 480, 450, 2);
+  Preset p5_3 = new Preset(1000, 100, 0, 200, 18, 25, 440, 480, 455, 3);
+  Preset p5_4 = new Preset(100, 400, 0, 200, 18, 25, 440, 480, 460, 1);
+  Preset p5_5 = new Preset(400, 400, 0, 200, 18, 25, 440, 480, 465, 1);
+  Preset p5_6 = new Preset(700, 400, 0, 200, 18, 25, 440, 480, 470, 1);
+  Preset p5_7 = new Preset(1000, 400, 0, 200, 18, 25, 440, 480, 475, 1);
 
+  Preset p6_0 = new Preset(100, 100, 0, 200, 6,  50, 110, 145, 110, 0);
+  Preset p6_1 = new Preset(600, 100, 0, 200, 9, 50, 42, 77, 42, 1);
+  Preset p6_2 = new Preset(100, 400, 0, 200, 11, 50, 102, 137, 102, 2);
+  Preset p6_3 = new Preset(600, 400, 0, 200, 18, 50, 63, 98, 63, 3);
+
+  Preset p7_0 = new Preset(100, 100, 0, 200, 6, 50, 110, 150, 110, 0);
+  Preset p7_1 = new Preset(400, 100, 0, 200, 6, 50, 100, 140, 100, 1);
+  Preset p7_2 = new Preset(700, 100, 0, 200, 6, 50, 90, 130, 90, 2);
+  Preset p7_3 = new Preset(1000, 100, 0, 200, 6, 50, 80, 120, 80, 3);
+  // Preset p7_4 = new Preset(100, 400, 0, 200, 6, 25, 440, 480, 460, 1);
+  // Preset p7_5 = new Preset(400, 400, 0, 200, 6, 25, 440, 480, 465, 1);
+  // Preset p7_6 = new Preset(700, 400, 0, 200, 6, 25, 440, 480, 470, 1);
+  // Preset p7_7 = new Preset(1000, 400, 0, 200, 6, 25, 440, 480, 475, 1);
+
+  Preset p8_0 = new Preset(200, 200, 0, 400, 0, 25, 0, 40, 0, 0);
+  Preset p8_1 = new Preset(300, 500, 0, 200, 2, 25, 40, 80, 40, 1);
+  Preset p8_2 = new Preset(700, 700, 0, 200, 4, 25, 40, 80, 40, 2);
 
   Presets() {
     lists = new ArrayList <Preset[]> ();
@@ -76,6 +97,10 @@ class Presets {
     list3 = new Preset[3];
     list4 = new Preset[9];
     list5 = new Preset[8];
+    list6 = new Preset[4];
+    list7 = new Preset[4];
+    list8 = new Preset[3];
+
 
     list0[0] = p0_0;
     list0[1] = p0_1;
@@ -114,6 +139,23 @@ class Presets {
     list5[6] = (p5_6);
     list5[7] = (p5_7);
 
+    list6[0] = p6_0;
+    list6[1] = p6_1;
+    list6[2] = p6_2;
+    list6[3] = p6_3;
+
+    list7[0] = (p7_0);
+    list7[1] = (p7_1);
+    list7[2] = (p7_2);
+    list7[3] = (p7_3);
+    // list7[4] = (p7_4);
+    // list7[5] = (p7_5);
+    // list7[6] = (p7_6);
+    // list7[7] = (p7_7);
+
+    list8[0] = (p8_0);
+    list8[1] = (p8_1);
+    list8[2] = (p8_2);
 
     lists.add(list0);
     lists.add(list1);
@@ -121,12 +163,29 @@ class Presets {
     lists.add(list3);
     lists.add(list4);
     lists.add(list5);
+    lists.add(list6);
+    lists.add(list7);
+    lists.add(list8);
+
 
     int n = fileList.length;
     files = new Preset[n];
     for (int i = 0; i < n ; i++ ) {
-      files[i] = new Preset(100, 100, 0, 200, i, 50, 50, 100, 60, i%4);
+      files[i] = new Preset(100, 100, 0, 200, i, 50, 0, 100, 60, i%4);
     }
+    files[0] = new Preset(100, 100, 0, 200, 0, 50, 0, 100, 60, 0);
+    files[1] = new Preset(100, 100, 0, 200, 1, 50, 0, 100, 60, 1);
+    files[2] = new Preset(100, 100, 0, 200, 2, 50, 0, 100, 60, 2);
+    files[3] = new Preset(100, 100, 0, 200, 3, 50, 0, 100, 60, 3);
+    files[4] = new Preset(100, 100, 0, 200, 4, 50, 0, 100, 60, 0);
+    files[5] = new Preset(100, 100, 0, 200, 5, 50, 200, 1000, 200, 1);
+    files[6] = new Preset(100, 100, 0, 200, 6, 25, 110, 145, 110, 2);
+    files[7] = new Preset(100, 100, 0, 200, 7, 25, 27, 67, 27, 3);
+    files[8] = new Preset(100, 100, 0, 200, 8, 50, 5, 45, 5, 0);
+    files[9] = new Preset(100, 100, 0, 200, 9, 50, 50, 90, 50, 1);
+    files[10] = new Preset(100, 100, 0, 200, 10, 50, 30, 70, 30, 2);
+    files[11] = new Preset(100, 100, 0, 200, 10, 50, 40, 80, 40, 3);
+
 
 
   }
@@ -143,11 +202,11 @@ class Preset {
   int h;
   int fileIndex;
   String fileName;
-  int colorIndex;
   int limit;
   int startFrameCount;
   int endFrameCount;
   int currentFrame;
+  int colorIndex;
 
   Preset(float _x, float _y, int _w, int _h,
          int fi, int l, int s, int e, int c, int col) {
@@ -174,5 +233,12 @@ class Preset {
     endFrameCount = e;
     currentFrame = c;
     colorIndex = col;
+  }
+  //copy
+  Preset (Preset p) {
+    this(p.x, p.y, p.w, p.h, p.fileIndex,
+         p.limit, p.startFrameCount,
+         p.endFrameCount, p.currentFrame,
+         p.colorIndex);
   }
 }

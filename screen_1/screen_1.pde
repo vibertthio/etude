@@ -15,6 +15,8 @@ import themidibus.*;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 NetAddress myRemoteLocation2;
+NetAddress myRemoteLocation3;
+
 eCircleClient client;
 eBackgroundClient bClient;
 
@@ -54,6 +56,14 @@ String[] fileList = { "std_UpHand1",       //0
                       "ABCD/random(1)",    //16
                       "ABCD/random(2)",    //17
                       "D/120",             //18
+
+                      "AB/60(1)",          //19
+                      "AB/60(2)",          //20
+                      "B/120",             //21
+                      "B/240",             //22
+                      "C/120_r",           //23
+                      "C/240_l",           //24
+                      "D/60",              //25
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
@@ -64,6 +74,13 @@ String[] dateList = { "2016.1.23",
                       "2016.7.23",
                       "2015.12.20",
                       "2015.2.5",
+                      "2016.3.1",
+                      "2016.5.10",
+                      "2016.7.23",
+                      "2016.5.10",
+                      "2016.7.23",
+                      "2016.5.10",
+                      "2016.7.23",
                       "2016.3.1",
                       "2016.5.10",
                       "2016.7.23",
@@ -150,7 +167,7 @@ void setup() {
   frameRate(40);
   size(1920, 1080, P3D);
 
-  //size(885, 500, P3D);
+  // size(885, 500, P3D);
   // size(1422, 800, P3D);
   // size(708, 400, P3D);
   noCursor();
@@ -195,9 +212,12 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this,10001);
   //test
-  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  myRemoteLocation = new NetAddress("10.0.1.4",12000);
+  myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  // myRemoteLocation = new NetAddress("192.168.0.102",12000);
+  // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("10.0.1.4",12001);
+  // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
+
 
 
   client = new eCircleClient();
@@ -827,7 +847,11 @@ void oscEvent(OscMessage theOscMessage) {
   }
   else if ( pat.contains("beat") ) {
     println("typetag: "+theOscMessage.typetag());
-    println("value : "+theOscMessage.get(0));
+    int value = theOscMessage.get(0).intValue();
+    println("value : " + value);
+    if (value%8 == 0) {
+      triggerMonitors();
+    }
   }
 }
 
@@ -893,8 +917,12 @@ void loadFilePreset(int index) {
   if (index < fileList.length) {
     if (numberOfMonitors < maxNumberOfMonitors) {
       int id = getId();
+      Preset temp = new Preset((presets.files)[index]);
+      temp.x = random( 200, width - 200);
+      temp.y = random( 200, height - 200);
+      temp.h = floor( 200 + 100 * random(0,1) );
       monitors[numberOfMonitors] =
-        new Monitor( (presets.files)[index], id);
+        new Monitor( temp, id);
       numberOfMonitors++;
     }
   }

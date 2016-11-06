@@ -1,4 +1,4 @@
-#N canvas 487 312 439 369 10;
+#N canvas 432 457 439 369 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 206 22 1350 737 gemwin-main 0;
@@ -262,7 +262,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 696 479 table vol_2 200;
 #X obj 696 503 table vol_3 200;
-#X msg 224 360 708 400 0 0;
+#X msg 224 360 1920 1080 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 1;
@@ -332,8 +332,8 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 520 524 sel 0 1;
 #X obj 581 523 spigot;
 #X msg 558 572 connect localhost 9999;
-#X msg 337 572 connect 10.0.1.4 10000;
-#X msg 95 532 connect 10.0.1.2 10001;
+#X msg 337 572 connect localhost 9999;
+#X msg 95 532 connect localhost 10001;
 #X obj 244 589 r net;
 #X obj 221 704 udpsend;
 #X obj 221 727 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -345,8 +345,8 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X text 408 598 frank circle;
 #X text 632 597 aluan sound;
 #X text 168 559 vibert circle;
-#X msg 221 677 connect 10.0.1.4 10002;
-#X obj 144 118 tgl 30 0 empty empty empty 17 7 0 10 -258113 -1 -1 0
+#X msg 221 677 connect localhost 10002;
+#X obj 144 118 tgl 30 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
 1;
 #X text 174 117 0 net;
 #X text 174 135 1 local;
@@ -734,7 +734,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 708 400;
+#X msg 325 270 dimen 1920 1080;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1592,7 +1592,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 160 243 etude_meta;
 #X obj 161 293 vj_cursor;
 #X obj 160 264 vj_griddot;
-#X msg 17 180 1920 1080 0 0;
+#X msg 16 180 1920 1080 0 0;
 #X msg 114 154 708 400 0 0;
 #X obj 335 233 gemkeyboard;
 #X floatatom 335 255 5 0 0 0 - - -, f 5;

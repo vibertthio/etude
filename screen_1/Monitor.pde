@@ -586,7 +586,7 @@ class Monitor {
     canvas.textSize(textSize);
     if ( loopStartAdjusting ) {
       canvas.fill(loopStartSignColor);
-      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.2 ,//2.5
+      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.5 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -594,7 +594,7 @@ class Monitor {
     }
     else if ( loopEndAdjusting ) {
       canvas.fill(loopEndSignColor);
-      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.2 , //2.5
+      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.5 , //2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -602,7 +602,7 @@ class Monitor {
     }
     else {
       canvas.fill(lineColor);
-      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.2 ,//2.5
+      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.5 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -1087,7 +1087,7 @@ class Monitor {
     metro.pause();
   }
   void selectedDisplay() {
-    canvas.fill(255,255,255, 150);
+    canvas.fill(255,255,255, 150 * cursorTimer.liner());
     canvas.rectMode(CORNER);
     canvas.rect(0, 0, w_rendor, h_rendor);
   }

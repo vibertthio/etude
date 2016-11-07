@@ -1,6 +1,10 @@
 #N canvas 1284 151 303 308 10;
 #X declare -path abs;
+<<<<<<< HEAD
 #N canvas 952 853 888 607 s-main 0;
+=======
+#N canvas 635 413 888 607 s-main 0;
+>>>>>>> origin/master
 #X obj 219 511 dac~;
 #X obj 109 -187 r all;
 #X obj 473 -186 udpreceive 9999;
@@ -930,7 +934,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X connect 66 0 28 0;
 #X restore 12 -74 pd deformed;
 #X obj 162 186 hsl 170 15 0 1 0 0 empty empty vol=1 5 8 0 10 -228856
--1 -1 16900 1;
+-1 -1 0 1;
 #X obj 7 383 t f f;
 #X obj 7 409 expr int($f1*100)/100;
 #X obj 438 162 sig~ 1;
@@ -1157,12 +1161,12 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X floatatom 374 -39 5 0 0 0 - - -, f 5;
 #X floatatom 429 -45 5 0 0 0 - - -, f 5;
 #X floatatom 484 -44 5 0 0 0 - - -, f 5;
-#X floatatom 624 89 5 0 0 0 - - -, f 5;
+#X floatatom 375 253 5 0 0 0 - - -, f 5;
 #X obj 373 -17 / 127;
 #X obj 429 -23 / 127;
 #X msg 429 49 1 \$1;
 #X obj 484 -25 / 127;
-#X obj 624 114 / 127;
+#X obj 375 278 / 127;
 #X msg 484 43 2 \$1;
 #X msg 371 62 0 \$1;
 #X obj 372 34 line;
@@ -1171,8 +1175,8 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X msg 429 2 \$1 200;
 #X obj 483 21 line;
 #X msg 484 -3 \$1 200;
-#X obj 624 162 line;
-#X msg 624 138 \$1 200;
+#X obj 375 326 line;
+#X msg 375 302 \$1 200;
 #X msg 21 119 \$1 500;
 #X obj 21 143 line;
 #X floatatom 21 94 5 0 0 0 - - -, f 5;
@@ -1206,7 +1210,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X obj 18 401 +~;
 #X obj 33 346 *~;
 #X obj 105 118 hsl 100 15 0.02 0.98 0 0 empty empty WIDTH 0 8 0 10
--262144 -1 -1 4991 1;
+-262144 -1 -1 0 1;
 #X obj 196 254 expr 1-$f1;
 #X floatatom 238 295 5 0 0 0 - - -, f 5;
 #X floatatom 196 279 5 0 0 0 - - -, f 5;
@@ -1272,7 +1276,7 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X connect 32 0 6 1;
 #X connect 33 0 13 0;
 #X coords 0 -1 1 1 110 35 1 100 100;
-#X restore 158 209 pd;
+#X restore 159 206 pd;
 #X obj 374 -74 route /ctl16 /ctl17 /ctl18 /ctl19 /ctl23;
 #X floatatom 545 -39 5 0 0 0 - - -, f 5;
 #X obj 545 -15 / 127;
@@ -1294,9 +1298,12 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 1;
 #X obj 20 -127 *~ 1;
 #X obj 617 -164 clone 40 ss_circle;
+<<<<<<< HEAD
 #X obj 657 13 loadbang;
 #X msg 657 35 64;
 #X obj 545 -123 print;
+=======
+>>>>>>> origin/master
 #X obj 616 -141 clone 40 ss;
 #X connect 1 0 24 0;
 #X connect 2 0 3 0;
@@ -1413,7 +1420,10 @@ SSSAD /c1/controls 0 0.49 1 0.8 2 0.355932 3 0.6 4 0.527966 5 0.42
 #X connect 92 1 91 0;
 #X connect 94 0 72 0;
 #X connect 94 0 72 1;
+<<<<<<< HEAD
 #X connect 96 0 97 0;
 #X connect 97 0 37 0;
+=======
+>>>>>>> origin/master
 #X coords 0 -1 1 1 250 270 1 100 100;
 #X restore 25 19 pd s-main;

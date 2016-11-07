@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #N canvas 1016 419 482 379 10;
+=======
+#N canvas 432 457 439 369 10;
+>>>>>>> origin/master
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 206 23 1350 737 gemwin-main 0;
@@ -262,7 +266,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 696 479 table vol_2 200;
 #X obj 696 503 table vol_3 200;
-#X msg 224 360 1280 720 0 0;
+#X msg 224 360 1920 1080 0 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 1;
@@ -734,7 +738,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 1280 720;
+#X msg 325 270 dimen 1920 1080;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1077,8 +1081,8 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X connect 20 0 18 0;
 #X connect 20 1 17 0;
 #X connect 21 0 6 0;
-#X restore 18 1 pd receive sound;
-#X obj 18 25 scan 1;
+#X restore 18 22 pd receive sound;
+#X obj 18 46 scan 1;
 #N canvas 310 23 1280 747 mouseIn 0;
 #X obj 504 -29 gemmouse 1 1;
 #X obj 499 208 pack f f;
@@ -1592,35 +1596,31 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 160 243 etude_meta;
 #X obj 161 293 vj_cursor;
 #X obj 160 264 vj_griddot;
-#X msg 17 180 1920 1080 0 0;
+#X msg 16 180 1920 1080 0 0;
+#X msg 114 154 708 400 0 0;
 #X obj 335 233 gemkeyboard;
 #X floatatom 335 255 5 0 0 0 - - -, f 5;
 #X obj 335 274 sel 93;
-#X obj 144 26 scan 2;
-#X obj 269 26 scan 3;
-#N canvas 524 383 355 274 send 0;
+#X obj 144 47 scan 2;
+#X obj 269 47 scan 3;
+#N canvas 0 22 355 274 send 0;
 #X obj 148 193 s net;
 #X obj 148 155 packOSC;
 #X msg 148 116 send /beat \$1, f 18;
 #X obj 148 80 inlet;
-#X floatatom 210 71 5 0 0 0 - - -, f 5;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 2 0;
-#X connect 3 0 4 0;
 #X restore 18 153 pd send beat;
-#X msg 114 154 1280 720 0 0;
-#X floatatom 18 130 5 0 0 0 - - -, f 5;
 #X connect 0 0 1 0;
 #X connect 5 0 6 0;
-#X connect 5 1 17 0;
-#X connect 5 2 18 0;
-#X connect 6 0 21 0;
+#X connect 5 1 18 0;
+#X connect 5 2 19 0;
+#X connect 6 0 20 0;
 #X connect 8 0 7 0;
 #X connect 9 0 8 0;
 #X connect 13 0 0 0;
-#X connect 14 0 15 0;
+#X connect 14 0 0 0;
 #X connect 15 0 16 0;
-#X connect 16 0 8 0;
-#X connect 20 0 0 0;
-#X connect 21 0 19 0;
+#X connect 16 0 17 0;
+#X connect 17 0 8 0;

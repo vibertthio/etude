@@ -1,14 +1,14 @@
-#N canvas 471 195 482 379 10;
+#N canvas 1016 419 482 379 10;
 #X declare -path abs;
 #X declare -path abs_other;
-#N canvas 206 22 1350 737 gemwin-main 0;
+#N canvas 206 23 1350 737 gemwin-main 0;
 #X obj 225 451 gemwin;
 #X msg 171 407 destroy;
 #X obj 72 301 sel 0 1;
 #X obj 95 559 udpsend;
-#X obj 95 582 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 95 582 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 581 484 r net;
+#X obj 581 462 r net;
 #X obj 118 451 spigot;
 #X msg 57 512 disconnect;
 #X obj 356 359 s W_H;
@@ -66,7 +66,7 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
+-1 -1 6900 1;
 #X obj 22 245 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -95,7 +95,7 @@
 #X connect 11 0 4 4;
 #X connect 12 0 4 0;
 #X restore 21 187 pd mask;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -317,7 +317,7 @@
 #X msg 697 405 gem_main;
 #X obj 697 427 print;
 #X obj 337 599 udpsend;
-#X obj 337 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 337 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 299 552 disconnect;
 #X obj 299 524 sel 0 1;
@@ -326,17 +326,17 @@
 color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 1 \, create \, 1;
 #X obj 558 599 udpsend;
-#X obj 558 622 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 184 151 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 520 552 disconnect;
 #X obj 520 524 sel 0 1;
 #X obj 581 523 spigot;
 #X msg 558 572 connect localhost 9999;
-#X msg 337 572 connect 10.0.1.4 10000;
-#X msg 95 532 connect 10.0.1.2 10001;
+#X msg 337 572 connect localhost 9999;
+#X msg 95 532 connect localhost 10001;
 #X obj 244 589 r net;
 #X obj 221 704 udpsend;
-#X obj 221 727 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 221 727 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 183 657 disconnect;
 #X obj 183 629 sel 0 1;
@@ -345,8 +345,8 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X text 408 598 frank circle;
 #X text 632 597 aluan sound;
 #X text 168 559 vibert circle;
-#X msg 221 677 connect 10.0.1.4 10002;
-#X obj 144 118 tgl 30 0 empty empty empty 17 7 0 10 -258113 -1 -1 0
+#X msg 221 677 connect localhost 10002;
+#X obj 144 118 tgl 30 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
 1;
 #X text 174 117 0 net;
 #X text 174 135 1 local;
@@ -1207,7 +1207,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 1;
 #X obj 247 95 list;
 #X obj 247 121 s mouseOpen;
-#X obj 328 78 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 328 78 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 326 99 list;
 #X obj 326 120 s mouseOpen;
@@ -1324,7 +1324,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj -21 -24 sel 1;
 #X obj 61 -6 t f f;
 #X msg -21 20 open keyboard \$1 \, 1;
-#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 468 426 % 30;
 #X connect 0 0 190 0;

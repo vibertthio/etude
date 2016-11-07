@@ -1,7 +1,7 @@
 #include "FastLED.h"
 #define NUM_LEDS 192
 #define DATA_PIN_1 5
-//#define DATA_PIN_2 6
+#define DATA_PIN_2 6
 
 const byte dim_curve[] = {
   0,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   3,   3,
@@ -45,7 +45,7 @@ float pos[NUM_LEDS];
 
 void setup() {
   FastLED.addLeds<WS2811, DATA_PIN_1, RGB>(leds[0], NUM_LEDS);
-  //FastLED.addLeds<WS2811, DATA_PIN_2, RGB>(leds[0], NUM_LEDS);
+  FastLED.addLeds<WS2811, DATA_PIN_2, RGB>(leds[0], NUM_LEDS);
   Serial.begin(9600);
 }
 

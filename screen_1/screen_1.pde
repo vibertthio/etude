@@ -35,6 +35,7 @@ int numberOfMonitors = 0;
 int maxNumberOfMonitors = 25;
 int maxFrameNumber = 20000;
 IntList idList;
+int maskValue = 0;
 
 //file list
 String[] fileList = { "std_UpHand1",       //0
@@ -64,6 +65,13 @@ String[] fileList = { "std_UpHand1",       //0
                       "C/120_r",           //23
                       "C/240_l",           //24
                       "D/60",              //25
+                      "U1171626",          //26
+                      "U117168",           //27
+                      "T/A",               //28
+                      "T/B",               //29
+                      "T/C_l",             //30
+                      "T/C_r",             //31
+                      "T/D",               //32
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
@@ -88,6 +96,14 @@ String[] dateList = { "2016.1.23",
                       "2016.7.23",
                       "2016.5.10",
                       "2016.7.23",
+                      "2016.3.1",
+                      "2016.5.10",
+                      "2016.7.23",
+                      "2016.7.23",
+                      "2016.7.23",
+                      "2016.3.1",
+                      "2015.12.20",
+                      "2015.2.5",
                       "2016.3.1",
                       "2016.5.10",
                       "2016.7.23",
@@ -135,6 +151,7 @@ boolean removeLine = false;
 boolean adjustingSpeed = false;
 boolean changeColor = false;
 boolean selectingMonitor = false;
+boolean selectingTriggerMonitor = false;
 boolean firstColor = false;
 boolean secondColor = false;
 boolean thirdColor = false;
@@ -165,8 +182,8 @@ void setup() {
   // println(fontList);
   MidiBus.list();
   frameRate(40);
-  size(1920, 1080, P3D);
-
+  // size(1920, 1080, P3D);
+  size(1280, 720, P3D);
   // size(885, 500, P3D);
   // size(1422, 800, P3D);
   // size(708, 400, P3D);
@@ -212,8 +229,8 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this,10001);
   //test
-  myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  // myRemoteLocation = new NetAddress("192.168.0.102",12000);
+  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("10.0.1.4",12001);
   // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
@@ -227,7 +244,6 @@ void setup() {
   // backImg = loadImage("layout_2.png");
   cursor = loadImage("paint.png");
   setupCursor();
-
 
 }
 
@@ -297,6 +313,23 @@ void draw() {
   cursorRects();
   drawInfo();
 
+  // pushMatrix();
+  // stroke(255);
+  // translate(0, 0, 2);
+  // line(20, 0, 20, height);
+  // popMatrix();
+  //
+  // pushMatrix();
+  // blendMode(LIGHTEST);
+  // // rectMode(CORNER);
+  // translate(0, 0, 10);
+  // noStroke();
+  // fill(0, 200, 0, maskValue);
+  // println(maskValue);
+  // // fill(0);
+  // rect(0, 0, width, height);
+  // // translate(0, 0, -2);
+  // popMatrix();
 }
 
 
@@ -310,9 +343,10 @@ void keyPressed() {
     bang = true;
   }
   if ( key == 't') {
-    print("check");
-    OscMessage osc = new OscMessage("/test");
-    oscP5.send(osc, myRemoteLocation);
+    selectingTriggerMonitor = true;
+    // print("check");
+    // OscMessage osc = new OscMessage("/test");
+    // oscP5.send(osc, myRemoteLocation);
   }
   if ( key == 'z') {
     drawLine = true;
@@ -369,9 +403,14 @@ void keyPressed() {
   }
 
   //PRESETS
-  // if ( key == 'h') {
-  //   loadPreset(0);
-  // }
+  if ( key == 'h') {
+    if( maskValue < 245 ) {
+      maskValue += 10;
+    }
+    else {
+      maskValue = 0;
+    }
+  }
   // if ( key == 'j') {
   //   loadPreset(1);
   // }
@@ -396,6 +435,9 @@ void keyReleased() {
   }
   if ( key == 's') {
     adjustingSpeed = false;
+  }
+  if ( key == 't') {
+    selectingTriggerMonitor = false;
   }
   if ( key == 'c') {
     changeColor = false;
@@ -616,15 +658,13 @@ void drawInfo() {
   if (textTimer.state) {
     //textSize(textSize);
     fill(textColor, 255 * (1 - textTimer.liner()));
-    textAlign(CENTER, CENTER);
-    // textAlign(LEFT, BOTTOM);
-
+    // textAlign(CENTER, CENTER);
     // text( "Press 'n' to switch mode", 30, 40);
     // text( "(New Monitor) & (Adjusting Monitor)", 30, 70);
     // String fr = "frameRate : " + str(frameRate);
     // text(fr, 30, 100);
 
-    textSize(6*textSize);
+    textSize(textSize);
     if ( newMonitor ) {
       msg = "Create";
     }
@@ -643,13 +683,16 @@ void drawInfo() {
     else if (selectingMonitor) {
       msg = "Select Monitor";
     }
+    else if (selectingTriggerMonitor) {
+      msg = "Select Trigger Point";
+    }
     else {
       if (msg != "Trigger")
         msg = "Edit";
     }
 
     // text( msg, 30, height - 40);
-    text( msg, width/2, height/2);
+    text( msg, 30, 70);
   }
 }
 void backgroundDots() {
@@ -790,13 +833,7 @@ void clearLines() {
   }
   lines.clear();
 }
-void triggerMonitors() {
-  for (int i=0; i<numberOfMonitors; i++) {
-    if (monitors[i].selected) {
-      monitors[i].triggerPlay();
-    }
-  }
-}
+
 
 void pauseMonitor() {
   for (int i=0; i<numberOfMonitors; i++) {
@@ -841,10 +878,19 @@ void oscEvent(OscMessage theOscMessage) {
     client.messageEvent(theOscMessage);
     //println(" addrpattern: "+theOscMessage.addrPattern());
   }
+
   else if ( pat.contains("rundot") ) {
     // println("typetag: "+theOscMessage.typetag());
     bClient.messageEvent(theOscMessage);
   }
+
+  else if ( pat.contains("mask") ) {
+    println("mask");
+    println("typetag: "+theOscMessage.typetag());
+    maskValue = 255 - theOscMessage.get(0).intValue();
+    println("maskValue: "+ maskValue);
+  }
+
   else if ( pat.contains("beat") ) {
     println("typetag: "+theOscMessage.typetag());
     int value = theOscMessage.get(0).intValue();
@@ -862,15 +908,20 @@ float lengthPd2Processing ( float l ) {
 
 //midi bus
 void noteOn(int channel, int pitch, int velocity) {
-  // println();
-  // println("Note On:");
-  // println("--------");
-  // println("Channel:"+channel);
+  println();
+  println("Note On:");
+  println("--------");
+  println("Channel:"+channel);
   println("Pitch:"+pitch);
-  // println("Velocity:"+velocity);
+  println("Velocity:"+velocity);
   if ( channel == 0 ) {
     loadFilePreset(pitch);
   }
+
+  if ( channel == 1 ) {
+    triggerKeyMonitors(pitch);
+  }
+
   else if (channel == 9 ) {
     loadPreset( (pitch - 36) );
   }
@@ -884,15 +935,15 @@ void noteOn(int channel, int pitch, int velocity) {
 //   println("Pitch:"+pitch);
 //   println("Velocity:"+velocity);
 // }
-// void controllerChange(int channel, int number, int value) {
-//   // Receive a controllerChange
-//   println();
-//   println("Controller Change:");
-//   println("--------");
-//   println("Channel:"+channel);
-//   println("Number:"+number);
-//   println("Value:"+value);
-// }
+void controllerChange(int channel, int number, int value) {
+  // Receive a controllerChange
+  println();
+  println("Controller Change:");
+  println("--------");
+  println("Channel:"+channel);
+  println("Number:"+number);
+  println("Value:"+value);
+}
 
 void loadPreset(int index) {
   Preset[] list;
@@ -918,12 +969,31 @@ void loadFilePreset(int index) {
     if (numberOfMonitors < maxNumberOfMonitors) {
       int id = getId();
       Preset temp = new Preset((presets.files)[index]);
-      temp.x = random( 200, width - 200);
-      temp.y = random( 200, height - 200);
+      // temp.x = random( 200, width - 200);
+      // temp.y = random( 200, height - 200);
+      temp.x = mouseX;
+      temp.y = mouseY;
       temp.h = floor( 200 + 100 * random(0,1) );
       monitors[numberOfMonitors] =
         new Monitor( temp, id);
       numberOfMonitors++;
+    }
+  }
+}
+void triggerMonitors() {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].selected) {
+      monitors[i].triggerPlay();
+    }
+  }
+}
+
+int triggerGroupNumber = 7;
+void triggerKeyMonitors( int index ) {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].triggerByKey) {
+      if ( monitors[i].triggerKey == index % triggerGroupNumber )
+      monitors[i].triggerPlay();
     }
   }
 }

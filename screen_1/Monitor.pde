@@ -21,6 +21,7 @@ class Monitor {
   int fCount = 0;
   int currentFrame = 0;
   int loopStartFrame, loopEndFrame;
+  int triggerKey = -1;
   //int[][] dataStorage;
 
   boolean loadPreset;
@@ -51,6 +52,7 @@ class Monitor {
   TimeLine transientTimer;
   TimeLine fadeOutTimer;
   TimeLine soundReactionTimer; // sound reaction
+  TimeLine soundTextReactionTimer;
 
   int changeRatioTime = 400;
   float changeRatioTimeRate = 6;
@@ -61,17 +63,20 @@ class Monitor {
   int transientTime = 200;
   float transientTimerRate = 0.7;
 
-  int soundReactionTime = 800;
+  int soundReactionTime = 250;
   float soundReactionTimerRate = 0.5;
+  int soundTextReactionTime = 600;
+  float soundTextReactionTimerRate = 0.5;
 
   //sound reaction
   color soundReactionColor = color (247, 202, 24);
   int soundReactionIndex = 0;
 
-  color soundReactionTextColor = color (249, 105, 14); //orange
-  int soundReactionTextSize = 60;
-  int soundReactionX = 150;
-  int soundReactionY = 200;
+  // color soundReactionTextColor = color (249, 105, 14); //orange
+  color soundReactionTextColor = color (255, 255, 255);
+  int soundReactionTextSize = 30;
+  int soundReactionX = 80;
+  int soundReactionY = 50;
 
   //Box2D
   Box box;
@@ -93,6 +98,8 @@ class Monitor {
     fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id, colorIndex); //fileList is global
     skeleton = new Skeleton(canvas, id);
     metro = new Metro(false ,timeSlot);
+
+    // canvas.textFont(fileSelector.font, textSize);
 
     //status variable
     loadPreset = false;
@@ -117,6 +124,9 @@ class Monitor {
     soundReactionTimer = new TimeLine(soundReactionTime);
     soundReactionTimer.setLinerRate(soundReactionTimerRate);
     soundReactionTimer.turnOffTimer();
+    soundTextReactionTimer = new TimeLine(soundTextReactionTime);
+    soundTextReactionTimer.setLinerRate(soundTextReactionTimerRate);
+    soundTextReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
 
   }
@@ -134,6 +144,8 @@ class Monitor {
     fileSelector = new FileSelector(canvas, w_rendor, h_rendor, id, colorIndex); //fileList is global
     skeleton = new Skeleton(canvas, id);
     metro = new Metro(false ,pre.limit);
+
+    // textFont(fileSelector.font, textSize);
 
     //status variable
     loadPreset = true;
@@ -158,6 +170,9 @@ class Monitor {
     soundReactionTimer = new TimeLine(soundReactionTime);
     soundReactionTimer.setLinerRate(soundReactionTimerRate);
     soundReactionTimer.turnOffTimer();
+    soundTextReactionTimer = new TimeLine(soundTextReactionTime);
+    soundTextReactionTimer.setLinerRate(soundTextReactionTimerRate);
+    soundTextReactionTimer.turnOffTimer();
     changeRatioTimer.startTimer();
 
     //setting for preset
@@ -260,8 +275,14 @@ class Monitor {
               gap--;
             }
             if(currentFrame >= loopEndFrame) {
-              currentFrame = loopStartFrame;
-              metro.startPlayingAt(loopStartFrame);
+              if (triggerByKey) {
+                metro.pause();
+              }
+              else {
+                //regular loop
+                currentFrame = loopStartFrame;
+                metro.startPlayingAt(loopStartFrame);
+              }
             }
           }
           soundReaction();
@@ -320,7 +341,9 @@ class Monitor {
       if (!fadeOut) { noTint(); }
 
       stroke(lineColor);
-      strokeWeight(lineWeight);
+      if ( !selected ) { strokeWeight(lineWeight); }
+      else { strokeWeight(lineWeight * 4); }
+
       noFill();
       rect(xpos - lineWeight/4, ypos - lineWeight/4, w_display, h_display);
       controlDotsDisplay();
@@ -361,22 +384,27 @@ class Monitor {
       //pose1, pose2, pose3, pose4
       if ( skeleton.soundPose1() ) {
         soundReactionTimer.startTimer();
+        soundTextReactionTimer.startTimer();
         soundReactionIndex = 1;
       }
       if ( skeleton.soundPose2() ) {
         soundReactionTimer.startTimer();
+        soundTextReactionTimer.startTimer();
         soundReactionIndex = 2;
       }
       if ( skeleton.soundPose3_l() ) {
         soundReactionTimer.startTimer();
+        soundTextReactionTimer.startTimer();
         soundReactionIndex = 3;
       }
       if ( skeleton.soundPose3_r() ) {
         soundReactionTimer.startTimer();
+        soundTextReactionTimer.startTimer();
         soundReactionIndex = 3;
       }
       if ( skeleton.soundPose4() ) {
         soundReactionTimer.startTimer();
+        soundTextReactionTimer.startTimer();
         soundReactionIndex = 4;
       }
 
@@ -389,23 +417,23 @@ class Monitor {
   }
 
   void soundReaction() {
-    if ( soundReactionTimer.liner() < 1
-      && soundReactionTimer.state
+    if ( soundTextReactionTimer.liner() < 1
+      && soundTextReactionTimer.state
       && startPlayingAndAdjusting ) {
       //println("REACTION!!!!");
       String react = "X";
       switch ( soundReactionIndex ) {
         case 1:
-          react = "A";
+          react = "Up";
           break;
         case 2:
-          react = "B";
+          react = "Bend";
           break;
         case 3:
-          react = "C";
+          react = "Grab";
           break;
         case 4:
-          react = "D";
+          react = "Lift";
           break;
       }
 
@@ -416,10 +444,10 @@ class Monitor {
       canvas.noStroke();
       canvas.rectMode(CORNER);
       canvas.rect(0, 0, w_rendor, h_rendor);
-
+      canvas.textAlign(LEFT, CENTER);
       canvas.textSize(soundReactionTextSize);
       canvas.fill(soundReactionTextColor,
-              255 * ( 1 - soundReactionTimer.liner() ));
+              255 * ( 1 - soundTextReactionTimer.liner() ));
       canvas.text(react, soundReactionX, soundReactionY);
     }
 
@@ -552,6 +580,8 @@ class Monitor {
   boolean boxCreated = false;
   boolean mouseSense = false;
   boolean selected = false;
+  boolean triggerByKey = false;
+
 
   float shiftOffsetX, shiftOffsetY;
 
@@ -582,11 +612,12 @@ class Monitor {
 
   void barDisplay() {
     //frame notation
+    canvas.textFont(fileSelector.font, textSize);
     canvas.textAlign(RIGHT, CENTER);
     canvas.textSize(textSize);
     if ( loopStartAdjusting ) {
       canvas.fill(loopStartSignColor);
-      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.5 ,//2.5
+      canvas.text(str(loopStartFrame),w_rendor - heightOfBar * 2.2 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -594,7 +625,7 @@ class Monitor {
     }
     else if ( loopEndAdjusting ) {
       canvas.fill(loopEndSignColor);
-      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.5 , //2.5
+      canvas.text(str(loopEndFrame),w_rendor - heightOfBar * 2.2 , //2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -602,7 +633,7 @@ class Monitor {
     }
     else {
       canvas.fill(lineColor);
-      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.5 ,//2.5
+      canvas.text(str(currentFrame),w_rendor - heightOfBar * 2.2 ,//2.5
                                 h_rendor - heightOfBar - textHeight);
       canvas.text("[            / " + str(fCount) + " ]",
                   w_rendor - heightOfBar * 1.0,
@@ -708,7 +739,8 @@ class Monitor {
     translate(0, 0, 1);
 
     stroke(lineColor, 255);
-    strokeWeight(lineWeight);
+    if (!selected) { strokeWeight(lineWeight); }
+    else { strokeWeight(lineWeight * 4); }
     fill(backGroundColor);
     ellipse(xpos, ypos, radiusOfControlDot*2, radiusOfControlDot*2);
     if(changingRatio) {
@@ -930,6 +962,9 @@ class Monitor {
         else if (selectingMonitor) {
           selected = !selected;
         }
+        else if (selectingTriggerMonitor) {
+          switchTriggerKey();
+        }
         else if (mouseSense && adjustingSpeed) {
           if ( x < w_display / 5 ) {
             metro.adjustSpeed(0.5);
@@ -1042,7 +1077,10 @@ class Monitor {
     pushMatrix();
     translate( xpos + w_display / 2, ypos - 18);
     // String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ]";
-    String t = "[ speed : " + nfs(metro.framerate(), 3, 2) + "  f/sec ] " + str(id);
+    String t = "[ speed : " + nfs(metro.framerate(), 3, 2)
+             + "  f/sec ] "
+             + " id : " + str(id)
+             + " key : " + str(triggerKey);
 
     textAlign(CENTER, CENTER);
     //rotate(-PI/2);
@@ -1054,7 +1092,7 @@ class Monitor {
     fill(255);
     pushMatrix();
     translate( xpos , ypos + h_display + 18);
-    String t = "date : " + dateList[index];
+    String t = "  [ " + fileList[index] +  " ]    date : " + dateList[index];
     textAlign(LEFT, CENTER);
     text(t, 0, 0);
     popMatrix();
@@ -1087,9 +1125,9 @@ class Monitor {
     metro.pause();
   }
   void selectedDisplay() {
-    canvas.fill(255,255,255, 150 * cursorTimer.liner());
-    canvas.rectMode(CORNER);
-    canvas.rect(0, 0, w_rendor, h_rendor);
+    // canvas.fill(255,255,255, 150 * cursorTimer.liner());
+    // canvas.rectMode(CORNER);
+    // canvas.rect(0, 0, w_rendor, h_rendor);
   }
   boolean contain(float _mX, float _mY) {
     float x = _mX - xpos;
@@ -1098,5 +1136,20 @@ class Monitor {
     if (x > 0 && x < w_display
        && y > 0 && y < h_display ) { return true; }
     else { return false; }
+  }
+  void switchTriggerKey() {
+    if (!triggerByKey) {
+      triggerByKey = true;
+      triggerKey = 0;
+    }
+    else {
+      if (triggerKey == triggerGroupNumber) {
+        triggerByKey = false;
+        triggerKey = -1;
+      }
+      else {
+        triggerKey++;
+      }
+    }
   }
 }

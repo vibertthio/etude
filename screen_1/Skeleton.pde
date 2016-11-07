@@ -46,12 +46,12 @@ class Skeleton {
     id = _id;
 
     //v_state
-    s_pose1 = new Vstate ( 0, 500 );
-    s_pose2 = new Vstate ( 0, 500 );
-    s_pose3_l = new Vstate ( 250, 250 );
-    s_pose3_r = new Vstate ( 250, 250 );
+    s_pose1 = new Vstate ( 0, 150 );
+    s_pose2 = new Vstate ( 0, 150 );
+    s_pose3_l = new Vstate ( 100, 150 );
+    s_pose3_r = new Vstate ( 100, 150 );
     s_squat = new Vstate ( 500, 500 );
-    s_pose4 = new Vstate (300, 300 );
+    s_pose4 = new Vstate (150, 140 );
   }
 
   void set(int[] dataBuffer) {

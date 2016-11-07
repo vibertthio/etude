@@ -1,12 +1,12 @@
-#N canvas 828 496 319 306 10;
+#N canvas 946 479 319 306 10;
 #X declare -path abs;
-#N canvas 490 116 843 566 gemwin-main 0;
+#N canvas 490 116 843 566 gemwin-main 1;
 #X obj 244 448 gemwin;
 #X msg 132 311 destroy;
 #X obj 132 279 sel 0 1;
 #X obj 265 504 s W_H;
 #X obj 106 152 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 2852 1;
+-1 -1 6900 1;
 #X obj 174 251 line;
 #N canvas 0 22 450 300 mask 0;
 #X obj 173 51 inlet;
@@ -35,7 +35,7 @@
 #X connect 11 0 4 4;
 #X connect 12 0 4 0;
 #X restore 59 208 pd mask;
-#X obj 104 115 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 104 115 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X obj 132 251 float;
 #X obj 67 -5 r hid;
@@ -44,7 +44,7 @@
 #X msg 67 61 0;
 #X obj 122 68 r bg-alpha;
 #X msg 174 229 \$1 3000;
-#X msg 224 360 1920 1080 0 0;
+#X msg 224 360 708 400 0 0;
 #X obj 318 382 r \$0-gemwin;
 #X obj 224 73 inlet;
 #X msg 224 164 1;
@@ -61,6 +61,10 @@
 #X msg 244 413 reset \, dimen \$1 \$2 \, FSAA 8 \, offset \$3 \$4 \,
 cursor 1 \, border 0 \, menubar 1 \, \, color 0.13 0.13 0.13 \, create
 \, 1;
+#X obj 343 96 r tocircle;
+#X obj 343 118 route /mask;
+#X floatatom 343 140 5 0 0 0 - - -, f 5;
+#X obj 343 167 expr 1- $f1;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 2 1 15 0;
@@ -93,6 +97,10 @@ cursor 1 \, border 0 \, menubar 1 \, \, color 0.13 0.13 0.13 \, create
 #X connect 28 2 24 0;
 #X connect 28 3 24 0;
 #X connect 29 0 0 0;
+#X connect 30 0 31 0;
+#X connect 31 0 32 0;
+#X connect 32 0 33 0;
+#X connect 33 0 4 0;
 #X coords 0 -1 1 1 110 70 1 100 100;
 #X restore 28 101 pd gemwin-main;
 #X obj 31 182 k_cpu;
@@ -602,5 +610,5 @@ cursor 1 \, border 0 \, menubar 1 \, \, color 0.13 0.13 0.13 \, create
 #X connect 9 0 0 0;
 #X restore 32 233 pd net;
 #X obj 31 258 clone 40 c-circle;
-#X msg 28 77 1920 1080 0 0;
+#X msg 28 77 708 400 0 0;
 #X connect 14 0 0 0;

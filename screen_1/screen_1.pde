@@ -63,15 +63,19 @@ String[] fileList = { "std_UpHand1",       //0
                       "B/120",             //21
                       "B/240",             //22
                       "C/120_r",           //23
-                      "C/240_l",           //24
-                      "D/60",              //25
-                      "U1171626",          //26
-                      "U117168",           //27
-                      "T/A",               //28
-                      "T/B",               //29
-                      "T/C_l",             //30
-                      "T/C_r",             //31
-                      "T/D",               //32
+                      "C/240_l",           //24(12)(0)
+                      "D/60",              //25(13)(1)
+                      "U1171626",          //26(14)(2)
+                      "U117168",           //27(15)(3)
+                      "T/A",               //28(16)(4)
+                      "T/B",               //29(17)(5)
+                      "T/C_l",             //30(18)(6)
+                      "T/C_r",             //31(19)(7)
+                      "T/D",               //32(20)(8)
+                      "T/A2",              //33(21)(9)
+                      "T/B2",              //34(22)(10)
+
+                      "H/std_theremin",      //35
                     };
 String[] dateList = { "2016.1.23",
                       "2015.12.20",
@@ -107,6 +111,9 @@ String[] dateList = { "2016.1.23",
                       "2016.3.1",
                       "2016.5.10",
                       "2016.7.23",
+                      "2016.3.1",
+                      "2015.12.20",
+                      "2015.12.20",
                     };
 boolean[] loadedList;
 
@@ -232,7 +239,7 @@ void setup() {
   // myRemoteLocation = new NetAddress("127.0.0.1",9020);
   myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
-  myRemoteLocation2 = new NetAddress("10.0.1.4",12001);
+  myRemoteLocation2 = new NetAddress("192.168.0.100",12001);
   // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
 
 
@@ -748,6 +755,17 @@ void dotsLine(float x1, float y1, float x2, float y2, int n) {
              y1 + ( y2 - y1 ) * i /numberOfDots, sz * 2, sz * 2);
   }
 }
+void dotsLine(PGraphics canvas, float x1, float y1, float x2, float y2, int n) {
+  //dist / 20 would be a good choice
+  int sz = 2;
+  int numberOfDots = n;
+  canvas.noStroke();
+  canvas.fill(255);
+  for(int i=0; i<=numberOfDots; i++) {
+    canvas.ellipse( x1 + ( x2 - x1 ) * i /numberOfDots,
+                    y1 + ( y2 - y1 ) * i /numberOfDots, sz * 2, sz * 2);
+  }
+}
 void dotsDashLine(float x1, float y1, float x2, float y2, int n) {
   int sz = 2;
   fill(255);
@@ -871,40 +889,48 @@ void oscEvent(OscMessage theOscMessage) {
   // print(" addrpattern: "+theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
+  String tag = theOscMessage.typetag();
   // println("------------------------");
   // println("pattern : " + pat);
-  if ( pat.contains("circle") ) {
+  // if ( pat.contains("circle")  ) {
+  if ( pat.equals("/circle")
+      && tag.equals("iffffii")) {
     // println("typetag: "+theOscMessage.typetag());
     client.messageEvent(theOscMessage);
     //println(" addrpattern: "+theOscMessage.addrPattern());
   }
 
-  else if ( pat.contains("rundot") ) {
+  else if ( pat.equals("/rundot")
+           && tag.equals("ffff")) {
     // println("typetag: "+theOscMessage.typetag());
     bClient.messageEvent(theOscMessage);
   }
 
-  else if ( pat.contains("mask") ) {
-    println("mask");
-    println("typetag: "+theOscMessage.typetag());
-    maskValue = 255 - theOscMessage.get(0).intValue();
-    println("maskValue: "+ maskValue);
-  }
 
-  else if ( pat.contains("beat") ) {
-    println("typetag: "+theOscMessage.typetag());
+  else if ( pat.equals("/beat")
+           && tag.equals("i")) {
+    // println("typetag: "+theOscMessage.typetag());
     int value = theOscMessage.get(0).intValue();
-    println("value : " + value);
-    if (value%8 == 0) {
-      triggerMonitors();
-    }
+    println("beat : " + value);
+    triggerBeatMonitors( value );
+    // if (value%8 == 0) {
+    //   triggerMonitors();
+    // }
   }
-}
 
+  // else if ( pat.contains("mask") ) {
+  //   println("mask");
+  //   println("typetag: "+theOscMessage.typetag());
+  //   maskValue = 255 - theOscMessage.get(0).intValue();
+  //   println("maskValue: "+ maskValue);
+  // }
+}
+public void oscStatus(OscStatus theStatus) {
+  println("osc status : "+theStatus.id());
+}
 float lengthPd2Processing ( float l ) {
   return ( l * height / 8 );
 }
-
 
 //midi bus
 void noteOn(int channel, int pitch, int velocity) {
@@ -918,9 +944,9 @@ void noteOn(int channel, int pitch, int velocity) {
     loadFilePreset(pitch);
   }
 
-  if ( channel == 1 ) {
-    triggerKeyMonitors(pitch);
-  }
+  // if ( channel == 1 ) {
+  //   triggerKeyMonitors(pitch);
+  // }
 
   else if (channel == 9 ) {
     loadPreset( (pitch - 36) );
@@ -988,11 +1014,19 @@ void triggerMonitors() {
   }
 }
 
-int triggerGroupNumber = 7;
+int triggerGroupNumber = 15;
 void triggerKeyMonitors( int index ) {
   for (int i=0; i<numberOfMonitors; i++) {
     if (monitors[i].triggerByKey) {
       if ( monitors[i].triggerKey == index % triggerGroupNumber )
+      monitors[i].triggerPlay();
+    }
+  }
+}
+void triggerBeatMonitors( int beat ) {
+  for (int i=0; i<numberOfMonitors; i++) {
+    if (monitors[i].triggerByKey) {
+      if ( monitors[i].triggerKey == beat )
       monitors[i].triggerPlay();
     }
   }

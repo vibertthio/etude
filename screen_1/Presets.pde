@@ -20,7 +20,7 @@ class Presets {
   // Preset f15 = new Preset(100, 100, 0, 200, 15, 50, 50, 100, 60, 0);
   // Preset f16 = new Preset(100, 100, 0, 200, 16, 50, 50, 100, 60, 0);
   // Preset f17 = new Preset(100, 100, 0, 200, 17, 50, 50, 100, 60, 0);
-  //
+  
 
   ArrayList <Preset[]> lists;
   Preset[] list0;
@@ -192,6 +192,7 @@ class Presets {
     files[31] = new Preset(100, 100, 0, 200, 31, 50, 0, 20, 0, 2);
     files[32] = new Preset(100, 100, 0, 200, 32, 50, 0, 20, 0, 3);
 
+    files[35] = new Preset(100, 100, 0, 200, 35, 50, 0, 200, 0, 3);
 
   }
 

@@ -265,6 +265,7 @@ class Monitor {
             selectedDisplay();
           }
           skeleton.display();
+          if(theremin) { skeleton.thereminDisplay(); }
           barDisplay();
           if(metro.frameCount() > currentFrame) {
             skeleton.update(dataStorage[index][currentFrame]);

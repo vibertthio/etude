@@ -107,7 +107,7 @@ class Skeleton {
   }
 
   //display
-  void display(){
+  void display() {
     if(appearance) {
 
       //draw bones
@@ -140,6 +140,19 @@ class Skeleton {
       }
     }
 
+  }
+
+  void thereminDisplay() {
+    dotsLine(canvas,
+             joints[JointType_HandRight].getX(),
+             joints[JointType_HandRight].getY(),
+             joints[JointType_AnkleRight].getX() + 30,
+             joints[JointType_AnkleRight].getY(), 15);
+    dotsLine(canvas,
+             joints[JointType_HandLeft].getX(),
+             joints[JointType_HandLeft].getY(),
+             joints[JointType_AnkleLeft].getX() - 30,
+             joints[JointType_AnkleLeft].getY(), 15);
   }
 
   void drawJoint(int jointType) {
@@ -390,18 +403,41 @@ class Skeleton {
   }
 
   void thereminSignal() {
-    //left heand
+
+    //left hand
+    //send normalized signal of x
+    float l_limit = ( joints[JointType_SpineBase].getY()
+                     - joints[JointType_SpineShoulder].getY() ) / 0.9 ;
+    float l_position = ( joints[JointType_SpineShoulder].getX()
+                     - joints[JointType_HandLeft].getX() ) / l_limit ;
+    l_position = 12 * max( 0 , min( 1, l_position )) + 60;
+
     String head = "/p" + str(id) +  "/l";
     OscMessage osc = new OscMessage(head);
-    osc.add(joints[JointType_HandLeft].getX());
-    osc.add(joints[JointType_HandLeft].getY());
+    println("left :" + floor(l_position));
+    // println("x : " + joints[JointType_HandLeft].getX() +
+    //         " y : " + joints[JointType_HandLeft].getY());
+    // osc.add(joints[JointType_HandLeft].getX());
+    // osc.add(joints[JointType_HandLeft].getY());
+    osc.add(floor(l_position));
     oscP5.send(osc, myRemoteLocation2);
 
     //right hand
+    float r_limit = ( joints[JointType_SpineBase].getY()
+                     - joints[JointType_Head].getY() ) ;
+    float r_position = ( joints[JointType_SpineBase].getY()
+                     - joints[JointType_HandRight].getY() ) / r_limit ;
+    r_position = 127 * max( 0 , min( 1, r_position ));
+
+
     head = "/p" + str(id) +  "/r";
     osc = new OscMessage(head);
-    osc.add(joints[JointType_HandRight].getX());
-    osc.add(joints[JointType_HandRight].getY());
+    println("right :" + floor(r_position));
+    // println("x : " + joints[JointType_HandRight].getX() +
+    //         " y : " + joints[JointType_HandRight].getY());
+    // osc.add(joints[JointType_HandRight].getX());
+    // osc.add(joints[JointType_HandRight].getY());
+    osc.add(floor(r_position));
     oscP5.send(osc, myRemoteLocation2);
   }
 

@@ -77,14 +77,14 @@ class eCircleClient {
     y = map(y, -4, 4, height, 0);
     sz = map(sz, 0, 4, 0, height/2);
     alpha = map(alpha, 0, 1, 127, 255);
-    print("id[" + circleId + "]  ");
-    print("x : " + str(x));
-    print(" y : " + str(y));
-    print(" sz : " + str(sz));
-    print(" alpha : " + str(alpha) + "\n");
-    print("col : " + str(colId));
-    print(" trg : " + str(trg));
-    print(" time: " + millis() + "\n");
+    // print("id[" + circleId + "]  ");
+    // print("x : " + str(x));
+    // print(" y : " + str(y));
+    // print(" sz : " + str(sz));
+    // print(" alpha : " + str(alpha) + "\n");
+    // print("col : " + str(colId));
+    // print(" trg : " + str(trg));
+    // print(" time: " + millis() + "\n");
     // println("------------------------");
 
     eCircles[circleId].update(x, y, sz, alpha, colId, trg);

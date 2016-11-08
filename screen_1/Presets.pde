@@ -20,7 +20,7 @@ class Presets {
   // Preset f15 = new Preset(100, 100, 0, 200, 15, 50, 50, 100, 60, 0);
   // Preset f16 = new Preset(100, 100, 0, 200, 16, 50, 50, 100, 60, 0);
   // Preset f17 = new Preset(100, 100, 0, 200, 17, 50, 50, 100, 60, 0);
-  
+
 
   ArrayList <Preset[]> lists;
   Preset[] list0;
@@ -32,6 +32,7 @@ class Presets {
   Preset[] list6;
   Preset[] list7;
   Preset[] list8;
+  Preset[] list9;
 
 
   Preset p0_0 = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
@@ -89,6 +90,15 @@ class Presets {
   Preset p8_1 = new Preset(300, 500, 0, 200, 2, 25, 40, 80, 40, 1);
   Preset p8_2 = new Preset(700, 700, 0, 200, 4, 25, 40, 80, 40, 2);
 
+  Preset p9_0 = new Preset(100, 100, 0, 200, 28, 50, 0, 20, 0, 0, 0);
+  Preset p9_1 = new Preset(100, 400, 0, 200, 32, 50, 0, 20, 0, 1, 2);
+  Preset p9_2 = new Preset(400, 400, 0, 200, 32, 50, 0, 20, 0, 1, 4);
+  Preset p9_3 = new Preset(700, 400, 0, 200, 32, 50, 0, 20, 0, 1, 6);
+  Preset p9_4 = new Preset(700, 100, 0, 200, 31, 50, 0, 20, 0, 2, 8);
+  Preset p9_5 = new Preset(400, 700, 0, 200, 32, 50, 0, 20, 0, 1, 10);
+  Preset p9_6 = new Preset(1000, 700, 0, 200, 32, 50, 0, 20, 0, 3, 12);
+  Preset p9_7 = new Preset(400, 100, 0, 200, 32, 50, 0, 20, 0, 1, 14);
+
   Presets() {
     lists = new ArrayList <Preset[]> ();
     list0 = new Preset[4];
@@ -100,6 +110,7 @@ class Presets {
     list6 = new Preset[4];
     list7 = new Preset[4];
     list8 = new Preset[3];
+    list9 = new Preset[8];
 
 
     list0[0] = p0_0;
@@ -157,6 +168,15 @@ class Presets {
     list8[1] = (p8_1);
     list8[2] = (p8_2);
 
+    list9[0] = p9_0;
+    list9[1] = p9_1;
+    list9[2] = p9_2;
+    list9[3] = p9_3;
+    list9[4] = p9_4;
+    list9[5] = p9_5;
+    list9[6] = p9_6;
+    list9[7] = p9_7;
+
     lists.add(list0);
     lists.add(list1);
     lists.add(list2);
@@ -166,6 +186,7 @@ class Presets {
     lists.add(list6);
     lists.add(list7);
     lists.add(list8);
+    lists.add(list9);
 
 
     int n = fileList.length;
@@ -213,6 +234,7 @@ class Preset {
   int endFrameCount;
   int currentFrame;
   int colorIndex;
+  int triggerKey = -1;
 
   Preset(float _x, float _y, int _w, int _h,
          int fi, int l, int s, int e, int c, int col) {
@@ -228,6 +250,20 @@ class Preset {
     colorIndex = col;
   }
   Preset(float _x, float _y, int _w, int _h,
+         int fi, int l, int s, int e, int c, int col, int _triggerKey) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    fileIndex = fi;
+    limit = l;
+    startFrameCount = s;
+    endFrameCount = e;
+    currentFrame = c;
+    colorIndex = col;
+    triggerKey = _triggerKey;
+  }
+  Preset(float _x, float _y, int _w, int _h,
          String fn, int l, int s, int e, int c, int col) {
     x = _x;
     y = _y;
@@ -239,6 +275,20 @@ class Preset {
     endFrameCount = e;
     currentFrame = c;
     colorIndex = col;
+  }
+  Preset(float _x, float _y, int _w, int _h,
+         String fn, int l, int s, int e, int c, int col, int _triggerKey) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    fileName = fn;
+    limit = l;
+    startFrameCount = s;
+    endFrameCount = e;
+    currentFrame = c;
+    colorIndex = col;
+    triggerKey = _triggerKey;
   }
   //copy
   Preset (Preset p) {

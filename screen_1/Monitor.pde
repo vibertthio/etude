@@ -158,6 +158,11 @@ class Monitor {
     fadeOut = false;
     dissappear = false;
 
+    if (pre.triggerKey != -1) {
+      triggerByKey = true;
+      triggerKey = pre.triggerKey;
+    }
+
     //TimeLine
     changeRatioTimer = new TimeLine(changeRatioTime);
     changeRatioTimer.setLinerRate(changeRatioTimeRate);

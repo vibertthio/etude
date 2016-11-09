@@ -77,14 +77,17 @@ class Presets {
   Preset p6_2 = new Preset(100, 400, 0, 200, 11, 50, 102, 137, 102, 2);
   Preset p6_3 = new Preset(600, 400, 0, 200, 18, 50, 63, 98, 63, 3);
 
-  Preset p7_0 = new Preset(100, 100, 0, 200, 6, 50, 110, 150, 110, 0);
-  Preset p7_1 = new Preset(400, 100, 0, 200, 6, 50, 100, 140, 100, 1);
-  Preset p7_2 = new Preset(700, 100, 0, 200, 6, 50, 90, 130, 90, 2);
-  Preset p7_3 = new Preset(1000, 100, 0, 200, 6, 50, 80, 120, 80, 3);
-  // Preset p7_4 = new Preset(100, 400, 0, 200, 6, 25, 440, 480, 460, 1);
-  // Preset p7_5 = new Preset(400, 400, 0, 200, 6, 25, 440, 480, 465, 1);
-  // Preset p7_6 = new Preset(700, 400, 0, 200, 6, 25, 440, 480, 470, 1);
-  // Preset p7_7 = new Preset(1000, 400, 0, 200, 6, 25, 440, 480, 475, 1);
+  Preset p7_0 = new Preset(100, 80, 0, 400, 33, 50, 4, 23, 4, 0, 0);
+  Preset p7_1 = new Preset(670, 80, 0, 200, 32, 50, 0, 19, 0, 1, 4);
+  Preset p7_2 = new Preset(1000, 80, 0, 200, 32, 50, 0, 19, 0, 1, 8);
+  Preset p7_3 = new Preset(1330, 80, 0, 200, 32, 50, 0, 19, 0, 1, 12);
+  Preset p7_4 = new Preset(1000, 350, 0, 200, 30, 50, 0, 19, 0, 2, 8);
+  Preset p7_5 = new Preset(670, 350, 0, 75, 32, 50, 0, 19, 0, 1, 3);
+  Preset p7_6 = new Preset(820, 350, 0, 75, 31, 50, 0, 19, 0, 2, 7);
+  Preset p7_7 = new Preset(100, 570, 0, 200, 33, 50, 4, 23, 4, 0, 10);
+  Preset p7_8 = new Preset(410, 570, 0, 200, 33, 50, 4, 23, 4, 0, 11);
+  Preset p7_9 = new Preset(1330, 350, 0, 200, 30, 50, 0, 19, 0, 2, 13);
+
 
   Preset p8_0 = new Preset(200, 200, 0, 400, 0, 25, 0, 40, 0, 0);
   Preset p8_1 = new Preset(300, 500, 0, 200, 2, 25, 40, 80, 40, 1);
@@ -108,7 +111,7 @@ class Presets {
     list4 = new Preset[9];
     list5 = new Preset[8];
     list6 = new Preset[4];
-    list7 = new Preset[4];
+    list7 = new Preset[10];
     list8 = new Preset[3];
     list9 = new Preset[8];
 
@@ -159,10 +162,12 @@ class Presets {
     list7[1] = (p7_1);
     list7[2] = (p7_2);
     list7[3] = (p7_3);
-    // list7[4] = (p7_4);
-    // list7[5] = (p7_5);
-    // list7[6] = (p7_6);
-    // list7[7] = (p7_7);
+    list7[4] = (p7_4);
+    list7[5] = (p7_5);
+    list7[6] = (p7_6);
+    list7[7] = (p7_7);
+    list7[8] = (p7_8);
+    list7[9] = (p7_9);
 
     list8[0] = (p8_0);
     list8[1] = (p8_1);
@@ -207,11 +212,13 @@ class Presets {
     files[10] = new Preset(100, 100, 0, 200, 10, 50, 30, 70, 30, 2);
     files[11] = new Preset(100, 100, 0, 200, 11, 50, 40, 80, 40, 3);
 
-    files[28] = new Preset(100, 100, 0, 200, 28, 50, 0, 20, 0, 0);
-    files[29] = new Preset(100, 100, 0, 200, 29, 50, 0, 20, 0, 1);
-    files[30] = new Preset(100, 100, 0, 200, 30, 50, 0, 20, 0, 2);
-    files[31] = new Preset(100, 100, 0, 200, 31, 50, 0, 20, 0, 2);
-    files[32] = new Preset(100, 100, 0, 200, 32, 50, 0, 20, 0, 3);
+    files[28] = new Preset(100, 100, 0, 200, 28, 50, 0, 19, 0, 0);
+    files[29] = new Preset(100, 100, 0, 200, 29, 50, 0, 19, 0, 1);
+    files[30] = new Preset(100, 100, 0, 200, 30, 50, 0, 19, 0, 2);
+    files[31] = new Preset(100, 100, 0, 200, 31, 50, 0, 19, 0, 2);
+    files[32] = new Preset(100, 100, 0, 200, 32, 50, 0, 19, 0, 3);
+    files[33] = new Preset(100, 100, 0, 200, 33, 50, 0, 19, 0, 3);
+    files[34] = new Preset(100, 100, 0, 200, 34, 50, 0, 19, 0, 0);
 
     files[35] = new Preset(100, 100, 0, 200, 35, 50, 0, 200, 0, 3);
 

@@ -5,7 +5,7 @@ class eBackgroundDot {
 
   //size
   float sz;
-  float szOffset = lengthPd2Processing(0.008);
+  float szOffset = lengthPd2Processing(0.01);
   float szLimit = lengthPd2Processing(0.06);
   float szPeak = szLimit;
 
@@ -13,7 +13,7 @@ class eBackgroundDot {
 
   //alpha
   float alpha;
-  float alphaOffset = 220;
+  float alphaOffset = 230;
   float alphaLimit = 255;
   float alphaPeak = alphaLimit;
 
@@ -128,7 +128,9 @@ class eBackgroundClient {
     float min = msg.get(3).floatValue();
 
 
-    x = map(x, -21.24, 21.24, 0, 3 * width);
+    //for 1902 * 1080
+    // x = map(x, -21.24, 21.24, 0, 3 * width);
+    x = map(x, -15, 15, 0, 3 * width);
     y = map(y, -4, 4, height, 0);
     xCenter = x;
     yCenter = y;

@@ -244,6 +244,7 @@ class Monitor {
         else if (fileSelectorFadeOut) {
           if (dissolveTimer.liner() >= 1) {
             fileSelectorFadeOut = false;
+            // if ( !loadPreset )
             startPlaySkeleton();
           }
         }
@@ -536,8 +537,10 @@ class Monitor {
   void startPlaySkeleton() {
     skeletonFadeIn = true;
     dissolveTimer.startTimer();
-    playing = true;
-    metro.startPlayingAt(currentFrame);
+    if ( !loadPreset ) {
+      playing = true;
+      metro.startPlayingAt(currentFrame);
+    }
     skeleton.set(dataStorage[index][currentFrame]);
   }
 
@@ -854,18 +857,20 @@ class Monitor {
     if ( scaling ) {
       float h_new = y;
       float w_new = h_new * screenRatio;
-      if ( w_new < x ) {
-        w_new = x;
-        h_new = w_new / screenRatio;
-      }
-      w_display = int(w_new);
-      h_display = int(h_new);
+      if ( h_new > 20 && w_new > 20) {
+        if ( w_new < x ) {
+          w_new = x;
+          h_new = w_new / screenRatio;
+        }
+        w_display = int(w_new);
+        h_display = int(h_new);
 
-      if (startPlayingAndAdjusting) {
-        box.killBody();
-        box = new Box(xpos + w_display / 2 , ypos + h_display / 2 ,
-                        w_display + radiusOfShiftingDot * 2,
-                        h_display + radiusOfShiftingDot * 2);
+        if (startPlayingAndAdjusting) {
+          box.killBody();
+          box = new Box(xpos + w_display / 2 , ypos + h_display / 2 ,
+                          w_display + radiusOfShiftingDot * 2,
+                          h_display + radiusOfShiftingDot * 2);
+        }
       }
     }
 
@@ -1157,5 +1162,15 @@ class Monitor {
         triggerKey++;
       }
     }
+  }
+  void switchTriggerKey(int b) {
+    if ( b >= 0 && b <= triggerGroupNumber) {
+      triggerByKey = true;
+      triggerKey = b;
+    }
+  }
+  void switchOffTriggerKey() {
+    triggerByKey = false;
+    triggerKey = -1;
   }
 }

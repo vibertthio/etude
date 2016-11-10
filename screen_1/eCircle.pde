@@ -73,7 +73,9 @@ class eCircleClient {
     int colId = msg.get(5).intValue();
     int trg = msg.get(6).intValue();
 
-    x = map(x, -21.24, 21.24, 0, 3 * width);
+    // x = map(x, -21.24, 21.24, 0, 3 * width);
+
+    x = map(x, -15, 15, 0, 3 * width);
     y = map(y, -4, 4, height, 0);
     sz = map(sz, 0, 4, 0, height/2);
     alpha = map(alpha, 0, 1, 127, 255);

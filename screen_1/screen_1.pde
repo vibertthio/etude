@@ -190,7 +190,9 @@ void setup() {
   MidiBus.list();
   frameRate(40);
   // FullScreen();
-  size(1920, 1080, P3D);
+  // size(1920, 1080, P3D);
+  size(1280, 1024, P3D);
+  // fullScreen(P3D);
   // size(1280, 720, P3D);
   // size(885, 500, P3D);
   // size(1422, 800, P3D);
@@ -945,16 +947,30 @@ void noteOn(int channel, int pitch, int velocity) {
   println("Channel:"+channel);
   println("Pitch:"+pitch);
   println("Velocity:"+velocity);
+
+  //pitch : 0 ~ numberOfFiles
   if ( channel == 0 ) {
-    loadFilePreset(pitch);
+    loadFilePreset( pitch );
   }
 
   // if ( channel == 1 ) {
   //   triggerKeyMonitors(pitch);
   // }
 
+  //pitch : 36 ~ 51
   else if (channel == 9 ) {
-    loadPreset( (pitch - 36) );
+    if ( !selectingTriggerMonitor ) {
+      loadPreset( (pitch - 36) );
+    }
+    //use controller to switch beat
+    else {
+      int b = (pitch - 36) * 2;
+      for (int i=0; i<numberOfMonitors; i++) {
+        if (monitors[i].mouseSense) {
+          monitors[i].switchTriggerKey(b);
+        }
+      }
+    }
   }
 }
 // void noteOff(int channel, int pitch, int velocity) {
@@ -981,7 +997,9 @@ void loadPreset(int index) {
   if (index < (presets.lists).size()) {
     list = (presets.lists).get(index);
     for( int i = 0, n = list.length; i < n; i++) {
-      if (numberOfMonitors < maxNumberOfMonitors) {
+      if (numberOfMonitors < maxNumberOfMonitors
+          && list[i].x > 0 && list[i].x < width
+          && list[i].y > 0 && list[i].y < height) {
         int id = getId();
         monitors[numberOfMonitors] =
           new Monitor( list[i], id);
@@ -995,6 +1013,25 @@ void loadPreset(int index) {
 
 
 }
+// void loadPreset(int index) {
+//   Preset[] list;
+//   if (index < (presets.lists).size()) {
+//     list = (presets.lists).get(index);
+//     for( int i = 0, n = list.length; i < n; i++) {
+//       if (numberOfMonitors < maxNumberOfMonitors) {
+//         int id = getId();
+//         monitors[numberOfMonitors] =
+//           new Monitor( list[i], id);
+//         numberOfMonitors++;
+//       }
+//     }
+//   }
+//   // else {
+//   //   list = (presets.lists).get(0);
+//   // }
+//
+//
+// }
 void loadFilePreset(int index) {
   if (index < fileList.length) {
     if (numberOfMonitors < maxNumberOfMonitors) {
@@ -1004,7 +1041,7 @@ void loadFilePreset(int index) {
       // temp.y = random( 200, height - 200);
       temp.x = mouseX;
       temp.y = mouseY;
-      temp.h = floor( 200 + 100 * random(0,1) );
+      temp.h = floor( 100 + 50 * random(0,1) );
       monitors[numberOfMonitors] =
         new Monitor( temp, id);
       numberOfMonitors++;
@@ -1019,7 +1056,7 @@ void triggerMonitors() {
   }
 }
 
-int triggerGroupNumber = 15;
+int triggerGroupNumber = 31;
 void triggerKeyMonitors( int index ) {
   for (int i=0; i<numberOfMonitors; i++) {
     if (monitors[i].triggerByKey) {

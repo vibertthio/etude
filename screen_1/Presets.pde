@@ -13,6 +13,7 @@ class Presets {
   Preset[] list7;
   Preset[] list8;
   Preset[] list9;
+  Preset[] list10;
 
   Presets() {
     //basic files
@@ -46,18 +47,25 @@ class Presets {
 
     //presets
     lists = new ArrayList <Preset[]> ();
-    list0 = new Preset[16];
+    list0 = new Preset[25];
     list1 = new Preset[3];
     list2 = new Preset[3];
     list3 = new Preset[9];
     list4 = new Preset[3];
     list5 = new Preset[9];
     list6 = new Preset[4];
-    list7 = new Preset[10];
-    list8 = new Preset[3];
+    list7 = new Preset[4];
+    list8 = new Preset[5];
     list9 = new Preset[8];
+    list10 = new Preset[32];
 
     //set 1
+    //
+    // (19)  (236, 162) (453) (670) (887)
+    //       (352)
+    //       (542)
+    //       (732)
+    //       (922)
     list0[0] = (new Preset(files[33])).set(236, 162, 130, 0, 0);
     list0[1] = (new Preset(files[32])).set(453, 162, 130, 0, 2);
     list0[2] = (new Preset(files[32])).set(670, 162, 130, 0, 4);
@@ -74,6 +82,15 @@ class Presets {
     list0[13] = (new Preset(files[32])).set(453, 732, 130, 3, 26);
     list0[14] = (new Preset(files[32])).set(670, 732, 130, 3, 28);
     list0[15] = (new Preset(files[32])).set(887, 732, 130, 3, 30);
+    list0[16] = (new Preset(files[32])).set(1104, 162, 130, 0, 3);
+    list0[17] = (new Preset(files[32])).set(1104, 352, 130, 1, 15);
+    list0[18] = (new Preset(files[32])).set(1104, 542, 130, 2, 27);
+    list0[19] = (new Preset(files[33])).set(1104, 732, 130, 3, 23);
+    list0[20] = (new Preset(files[32])).set(236, 922, 130, 0, 21);
+    list0[21] = (new Preset(files[32])).set(453, 922, 130, 1, 25);
+    list0[22] = (new Preset(files[32])).set(670, 922, 130, 2, 29);
+    list0[23] = (new Preset(files[32])).set(887, 922, 130, 3, 31);
+    list0[24] = (new Preset(files[33])).set(1104, 922, 130, 3, 6);
 
 
     list1[0] = (new Preset(files[32])).set(453, 162, 130, 0, 2);
@@ -114,22 +131,29 @@ class Presets {
     list6[2] = (new Preset(files[32])).set(1104, 542, 130, 2, 27);
     list6[3] = (new Preset(files[33])).set(1104, 732, 130, 3, 23);
 
+    list7[0] = (new Preset(files[32])).set(236, 922, 130, 0, 21);
+    list7[1] = (new Preset(files[32])).set(453, 922, 130, 1, 25);
+    list7[2] = (new Preset(files[32])).set(670, 922, 130, 2, 29);
+    list7[3] = (new Preset(files[32])).set(887, 922, 130, 3, 31);
 
-    //set 2
-    list7[0] = new Preset(100, 80, 0, 300, 33, 50, 4, 23, 4, 0, 0);
-    list7[1] = new Preset(550, 80, 0, 200, 32, 50, 0, 19, 0, 1, 8);
-    list7[2] = new Preset(900, 80, 0, 200, 32, 50, 0, 19, 0, 1, 16);
-    list7[3] = new Preset(1000, 80, 0, 200, 32, 50, 0, 19, 0, 1, 24);
-    list7[4] = new Preset(1000, 350, 0, 200, 30, 50, 0, 19, 0, 2, 16);
-    list7[5] = new Preset(670, 350, 0, 75, 32, 50, 0, 19, 0, 1, 6);
-    list7[6] = new Preset(550, 350, 0, 75, 31, 50, 0, 19, 0, 2, 14);
-    list7[7] = new Preset(100, 570, 0, 200, 33, 50, 4, 23, 4, 0, 20);
-    list7[8] = new Preset(410, 570, 0, 200, 33, 50, 4, 23, 4, 0, 22);
-    list7[9] = new Preset(1000, 570, 0, 200, 30, 50, 0, 19, 0, 2, 26);
+    list8[0] = (new Preset(files[34])).set(19, 162, 130, 0, 16);
+    list8[1] = (new Preset(files[34])).set(19, 352, 130, 1, 20);
+    list8[2] = (new Preset(files[34])).set(19, 542, 130, 2, 26);
+    list8[3] = (new Preset(files[34])).set(19, 732, 130, 3, 28);
+    list8[4] = (new Preset(files[34])).set(19, 922, 130, 3, 28);
 
-    list8[0] = new Preset(200, 200, 0, 400, 0, 25, 0, 40, 0, 0);
-    list8[1] = new Preset(300, 500, 0, 200, 2, 25, 40, 80, 40, 1);
-    list8[2] = new Preset(700, 700, 0, 200, 4, 25, 40, 80, 40, 2);
+
+    // list7[0] = new Preset(100, 80, 0, 300, 33, 50, 4, 23, 4, 0, 0);
+    // list7[1] = new Preset(550, 80, 0, 200, 32, 50, 0, 19, 0, 1, 8);
+    // list7[2] = new Preset(900, 80, 0, 200, 32, 50, 0, 19, 0, 1, 16);
+    // list7[3] = new Preset(1000, 80, 0, 200, 32, 50, 0, 19, 0, 1, 24);
+    // list7[4] = new Preset(1000, 350, 0, 200, 30, 50, 0, 19, 0, 2, 16);
+    // list7[5] = new Preset(670, 350, 0, 75, 32, 50, 0, 19, 0, 1, 6);
+    // list7[6] = new Preset(550, 350, 0, 75, 31, 50, 0, 19, 0, 2, 14);
+    // list7[7] = new Preset(100, 570, 0, 200, 33, 50, 4, 23, 4, 0, 20);
+    // list7[8] = new Preset(410, 570, 0, 200, 33, 50, 4, 23, 4, 0, 22);
+    // list7[9] = new Preset(1000, 570, 0, 200, 30, 50, 0, 19, 0, 2, 26);
+
 
     list9[0] = new Preset(100, 100, 0, 200, 33, 50, 4, 23, 4, 0, 0);
     list9[1] = new Preset(100, 400, 0, 200, 32, 50, 0, 20, 0, 1, 4);
@@ -139,6 +163,39 @@ class Presets {
     list9[5] = new Preset(400, 700, 0, 200, 32, 50, 0, 20, 0, 1, 20);
     list9[6] = new Preset(1000, 700, 0, 200, 32, 50, 0, 20, 0, 3, 24);
     list9[7] = new Preset(400, 100, 0, 200, 32, 50, 0, 20, 0, 1, 28);
+
+    //
+    // (19)  (236, 162) (453) (670) (887)
+    //       (352)
+    //       (542)
+    //       (732)
+    //       (922)
+    list10[0] = (new Preset(files[33])).set(236, 162, 130, 0, 0);
+    list10[1] = (new Preset(files[32])).set(453, 162, 130, 1, 2);
+    list10[2] = (new Preset(files[32])).set(670, 162, 130, 2, 4);
+    list10[3] = (new Preset(files[32])).set(887, 162, 130, 3, 6);
+    list10[4] = (new Preset(files[34])).set(236, 352, 130, 0, 8);
+    list10[5] = (new Preset(files[32])).set(453, 352, 130, 1, 10);
+    list10[6] = (new Preset(files[32])).set(670, 352, 130, 2, 12);
+    list10[7] = (new Preset(files[34])).set(887, 352, 130, 3, 14);
+    list10[8] = (new Preset(files[32])).set(236, 542, 130, 0, 16);
+    list10[9] = (new Preset(files[34])).set(453, 542, 130, 1, 18);
+    list10[10] = (new Preset(files[33])).set(670, 542, 130, 2, 20);
+    list10[11] = (new Preset(files[32])).set(887, 542, 130, 3, 22);
+    list10[12] = (new Preset(files[34])).set(236, 732, 130, 0, 24);
+    list10[13] = (new Preset(files[32])).set(453, 732, 130, 1, 26);
+    list10[14] = (new Preset(files[32])).set(670, 732, 130, 2, 28);
+    list10[15] = (new Preset(files[32])).set(887, 732, 130, 3, 30);
+    list10[16] = (new Preset(files[32])).set(19, 162, 130, 1, 1);
+    list10[17] = (new Preset(files[32])).set(19, 352, 130, 1, 3);
+    list10[18] = (new Preset(files[32])).set(19, 542, 130, 1, 5);
+    list10[19] = (new Preset(files[32])).set(19, 732, 130, 1, 7);
+    list10[20] = (new Preset(files[32])).set(19, 922, 130, 1, 9);
+    list10[21] = (new Preset(files[32])).set(236, 922, 130, 1, 11);
+    list10[22] = (new Preset(files[32])).set(453, 922, 130, 1, 13);
+    list10[23] = (new Preset(files[32])).set(670, 922, 130, 1, 15);
+    list10[24] = (new Preset(files[32])).set(887, 922, 130, 1, 17);
+
 
     lists.add(list0);
     lists.add(list1);
@@ -150,6 +207,7 @@ class Presets {
     lists.add(list7);
     lists.add(list8);
     lists.add(list9);
+    lists.add(list10);
 
 
     // list16[0] = new Preset(100, 100, 0, 200, 0, 50, 50, 100, 60, 0);
@@ -163,6 +221,9 @@ class Presets {
     // list17[3] = new Preset(600, 400, 0, 200, 18, 50, 63, 98, 63, 3);
 
 
+    // list18[0] = new Preset(200, 200, 0, 400, 0, 25, 0, 40, 0, 0);
+    // list18[1] = new Preset(300, 500, 0, 200, 2, 25, 40, 80, 40, 1);
+    // list18[2] = new Preset(700, 700, 0, 200, 4, 25, 40, 80, 40, 2);
   }
 
   // Preset get(int i) {

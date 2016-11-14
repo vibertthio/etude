@@ -32,7 +32,7 @@ int numberOfData = 36;
 int fRate = 20;
 int timeSlot = 1000/fRate;
 int numberOfMonitors = 0;
-int maxNumberOfMonitors = 25;
+int maxNumberOfMonitors = 32;
 int maxFrameNumber = 20000;
 IntList idList;
 int maskValue = 0;
@@ -163,7 +163,8 @@ boolean firstColor = false;
 boolean secondColor = false;
 boolean thirdColor = false;
 boolean physicsWork = true;
-
+boolean mask = false;
+boolean fixSize = false;
 
 //text
 //String fontType = "SansSerif";
@@ -191,8 +192,8 @@ void setup() {
   frameRate(40);
   // FullScreen();
   // size(1920, 1080, P3D);
-  size(1280, 1024, P3D);
-  // fullScreen(P3D);
+  // size(1280, 1024, P3D);
+  fullScreen(P3D);
   // size(1280, 720, P3D);
   // size(885, 500, P3D);
   // size(1422, 800, P3D);
@@ -237,10 +238,10 @@ void setup() {
 
 
   //oscP5
-  oscP5 = new OscP5(this,10001);
+  oscP5 = new OscP5(this,10010);
   //test
-  myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  // myRemoteLocation = new NetAddress("192.168.0.100",12000);
+  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("192.168.0.100",12001);
   // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
@@ -325,21 +326,24 @@ void draw() {
 
   // pushMatrix();
   // stroke(255);
-  // translate(0, 0, 2);
+  // translate(0, 0, 1);
   // line(20, 0, 20, height);
   // popMatrix();
-  //
-  // pushMatrix();
-  // blendMode(LIGHTEST);
-  // // rectMode(CORNER);
-  // translate(0, 0, 10);
-  // noStroke();
-  // fill(0, 200, 0, maskValue);
-  // println(maskValue);
-  // // fill(0);
-  // rect(0, 0, width, height);
-  // // translate(0, 0, -2);
-  // popMatrix();
+
+  if (mask) {
+    pushMatrix();
+    rectMode(CORNER);
+    // blendMode(LIGHTEST);
+    // rectMode(CORNER);
+    translate(0, 0, 1);
+    noStroke();
+    fill(0, 0, 0, maskValue);
+    println(maskValue);
+    // fill(0);
+    rect(0, 0, width, height);
+    // translate(0, 0, -2);
+    popMatrix();
+  }
 }
 
 
@@ -412,6 +416,25 @@ void keyPressed() {
     physicsWork = !physicsWork;
   }
 
+  if ( key == '0') {
+    mask = !mask;
+  }
+
+  if ( key == 'f') {
+    bang = true;
+    if (!fixSize) {
+      msg = "Fix Size";
+    }
+    else {
+      msg = "Random Size";
+    }
+    fixSize = !fixSize;
+  }
+
+  if ( key == 'i') {
+    removeMomitors();
+  }
+
   //PRESETS
   if ( key == 'h') {
     if( maskValue < 245 ) {
@@ -470,6 +493,7 @@ void keyReleased() {
     backGroundColorIndex = 3;
     localBackGroundColor = color (34, 49, 63);
   }
+
 
 
   textTimer.turnOffTimer();
@@ -701,7 +725,9 @@ void drawInfo() {
       msg = "Select Trigger Point";
     }
     else {
-      if (msg != "Trigger")
+      if (msg != "Trigger" &&
+          msg != "Fix Size" &&
+          msg != "Random Size")
         msg = "Edit";
     }
 
@@ -893,8 +919,8 @@ int getId() {
 //ocs events
 void oscEvent(OscMessage theOscMessage) {
   // print("### received an osc message.");
-  // print(" addrpattern: "+theOscMessage.addrPattern());
-  // println(" typetag: "+theOscMessage.typetag());
+  print(" addrpattern: "+theOscMessage.addrPattern());
+  println(" typetag: "+theOscMessage.typetag());
   String pat = theOscMessage.addrPattern();
   String tag = theOscMessage.typetag();
   // println("------------------------");
@@ -925,12 +951,12 @@ void oscEvent(OscMessage theOscMessage) {
     // }
   }
 
-  // else if ( pat.contains("mask") ) {
-  //   println("mask");
-  //   println("typetag: "+theOscMessage.typetag());
-  //   maskValue = 255 - theOscMessage.get(0).intValue();
-  //   println("maskValue: "+ maskValue);
-  // }
+  else if ( pat.contains("mask") ) {
+    // println("mask");
+    // println("typetag: "+theOscMessage.typetag());
+    maskValue = 255 - theOscMessage.get(0).intValue();
+    // println("maskValue: "+ maskValue);
+  }
 }
 public void oscStatus(OscStatus theStatus) {
   println("osc status : "+theStatus.id());
@@ -1041,7 +1067,12 @@ void loadFilePreset(int index) {
       // temp.y = random( 200, height - 200);
       temp.x = mouseX;
       temp.y = mouseY;
-      temp.h = floor( 100 + 50 * random(0,1) );
+      if ( !fixSize ) {
+        temp.h = floor( 200 + 100 * random(0,1) );
+      }
+      else {
+        temp.h = 130;
+      }
       monitors[numberOfMonitors] =
         new Monitor( temp, id);
       numberOfMonitors++;
@@ -1071,5 +1102,10 @@ void triggerBeatMonitors( int beat ) {
       if ( monitors[i].triggerKey == beat )
       monitors[i].triggerPlay();
     }
+  }
+}
+void removeMomitors() {
+  for (int i=0; i<numberOfMonitors; i++) {
+    monitors[i].remove();
   }
 }

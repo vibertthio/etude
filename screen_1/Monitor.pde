@@ -361,7 +361,8 @@ class Monitor {
       tint(255,  255 * (1-fadeOutTimer.liner()));
       image(canvas, xpos, ypos, w_display, h_display);
       stroke(lineColor, 255 * (1-fadeOutTimer.liner()));
-      strokeWeight(lineWeight/2);
+      // strokeWeight(lineWeight/2);
+      strokeWeight(lineWeight);
       noFill();
       rect(xpos - lineWeight/2, ypos - lineWeight/2, w_display, h_display);
       fadeOutControlDotDisplay();
@@ -537,10 +538,12 @@ class Monitor {
   void startPlaySkeleton() {
     skeletonFadeIn = true;
     dissolveTimer.startTimer();
-    if ( !loadPreset ) {
+    if ( !fixSize ) {
       playing = true;
       metro.startPlayingAt(currentFrame);
     }
+    // playing = true;
+    // metro.startPlayingAt(currentFrame);
     skeleton.set(dataStorage[index][currentFrame]);
   }
 
@@ -968,6 +971,20 @@ class Monitor {
         float _x = x * w_rendor / w_display;
         float _y = y * h_rendor / h_display;
         if ( dist ( _x, _y, buttonPosX, buttonPosY ) < buttonRadius ) {
+          if ( theremin ) {
+            String head = "/p" + str(id) + "/close";
+            OscMessage osc = new OscMessage(head);
+            osc.add(1);
+            print(osc);
+            oscP5.send(osc, myRemoteLocation2);
+          }
+          else {
+            String head = "/p" + str(id) + "/open";
+            OscMessage osc = new OscMessage(head);
+            osc.add(1);
+            print(osc);
+            oscP5.send(osc, myRemoteLocation2);
+          }
           theremin = !theremin;
         }
         else if (selectingMonitor) {
@@ -1172,5 +1189,9 @@ class Monitor {
   void switchOffTriggerKey() {
     triggerByKey = false;
     triggerKey = -1;
+  }
+  void remove() {
+    fadeOut = true;
+    fadeOutTimer.startTimer();
   }
 }

@@ -414,7 +414,7 @@ class Skeleton {
 
     String head = "/p" + str(id) +  "/l";
     OscMessage osc = new OscMessage(head);
-    println("left :" + floor(l_position));
+    // println("left :" + floor(l_position));
     // println("x : " + joints[JointType_HandLeft].getX() +
     //         " y : " + joints[JointType_HandLeft].getY());
     // osc.add(joints[JointType_HandLeft].getX());
@@ -432,7 +432,7 @@ class Skeleton {
 
     head = "/p" + str(id) +  "/r";
     osc = new OscMessage(head);
-    println("right :" + floor(r_position));
+    // println("right :" + floor(r_position));
     // println("x : " + joints[JointType_HandRight].getX() +
     //         " y : " + joints[JointType_HandRight].getY());
     // osc.add(joints[JointType_HandRight].getX());

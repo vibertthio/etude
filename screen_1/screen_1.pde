@@ -240,8 +240,8 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this,10010);
   //test
-  // myRemoteLocation = new NetAddress("127.0.0.1",9020);
-  myRemoteLocation = new NetAddress("192.168.0.100",12000);
+  myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  // myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("192.168.0.100",12001);
   // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
@@ -492,6 +492,19 @@ void keyReleased() {
     thirdColor = false;
     backGroundColorIndex = 3;
     localBackGroundColor = color (34, 49, 63);
+  }
+
+  if (key == '1') {
+    loadPreset(0);
+  }
+  if (key == '2') {
+    loadPreset(1);
+  }
+  if (key == '3') {
+    loadPreset(2);
+  }
+  if (key == '4') {
+    loadPreset(3);
   }
 
 

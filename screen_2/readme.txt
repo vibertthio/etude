@@ -1,4 +1,4 @@
-
+1[[]]]]]]]][
 複製應用程式pd兩份，個別打開
 screen_2_main_v2.pd
 screen_2_sound_v2.pd

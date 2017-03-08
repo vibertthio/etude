@@ -661,6 +661,9 @@ void beginContact(Contact cp) {
 
 }
 
+void endContact(Contact cp) {
+}
+
 //other functions
 void draggingDraw() {
   rectMode(CORNER);

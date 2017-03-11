@@ -660,7 +660,6 @@ void beginContact(Contact cp) {
   oscP5.send(osc, myRemoteLocation);
 
 }
-
 void endContact(Contact cp) {
 }
 

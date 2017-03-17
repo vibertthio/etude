@@ -1,4 +1,4 @@
-#N canvas 919 503 478 424 10;
+#N canvas 322 574 478 424 10;
 #X declare -path abs;
 #X declare -path abs_other;
 #N canvas 434 144 1276 737 gemwin-main 0;
@@ -66,9 +66,9 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 109 151 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 6900 1;
+-1 -1 0 1;
 #X obj -78 316 line;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -288,7 +288,7 @@
 #X obj 299 524 sel 0 1;
 #X obj 360 523 spigot;
 #X obj 558 599 udpsend;
-#X obj 184 151 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 184 151 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 520 552 disconnect;
 #X obj 520 524 sel 0 1;
@@ -388,7 +388,7 @@
 1;
 #X obj 269 196 spigot;
 #X obj 585 290 k_range 0 3 60 4;
-#X obj 292 -32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 292 -32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X connect 0 0 6 0;
 #X connect 1 0 3 0;
@@ -818,7 +818,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X coords 0 716 1 715 80 50 0;
 #X restore 179 250 pd boids;
 #X obj 349 163 k_cpu;
-#N canvas 116 23 1265 724 GLSL 0;
+#N canvas 332 194 1265 724 GLSL 0;
 #X obj 256 194 glsl_fragment;
 #X obj 256 246 glsl_program;
 #X msg 331 218 link \$1;
@@ -1688,7 +1688,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 179 316 vj_cursor;
 #X obj 179 295 vj_griddot;
 #X obj 180 342 clone 40 c-circle;
-#N canvas 1186 405 836 660 savedata 1;
+#N canvas 1186 405 836 660 savedata 0;
 #X obj 321 491 s load;
 #X obj 95 34 table ball_ss 30;
 #X obj 97 61 table ball_x 30;

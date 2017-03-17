@@ -189,11 +189,11 @@ void setup() {
   // String[] fontList = PFont.list();
   // println(fontList);
   MidiBus.list();
-  frameRate(40);
   // FullScreen();
   // size(1920, 1080, P3D);
-  // size(1280, 1024, P3D);
-  fullScreen(P3D);
+  // size(1920, 1080);
+  size(1280, 1024, P3D);
+  // fullScreen(P3D);
   // size(1280, 720, P3D);
   // size(885, 500, P3D);
   // size(1422, 800, P3D);
@@ -238,14 +238,14 @@ void setup() {
 
 
   //oscP5
-  oscP5 = new OscP5(this,10010);
+  oscP5 = new OscP5(this,3000);
   //test
-  myRemoteLocation = new NetAddress("127.0.0.1",9020);
+  println("check");
+  myRemoteLocation = new NetAddress("127.0.0.1",9010);
   // myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("192.168.0.100",12001);
   // myRemoteLocation3 = new NetAddress("127.0.0.1",9020);
-
 
 
   client = new eCircleClient();
@@ -660,8 +660,7 @@ void beginContact(Contact cp) {
   oscP5.send(osc, myRemoteLocation);
 
 }
-void endContact(Contact cp) {
-}
+void endContact(Contact cp) {}
 
 //other functions
 void draggingDraw() {

@@ -413,14 +413,14 @@ class Skeleton {
     l_position = 12 * max( 0 , min( 1, l_position )) + 60;
 
     String head = "/p" + str(id) +  "/l";
-    OscMessage osc = new OscMessage(head);
+    // OscMessage osc = new OscMessage(head);
     // println("left :" + floor(l_position));
     // println("x : " + joints[JointType_HandLeft].getX() +
     //         " y : " + joints[JointType_HandLeft].getY());
     // osc.add(joints[JointType_HandLeft].getX());
     // osc.add(joints[JointType_HandLeft].getY());
-    osc.add(floor(l_position));
-    oscP5.send(osc, myRemoteLocation2);
+    // osc.add(floor(l_position));
+    // oscP5.send(osc, myRemoteLocation2);
 
     //right hand
     float r_limit = ( joints[JointType_SpineBase].getY()
@@ -430,15 +430,15 @@ class Skeleton {
     r_position = 127 * max( 0 , min( 1, r_position ));
 
 
-    head = "/p" + str(id) +  "/r";
-    osc = new OscMessage(head);
+    // head = "/p" + str(id) +  "/r";
+    // osc = new OscMessage(head);
     // println("right :" + floor(r_position));
     // println("x : " + joints[JointType_HandRight].getX() +
     //         " y : " + joints[JointType_HandRight].getY());
     // osc.add(joints[JointType_HandRight].getX());
     // osc.add(joints[JointType_HandRight].getY());
-    osc.add(floor(r_position));
-    oscP5.send(osc, myRemoteLocation2);
+    // osc.add(floor(r_position));
+    // oscP5.send(osc, myRemoteLocation2);
   }
 
 

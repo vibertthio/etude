@@ -1,17 +1,17 @@
 class System {
-  Strip[] strips;
-  int nOfStrips = 6;
+  Light[] lights;
+  int nOfLights = 6;
 
   System() {
-    strips = new Strip[nOfStrips];
+    lights = new Light[nOfLights];
     int middle = 400;
     int[] gap = {60, 200, 350};
-    strips[0] = new Strip(0, 0, middle - gap[2], 350, 90);
-    strips[1] = new Strip(0, 0, middle - gap[1], 320, 80);
-    strips[2] = new Strip(0, 0, middle - gap[0], 300, 70);
-    strips[3] = new Strip(0, 0, middle + gap[0], 300, 70);
-    strips[4] = new Strip(0, 0, middle + gap[1], 320, 80);
-    strips[5] = new Strip(0, 0, middle + gap[2], 350, 90);
+    lights[0] = new Light(0, 0, middle - gap[2], 350, 90);
+    lights[1] = new Light(0, 0, middle - gap[1], 320, 80);
+    lights[2] = new Light(0, 0, middle - gap[0], 300, 70);
+    lights[3] = new Light(0, 0, middle + gap[0], 300, 70);
+    lights[4] = new Light(0, 0, middle + gap[1], 320, 80);
+    lights[5] = new Light(0, 0, middle + gap[2], 350, 90);
 
   }
 
@@ -29,9 +29,9 @@ class System {
       turnSequence();
     }
 
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].update();
-      strips[i].render();
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].update();
+      lights[i].render();
     }
 
     image(canvas, 400, 0);
@@ -39,23 +39,23 @@ class System {
   }
 
   void turnOn() {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].turnOn();
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].turnOn();
     }
   }
 
   void turnOn(int time) {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].turnOn(time);
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].turnOn(time);
     }
   }
 
   void turnOneOn(int id) {
-    strips[id].turnOn();
+    lights[id].turnOn();
   }
 
   void turnOneOn(int id, int time) {
-    strips[id].turnOn(time);
+    lights[id].turnOn(time);
   }
 
   boolean turnEachOnActivate = false;
@@ -72,43 +72,43 @@ class System {
   void turnEachOn() {
     turnEachOnCount++;
     if (turnEachOnCount > turnEachOnCountLimit) {
-      int prev = (turnEachOnIndex > 0)? (turnEachOnIndex - 1) : (nOfStrips - 1);
+      int prev = (turnEachOnIndex > 0)? (turnEachOnIndex - 1) : (nOfLights - 1);
       turnOneOn(turnEachOnIndex, turnEachOnTime);
       turnOneOff(prev, turnEachOnTime);
-      turnEachOnIndex = (turnEachOnIndex + 1) % nOfStrips;
+      turnEachOnIndex = (turnEachOnIndex + 1) % nOfLights;
       turnEachOnCount = 0;
     }
   }
 
   void turnOff() {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].turnOff();
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].turnOff();
     }
   }
 
   void turnOff(int time) {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].turnOff(time);
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].turnOff(time);
     }
   }
 
   void turnOneOff(int id) {
-    strips[id].turnOff();
+    lights[id].turnOff();
   }
 
   void turnOneOff(int id, int time) {
-    strips[id].turnOff(time);
+    lights[id].turnOff(time);
   }
 
   void dimRepeat(int time, int ll) {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].dimRepeat(time, ll);
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].dimRepeat(time, ll);
     }
   }
 
   void blink() {
-    for (int i = 0; i < nOfStrips; i++) {
-      strips[i].blink();
+    for (int i = 0; i < nOfLights; i++) {
+      lights[i].blink();
     }
   }
 

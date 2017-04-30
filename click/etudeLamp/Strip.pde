@@ -1,6 +1,6 @@
 color lightColor = color (239, 72, 54);
 
-class Strip {
+class Light {
   int id;
   float angle;
   float xpos;
@@ -29,7 +29,7 @@ class Strip {
   int elapseLength = 10;
   int elapseEdge = 500;
 
-  Strip(int _id, float _a, float _x, float _y, float _sz) {
+  Light(int _id, float _a, float _x, float _y, float _sz) {
     id = _id;
     angle = _a;
     xpos = _x;
@@ -68,7 +68,6 @@ class Strip {
 
   void render() {
     canvas.pushMatrix();
-
     canvas.translate(xpos, ypos);
 
     canvas.noStroke();

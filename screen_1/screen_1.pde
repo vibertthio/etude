@@ -241,7 +241,7 @@ void setup() {
   oscP5 = new OscP5(this,3000);
   //test
   println("check");
-  myRemoteLocation = new NetAddress("127.0.0.1",9010);
+  myRemoteLocation = new NetAddress("127.0.0.1",9020);
   // myRemoteLocation = new NetAddress("192.168.0.100",12000);
   // myRemoteLocation = new NetAddress("10.0.1.4",12000);
   myRemoteLocation2 = new NetAddress("192.168.0.100",12001);

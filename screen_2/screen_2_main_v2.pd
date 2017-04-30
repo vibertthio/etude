@@ -66,9 +66,9 @@
 #X connect 24 0 22 0;
 #X restore 419 369 pd color;
 #X obj 109 151 hsl 70 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
--1 -1 0 1;
+-1 -1 6900 1;
 #X obj -78 316 line;
-#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+#X obj 104 119 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
 1;
 #X obj 72 247 float;
 #X obj 224 382 t a a a;
@@ -228,7 +228,7 @@
 #X obj 695 454 table vol_1 200;
 #X obj 696 479 table vol_2 200;
 #X obj 696 503 table vol_3 200;
-#X msg 224 360 1024 578 0 0;
+#X msg 224 360 200 100 -200 0;
 #X msg 592 279 stereo \$1;
 #X obj 977 191 vradio 15 1 0 4 empty empty empty 0 -8 0 10 -262144
 -1 -1 0;
@@ -288,7 +288,7 @@
 #X obj 299 524 sel 0 1;
 #X obj 360 523 spigot;
 #X obj 558 599 udpsend;
-#X obj 184 151 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 184 151 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 520 552 disconnect;
 #X obj 520 524 sel 0 1;
@@ -657,7 +657,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 481 158 pack f f;
 #X obj 483 281 / 127;
 #X msg 485 186 \$2 \$1;
-#X obj 26 211 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 26 211 tgl 30 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 104 108 sel 1;
 #X obj 481 211 route 41 42;
@@ -870,7 +870,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X msg 7 364 0;
 #X obj -20 342 t a b;
 #X obj -20 462 pix_texture;
-#X msg 325 270 dimen 1024 578;
+#X msg 325 270 dimen 200 100;
 #X obj 117 472 loadbang;
 #X msg 117 496 rectangle 0 \, texunit 0;
 #X obj 420 167 fmod 1;
@@ -1290,7 +1290,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj 132 83 list;
 #X obj 132 109 s mouseOpen;
 #X msg 160 54 1;
-#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 210 54 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 247 95 list;
 #X obj 247 121 s mouseOpen;
@@ -1407,7 +1407,7 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X obj -21 -24 sel 1;
 #X obj 61 -6 t f f;
 #X msg -21 20 open keyboard \$1 \, 1;
-#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj -21 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 468 426 % 30;
 #X obj 850 533 expr (($f1/8)*24);
@@ -1885,20 +1885,22 @@ color 0.13 0.13 0.13 \, cursor 1 \, frame 40 \, border 0 \, menubar
 #X connect 21 0 6 0;
 #X restore 24 2 pd receive sound;
 #X msg 21 188 1024 578 0 0;
-#X msg 36 211 1280 720 0 -50;
 #X obj 24 26 scan 1;
 #X obj 396 265 tgl 30 0 empty empty print 35 7 0 10 -262144 -1 -1 0
 1;
 #X obj 180 367 clone 30 drawline;
 #X obj 150 27 scan 2;
 #X obj 275 27 scan 3;
+#X msg 35 211 1600 1000 0 -1000;
+#X msg 125 192 200 100 -200 0;
 #X connect 0 0 1 0;
 #X connect 6 0 5 0;
 #X connect 7 0 6 0;
-#X connect 14 0 17 0;
-#X connect 14 1 20 0;
-#X connect 14 2 21 0;
+#X connect 14 0 16 0;
+#X connect 14 1 19 0;
+#X connect 14 2 20 0;
 #X connect 15 0 0 0;
-#X connect 16 0 0 0;
-#X connect 18 0 5 1;
-#X connect 20 0 13 0;
+#X connect 17 0 5 1;
+#X connect 19 0 13 0;
+#X connect 21 0 0 0;
+#X connect 22 0 0 0;

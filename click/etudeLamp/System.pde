@@ -1,6 +1,27 @@
+/**
+ * System
+ * TODO
+ * . blinking mode (in a period of time or blink specific time)
+ * . pattern trigger
+ * . piano mode (always enable)
+ * . random mode
+ * . multiple pattern
+ *
+ * ControlP5 panel
+ * . first panel should be the mode radio
+ * . there should be bang panel below radio
+ */
 class System {
   Light[] lights;
   int nOfLights = 6;
+
+  // Modes
+  boolean[] modes = {
+    false, // blink mode
+    false, // random mode
+    false, // pattern mode
+  };
+
 
   System() {
     lights = new Light[nOfLights];
@@ -18,11 +39,6 @@ class System {
   void render() {
     canvas.beginDraw();
     canvas.background(0);
-
-    // turnEachOn
-    if (turnEachOnActivate) {
-      turnEachOn();
-    }
 
     // turnSequence
     if (turnSequenceActivate) {
@@ -56,28 +72,6 @@ class System {
 
   void turnOneOn(int id, int time) {
     lights[id].turnOn(time);
-  }
-
-  boolean turnEachOnActivate = false;
-  int turnEachOnTime = 0;
-  int turnEachOnIndex = 0;
-  int turnEachOnCount = 0;
-  int turnEachOnCountLimit = 5;
-
-  void triggerTurnEachOn(int time) {
-    turnEachOnActivate = !turnEachOnActivate;
-    turnEachOnTime = time;
-  }
-
-  void turnEachOn() {
-    turnEachOnCount++;
-    if (turnEachOnCount > turnEachOnCountLimit) {
-      int prev = (turnEachOnIndex > 0)? (turnEachOnIndex - 1) : (nOfLights - 1);
-      turnOneOn(turnEachOnIndex, turnEachOnTime);
-      turnOneOff(prev, turnEachOnTime);
-      turnEachOnIndex = (turnEachOnIndex + 1) % nOfLights;
-      turnEachOnCount = 0;
-    }
   }
 
   void turnOff() {
@@ -145,5 +139,10 @@ class System {
     }
   }
 
+  // performance
+  void pianoTrigger(int id, int release) {
+    turnOneOn(id);
+    turnOneOff(id, release);
+  }
 
 }

@@ -30,30 +30,14 @@ void draw() {
 }
 
 void keyPressed() {
-
-  if (key == '1') {
-    system.turnOn();
-  }
-  if (key == '2') {
-    system.turnOff();
-  }
-  if (key == '3') {
-    system.turnOn(300);
-  }
-  if (key == '4') {
-    system.turnOff(300);
-  }
-  if (key == '5') {
-    system.dimRepeat(1, 50);
-  }
-  if (key == '6') {
-    system.dimRepeat(3, 30);
+  if (int(key) >= 49 && int(key) <= 54) {
+    system.pianoTrigger(int(key) - 49, 300);
   }
   if (key == '7') {
     system.blink();
   }
   if (key == '8') {
-    // system.elapseTrigger();
+    println("press");
   }
 }
 
@@ -72,7 +56,7 @@ void gui() {
                 .setBackgroundHeight(200)
                 ;
 
-  cp5.addBang("bang_0")
+  cp5.addBang("dim on")
      .setPosition(10,20)
      .setSize(30,30)
      .moveTo(g1)

@@ -17,11 +17,10 @@ class System {
 
   // Modes
   boolean[] modes = {
+    false, // sequence mode
     false, // blink mode
     false, // random mode
-    false, // pattern mode
   };
-
 
   System() {
     lights = new Light[nOfLights];
@@ -40,9 +39,12 @@ class System {
     canvas.beginDraw();
     canvas.background(0);
 
-    // turnSequence
-    if (turnSequenceActivate) {
+    // modes
+    if (modes[0]) { // sequence
       turnSequence();
+    }
+    if (modes[1]) { // blink
+      blinkAll();
     }
 
     for (int i = 0; i < nOfLights; i++) {
@@ -106,8 +108,20 @@ class System {
     }
   }
 
-  boolean turnSequenceActivate = false;
-  int turnSequenceTime = 0;
+  void blink(int id) {
+    lights[id].blink();
+  }
+
+
+  /**
+   * Performance
+   */
+  void pianoTrigger(int id, int release) {
+    turnOneOn(id);
+    turnOneOff(id, release);
+  }
+
+  int turnSequenceTime = 100;
   int turnSequenceIndex = 0;
   int turnSequenceCount = 0;
   int turnSequenceCountLimit = 5;
@@ -118,16 +132,14 @@ class System {
     { 0, 1, 0, 1, 5, 4, 5, 4, 3, 2, 3, 2 },
   };
   int[] sequence;
-
   void triggerSequence(int index, int time) {
     turnOff();
-    turnSequenceActivate = !turnSequenceActivate;
+    modes[0] = !modes[0];
     turnSequenceTime = time;
     sequence = sequenceSet[index%sequenceSet.length];
     turnSequenceIndex = 0;
     turnSequenceCount = 0;
   }
-
   void turnSequence() {
     turnSequenceCount++;
     if (turnSequenceCount > turnSequenceCountLimit) {
@@ -139,10 +151,18 @@ class System {
     }
   }
 
-  // performance
-  void pianoTrigger(int id, int release) {
-    turnOneOn(id);
-    turnOneOff(id, release);
+  int blinkCount = 0;
+  int blinkCountLimit = 5;
+  void triggerBlinkMode() {
+    modes[1] = !modes[1];
   }
+  void blinkAll() {
+    blinkCount++;
+    if (blinkCount > blinkCountLimit) {
+      blink();
+      blinkCount = 0;
+    }
+  }
+
 
 }

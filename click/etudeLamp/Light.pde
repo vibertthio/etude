@@ -22,12 +22,7 @@ class Light {
   // blink function
   boolean blink = false;
   TimeLine turnOnTimer;
-
-  // elapse
-  boolean elaspsing = true;
-  int elapseIndex = 0;
-  int elapseLength = 10;
-  int elapseEdge = 500;
+  int blinkLimit = 20;
 
   Light(int _id, float _a, float _x, float _y, float _sz) {
     id = _id;
@@ -60,7 +55,7 @@ class Light {
       }
     } else if (blink) {
       if (turnOnTimer.liner() == 1) {
-        turnOff();
+        turnOff(blinkLimit);
         blink = false;
       }
     }
@@ -111,12 +106,17 @@ class Light {
     targetAlpha = 0;
   }
 
-  void turnOnFor(int time) {
+  void turnOnFor(int dur) {
+    turnOnFor(dur, 0);
+  }
+
+  void turnOnFor(int dur, int time) {
     repeatBreathing = false;
     blink = true;
-    turnOn();
-    turnOnTimer.limit = time;
+    blinkLimit = time;
+    turnOnTimer.limit = dur;
     turnOnTimer.startTimer();
+    turnOn(blinkLimit);
   }
 
   void blink() {

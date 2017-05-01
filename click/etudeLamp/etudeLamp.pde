@@ -208,19 +208,19 @@ public void controlEvent(ControlEvent theEvent) {
       system.blink();
       break;
     case(4):
-      system.triggerBlinkMode();
+      system.triggerRandomMode();
       break;
     case(5):
-      system.triggerSequence(0, 200);
+      system.triggerSequenceMode(0, 200);
       break;
     case(6):
-      system.triggerSequence(1, 200);
+      system.triggerSequenceMode(1, 200);
       break;
     case(7):
-      system.triggerSequence(2, 200);
+      system.triggerSequenceMode(2, 200);
       break;
     case(8):
-      system.triggerSequence(3, 200);
+      system.triggerSequenceMode(3, 200);
       break;
   }
 }

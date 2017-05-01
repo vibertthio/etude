@@ -46,6 +46,9 @@ class System {
     if (modes[1]) { // blink
       blinkAll();
     }
+    if (modes[2]) {
+      randomSequence();
+    }
 
     for (int i = 0; i < nOfLights; i++) {
       lights[i].update();
@@ -74,6 +77,10 @@ class System {
 
   void turnOneOn(int id, int time) {
     lights[id].turnOn(time);
+  }
+
+  void turnOneOnFor(int id, int time, int dur) {
+    lights[id].turnOnFor(time, dur);
   }
 
   void turnOff() {
@@ -122,6 +129,7 @@ class System {
   }
 
   int turnSequenceTime = 100;
+  int turnSequenceDur = 50;
   int turnSequenceIndex = 0;
   int turnSequenceCount = 0;
   int turnSequenceCountLimit = 5;
@@ -132,7 +140,7 @@ class System {
     { 0, 1, 0, 1, 5, 4, 5, 4, 3, 2, 3, 2 },
   };
   int[] sequence;
-  void triggerSequence(int index, int time) {
+  void triggerSequenceMode(int index, int time) {
     turnOff();
     modes[0] = !modes[0];
     turnSequenceTime = time;
@@ -143,9 +151,7 @@ class System {
   void turnSequence() {
     turnSequenceCount++;
     if (turnSequenceCount > turnSequenceCountLimit) {
-      int prev = (turnSequenceIndex > 0)? (turnSequenceIndex - 1) : (sequence.length - 1);
-      turnOneOn(sequence[turnSequenceIndex], turnSequenceTime);
-      turnOneOff(sequence[prev], turnSequenceTime);
+      turnOneOnFor(sequence[turnSequenceIndex], turnSequenceDur, turnSequenceTime);
       turnSequenceIndex = (turnSequenceIndex + 1) % sequence.length;
       turnSequenceCount = 0;
     }
@@ -164,5 +170,20 @@ class System {
     }
   }
 
-
+  int randomCount = 0;
+  int randomCountLimit = 5;
+  int randomIndex = 0;
+  int randomTime = 200;
+  int randomDuration = 50;
+  void triggerRandomMode() {
+    modes[2] = !modes[2];
+  }
+  void randomSequence() {
+    randomCount++;
+    if (randomCount > randomCountLimit) {
+      randomIndex = floor(random(nOfLights));
+      turnOneOnFor(randomIndex, randomDuration, randomTime);
+      randomCount = 0;
+    }
+  }
 }

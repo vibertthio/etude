@@ -62,6 +62,7 @@ class Light {
   }
 
   void render() {
+    sendOSC();
     canvas.pushMatrix();
     canvas.translate(xpos, ypos);
 
@@ -107,7 +108,7 @@ class Light {
   }
 
   void turnOnFor(int dur) {
-    turnOnFor(dur, 0);
+    turnOnFor(dur, 20);
   }
 
   void turnOnFor(int dur, int time) {
@@ -151,4 +152,12 @@ class Light {
     dimTimer.startTimer();
   }
 
+  // oscP5
+  void sendOSC() {
+    String head = "/l" + str(id);
+    println(head);
+    OscMessage osc = new OscMessage(head);
+    osc.add(alpha);
+    oscP5.send(osc,  myRemoteLocation);
+  }
 }

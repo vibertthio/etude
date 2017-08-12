@@ -155,7 +155,6 @@ class Light {
   // oscP5
   void sendOSC() {
     String head = "/l" + str(id);
-    println(head);
     OscMessage osc = new OscMessage(head);
     osc.add(alpha);
     oscP5.send(osc,  myRemoteLocation);

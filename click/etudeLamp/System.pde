@@ -69,6 +69,22 @@ class System {
     }
   }
 
+  boolean randomTriggerOn = false;
+  int randomTriggerIndex;
+  void randomTriggerOne() {
+    if (!randomTriggerOn) {
+      int temp;
+      do {
+        temp = floor(random(nOfLights));
+      } while (temp == randomTriggerIndex);
+      randomTriggerIndex = temp;
+      turnOneOn(randomTriggerIndex);
+    } else {
+      turnOneOff(randomTriggerIndex);
+    }
+    randomTriggerOn = !randomTriggerOn;
+  }
+
   void turnOn(int time) {
     for (int i = 0; i < nOfLights; i++) {
       lights[i].turnOn(time);
@@ -191,11 +207,11 @@ class System {
     }
   }
 
-  int complexSequenceTime = 300;
-  int complexSequenceDur = 100;
+  int complexSequenceTime = 10;
+  int complexSequenceDur = 20;
   int complexSequenceIndex = 0;
   int complexSequenceCount = 0;
-  int complexSequenceCountLimit = 20;
+  int complexSequenceCountLimit = 3;
   int[][][] complexSequenceSet = {
     {
       {0, 5},

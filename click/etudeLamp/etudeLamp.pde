@@ -2,6 +2,7 @@ import codeanticode.syphon.*;
 import controlP5.*;
 import oscP5.*;
 import netP5.*;
+import themidibus.*;
 
 //oscP5
 OscP5 oscP5;
@@ -11,9 +12,16 @@ NetAddress myRemoteLocation;
 ControlP5 cp5;
 Accordion accordion;
 
+//midi bus
+MidiBus midi;
+
 PGraphics canvas;
 
 System system;
+boolean localHost = false;
+
+//state
+boolean controlling = false;
 
 color c = color(0, 160, 100);
 
@@ -23,13 +31,20 @@ void settings() {
 }
 
 void setup() {
+  MidiBus.list();
+  midi = new MidiBus(this, "vibert", -1);
+
   background(20);
   canvas = createGraphics(800, 800, P3D);
   system = new System();
 
   // oscP5
   oscP5 = new OscP5(this,3000);
-  myRemoteLocation = new NetAddress("169.254.42.145", 7300);
+  // if (localHost) {
+  //   myRemoteLocation = new NetAddress("127.0.0.1", 7300);
+  // } else {
+  // }
+  myRemoteLocation = new NetAddress("169.254.114.53", 7300);
 
   gui();
 }
@@ -51,11 +66,8 @@ void keyPressed() {
   }
 }
 
-void mousePressed() {
 
-}
-
-
+Toggle sw;
 void gui() {
 
   cp5 = new ControlP5(this);
@@ -132,18 +144,23 @@ void gui() {
   ;
 
 
-  cp5.addToggle("m1")
+  sw = cp5.addToggle("switch")
     .setPosition(10,20)
     .setSize(20,20)
     .moveTo(g2)
   ;
+  cp5.addToggle("m1")
+    .setPosition(10,55)
+    .setSize(20,20)
+    .moveTo(g2)
+  ;
   cp5.addToggle("m2")
-    .setPosition(35,20)
+    .setPosition(35,55)
     .setSize(20,20)
     .moveTo(g2)
   ;
   cp5.addToggle("m3")
-    .setPosition(60,20)
+    .setPosition(60,55)
     .setSize(20,20)
     .moveTo(g2)
   ;
@@ -175,9 +192,12 @@ public void controlEvent(ControlEvent theEvent) {
       " / name:"+theEvent.controller().getName()+
       " / value:"+theEvent.controller().getValue()
     );
+    if (theEvent.controller().getName() == "switch") {
+      sendSwitchOSC(int(theEvent.controller().getValue()));
+    }
     switch(theEvent.controller().getId()) {
       case (0):
-        system.turnOn(300);
+        system.turnOn(5000);
         break;
       case (1):
         system.turnOff(300);
@@ -186,7 +206,7 @@ public void controlEvent(ControlEvent theEvent) {
         system.dimRepeat(3, 500);
         break;
       case (3):
-        system.triggerBlinkMode();
+          system.triggerBlinkMode();
         break;
       case (4):
         system.triggerRandomMode();
@@ -206,3 +226,144 @@ public void controlEvent(ControlEvent theEvent) {
     }
   }
 }
+
+void sendSwitchOSC(int state) {
+  String head = "/ls";
+  OscMessage osc = new OscMessage(head);
+  osc.add(state);
+  oscP5.send(osc,  myRemoteLocation);
+}
+
+//midi bus
+int ch = 9;
+void noteOn(int channel, int pitch, int velocity) {
+  println();
+  println("Note On:");
+  println("--------");
+  println("Channel:"+channel);
+  println("Pitch:"+pitch);
+  println("Velocity:"+velocity);
+
+  if (channel == ch) {
+    switch(pitch) {
+      case(65) :
+        if (velocity == 0) {
+          sendSwitchOSC(0);
+          sw.setValue(0);
+          controlling = false;
+        } else {
+          sendSwitchOSC(1);
+          sw.setValue(1);
+          controlling = true;
+        }
+        break;
+      case(69) :
+        system.triggerBlinkMode();
+        break;
+      case(70) :
+        system.randomTriggerOne();
+        break;
+      case(71) :
+        if (velocity != 0) {
+          system.turnOn();
+          system.turnOff(200);
+        }
+        break;
+      case(72) :
+        system.triggerComplexSequenceMode(1);
+        break;
+      case(73) :
+        if (velocity != 0) {
+          system.turnOneOn(1);
+          system.turnOneOff(1, 200);
+          system.turnOneOn(2);
+          system.turnOneOff(2, 200);
+          system.turnOneOn(3);
+          system.turnOneOff(3, 200);
+          system.turnOneOn(4);
+          system.turnOneOff(4, 200);
+        }
+        break;
+      case(74) :
+        if (velocity != 0) {
+          system.turnOneOn(0);
+          system.turnOneOff(0, 200);
+          system.turnOneOn(1);
+          system.turnOneOff(1, 200);
+          system.turnOneOn(4);
+          system.turnOneOff(4, 200);
+          system.turnOneOn(5);
+          system.turnOneOff(5, 200);
+        }
+        break;
+      case(75) :
+        if (velocity != 0) {
+          system.turnOff();
+          system.turnOn(9000);
+        }
+        break;
+      case(76) :
+        if (velocity != 0) {
+          system.turnOff();
+          system.turnOn(4000);
+        }
+        break;
+      case(81) :
+        break;
+      case(82) :
+        break;
+    }
+  }
+}
+// void noteOn(int channel, int pitch, int velocity) {
+//   println();
+//   println("Note On:");
+//   println("--------");
+//   println("Channel:"+channel);
+//   println("Pitch:"+pitch);
+//   println("Velocity:"+velocity);
+//
+//   if (channel == 14) {
+//     switch(pitch) {
+//       case(72) :
+//         if (!controlling) {
+//           sendSwitchOSC(1);
+//           sw.setValue(1);
+//         } else {
+//           sendSwitchOSC(0);
+//           sw.setValue(0);
+//         }
+//         controlling = !controlling;
+//         break;
+//       case(73) :
+//         system.turnOn(300);
+//         break;
+//       case(74) :
+//         system.turnOff(300);
+//         break;
+//       case(75) :
+//         system.dimRepeat(3, 500);
+//         break;
+//       case(76) :
+//         system.triggerBlinkMode();
+//         break;
+//       case(77) :
+//         system.triggerRandomMode();
+//         break;
+//       case(78) :
+//         system.triggerSequenceMode(0, 200);
+//         break;
+//       case(79) :
+//         system.triggerSequenceMode(1, 200);
+//         break;
+//       case(80) :
+//         system.triggerSequenceMode(2, 200);
+//         break;
+//       case(81) :
+//         system.triggerComplexSequenceMode(1);
+//         break;
+//       case(82) :
+//         break;
+//     }
+//   }
+// }

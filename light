@@ -1,0 +1,2 @@
+#!/bin/sh
+processing-java --sketch=/Users/vibertthio/Documents/etude/click/etudeLamp --run

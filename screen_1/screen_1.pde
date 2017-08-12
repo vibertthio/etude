@@ -191,15 +191,15 @@ void setup() {
   MidiBus.list();
   // FullScreen();
   // size(1920, 1080, P3D);
-  // size(1920, 1080);
-  size(1280, 1024, P3D);
+  size(960, 540, P3D);
+  // size(1280, 1024, P3D);
   // fullScreen(P3D);
   // size(1280, 720, P3D);
   // size(885, 500, P3D);
   // size(1422, 800, P3D);
   // size(708, 400, P3D);
   noCursor();
-  midi = new MidiBus(this, 0, -1);
+  midi = new MidiBus(this, "LK Mini MIDI", -1);
 
   //color Adjusting
   mainBackgroundColor = etudeBack;

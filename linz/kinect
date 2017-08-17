@@ -1,0 +1,3 @@
+#!/bin/sh
+
+processing-java --sketch=/Users/vibertthio/Documents/etude/linz/screen_1 --run

@@ -977,14 +977,14 @@ class Monitor {
             String head = "/p" + str(id) + "/close";
             OscMessage osc = new OscMessage(head);
             osc.add(1);
-            print(osc);
+            // print(osc);
             oscP5.send(osc, myRemoteLocation);
           }
           else {
             String head = "/p" + str(id) + "/open";
             OscMessage osc = new OscMessage(head);
             osc.add(1);
-            print(osc);
+            // print(osc);
             oscP5.send(osc, myRemoteLocation);
           }
           theremin = !theremin;

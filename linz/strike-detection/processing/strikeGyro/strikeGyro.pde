@@ -1,5 +1,10 @@
 import processing.serial.*;
 import processing.opengl.*;
+import oscP5.*;
+import netP5.*;
+
+OscP5 oscP5;
+NetAddress myRemoteLocation;
 
 Serial port;                         // The serial port
 char[] teapotPacket = new char[14];  // InvenSense Teapot packet
@@ -36,6 +41,10 @@ void setup() {
     // String portName = "/dev/cu.usbmodem1421";
     port = new Serial(this, portName, 115200);
     port.write('r');
+
+    // oscP5
+    oscP5 = new OscP5(this,12000);
+    myRemoteLocation = new NetAddress("169.254.114.53",3002);
 }
 
 void draw() {
@@ -50,7 +59,7 @@ void draw() {
   bk -= bk * 0.1;
   background(bk);
   derivative();
-
+  sendOsc();
 }
 
 void trigger() {
@@ -60,6 +69,11 @@ void trigger() {
 void trigger(float value) {
   float v = map(value, 2000, 10000, 0, 255);
   bk = v;
+
+  String head = "/strike";
+  OscMessage osc = new OscMessage(head);
+  osc.add(v);
+  oscP5.send(osc, myRemoteLocation);
 }
 
 void serialEvent(Serial port) {
@@ -95,7 +109,7 @@ void serialEvent(Serial port) {
                   if (accel[i] >= 2) accel[i] = -4 + accel[i];
                 }
                 // derivative();
-                debug();
+                // debug();
             }
         }
     }
@@ -140,14 +154,14 @@ void debug() {
   //   print("y:\t" + accel[1] * 100 + "\t");
   //   println("z:\t" + accel[2] * 100);
   // }
-  println("accel:");
-  print("x:\t" + accel[0] * 100 + "\t");
-  print("y:\t" + accel[1] * 100 + "\t");
-  println("z:\t" + accel[2] * 100);
-  println("gyro:");
-  print("x:\t" + accel[3] * 10000 + "\t");
-  print("y:\t" + accel[4] * 10000 + "\t");
-  println("z:\t" + accel[5] * 10000);
+  // println("accel:");
+  // print("x:\t" + accel[0] * 100 + "\t");
+  // print("y:\t" + accel[1] * 100 + "\t");
+  // println("z:\t" + accel[2] * 100);
+  // println("gyro:");
+  // print("x:\t" + accel[3] * 10000 + "\t");
+  // print("y:\t" + accel[4] * 10000 + "\t");
+  // println("z:\t" + accel[5] * 10000);
 }
 
 boolean showValue = false;
@@ -161,4 +175,17 @@ void keyReleased() {
   if (key == ' ') {
     showValue = false;
   }
+}
+
+void sendOsc() {
+  String head = "/accel";
+  OscMessage osc = new OscMessage(head);
+  osc.add(accel[0]);
+  osc.add(accel[1]);
+  osc.add(accel[2]);
+  osc.add(motion[1]);
+  osc.add(accel[3] * 10000);
+  osc.add(accel[4] * 10000);
+  osc.add(accel[5] * 10000);
+  oscP5.send(osc, myRemoteLocation);
 }

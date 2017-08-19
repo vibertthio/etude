@@ -281,7 +281,7 @@ void loop() {
 
         // read a packet from FIFO
         mpu.getFIFOBytes(fifoBuffer, packetSize);
-        
+
         // track FIFO count here in case there is > 1 packet available
         // (this lets us immediately read more without waiting for an interrupt)
         fifoCount -= packetSize;
@@ -369,7 +369,7 @@ void loop() {
 
 
         #endif
-    
+
         #ifdef OUTPUT_TEAPOT
             // display quaternion values in InvenSense Teapot demo format:
             mpu.dmpGetQuaternion(&q, fifoBuffer);
@@ -378,18 +378,21 @@ void loop() {
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
             mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
 
+            mpu.dmpGetQuaternion(&q, fifoBuffer);
+            mpu.dmpGetEuler(euler, &q);
+
             teapotPacket[2] = (uint8_t)(aaWorld.x >> 8);
             teapotPacket[3] = (uint8_t)(aaWorld.x & 0xFF);
             teapotPacket[4] = (uint8_t)(aaWorld.y >> 8);
             teapotPacket[5] = (uint8_t)(aaWorld.y & 0xFF);
             teapotPacket[6] = (uint8_t)(aaWorld.z >> 8);
             teapotPacket[7] = (uint8_t)(aaWorld.z & 0xFF);
-            teapotPacket[8] = (uint8_t)(aaWorld.x >> 8);
-            teapotPacket[9] = (uint8_t)(aaWorld.x & 0xFF);
-            teapotPacket[10] = (uint8_t)(aaWorld.y >> 8);
-            teapotPacket[11] = (uint8_t)(aaWorld.y & 0xFF);
-            teapotPacket[12] = (uint8_t)(aaWorld.z >> 8);
-            teapotPacket[13] = (uint8_t)(aaWorld.z & 0xFF);
+            teapotPacket[8] = (uint8_t)((int)(euler[0] * 180/M_PI) >> 8);
+            teapotPacket[9] = (uint8_t)((int)(euler[0] * 180/M_PI) & 0xFF);
+            teapotPacket[10] = (uint8_t)((int)(euler[1] * 180/M_PI) >> 8);
+            teapotPacket[11] = (uint8_t)((int)(euler[1] * 180/M_PI) & 0xFF);
+            teapotPacket[12] = (uint8_t)((int)(euler[2] * 180/M_PI) >> 8);
+            teapotPacket[13] = (uint8_t)((int)(euler[2] * 180/M_PI) & 0xFF);
             Serial.write(teapotPacket, 18);
             teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
         #endif

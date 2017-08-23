@@ -81,6 +81,11 @@ void serialEvent(Serial port) {
     while (port.available() > 0) {
         int ch = port.read();
 
+        if (serialCount == 0 && ch == '#') {
+          println("message:");
+          println(port.read());
+        }
+
         if (synced == 0 && ch != '$') return;   // initial synchronization - also used to resync/realign if needed
         synced = 1;
         //print ((char)ch);

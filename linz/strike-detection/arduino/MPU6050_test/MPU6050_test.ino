@@ -90,7 +90,7 @@ MPU6050 mpu;
 // (in degrees) calculated from the quaternions coming from the FIFO.
 // Note that Euler angles suffer from gimbal lock (for more info, see
 // http://en.wikipedia.org/wiki/Gimbal_lock)
-//#define OUTPUT_READABLE_EULER
+// #define OUTPUT_READABLE_EULER
 
 // uncomment "OUTPUT_READABLE_YAWPITCHROLL" if you want to see the yaw/
 // pitch/roll angles (in degrees) calculated from the quaternions coming
@@ -142,6 +142,23 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 // packet structure for InvenSense teapot demo
 //uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 uint8_t teapotPacket[18] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
+
+
+// ====================================================
+// ===               BUTTON CONFIG                  ===
+// ====================================================
+// set pin numbers:
+const int buttonPin = 2;    // the number of the pushbutton pin
+// Variables will change:
+int ledState = HIGH;         // the current state of the output pin
+int buttonState;             // the current reading from the input pin
+int lastButtonState = LOW;   // the previous reading from the input pin
+
+// the following variables are long's because the time, measured in miliseconds,
+// will quickly become a bigger number than can be stored in an int.
+long lastDebounceTime = 0;  // the last time the output pin was toggled
+long debounceDelay = 50;    // the debounce time; increase if the output flickers
+uint8_t buttonMessage[2] = { '#', 1 };
 
 
 
@@ -235,6 +252,8 @@ void setup() {
 
     // configure LED for output
     pinMode(LED_PIN, OUTPUT);
+    pinMode(buttonPin, INPUT);
+
 }
 
 
@@ -249,17 +268,38 @@ void loop() {
 
     // wait for MPU interrupt or extra packet(s) available
     while (!mpuInterrupt && fifoCount < packetSize) {
-        // other program behavior stuff here
-        // .
-        // .
-        // .
-        // if you are really paranoid you can frequently test in between other
-        // stuff to see if mpuInterrupt is true, and if so, "break;" from the
-        // while() loop to immediately process the MPU data
-        // .
-        // .
-        // .
+        break;
     }
+
+    /******* buttons detection *******/
+    int reading = digitalRead(buttonPin);
+
+    // check to see if you just pressed the button
+    // (i.e. the input went from LOW to HIGH),  and you've waited
+    // long enough since the last press to ignore any noise:
+
+    // If the switch changed, due to noise or pressing:
+    if (reading != lastButtonState) {
+      // reset the debouncing timer
+      lastDebounceTime = millis();
+    }
+
+    if ((millis() - lastDebounceTime) > debounceDelay) {
+      // whatever the reading is at, it's been there for longer
+      // than the debounce delay, so take it as the actual current state:
+
+      // if the button state has changed:
+      if (reading != buttonState) {
+        buttonState = reading;
+
+        // only toggle the LED if the new button state is HIGH
+        if (buttonState == HIGH) {
+          Serial.write(buttonMessage, 2);
+        }
+      }
+    }
+    lastButtonState = reading;
+
 
     // reset interrupt flag and get INT_STATUS byte
     mpuInterrupt = false;

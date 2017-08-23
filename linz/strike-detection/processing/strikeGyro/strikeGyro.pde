@@ -59,7 +59,7 @@ void draw() {
   bk -= bk * 0.1;
   background(bk);
   derivative();
-  sendOsc();
+  sendAccelOsc();
 }
 
 void trigger() {
@@ -69,22 +69,45 @@ void trigger() {
 void trigger(float value) {
   float v = map(value, 2000, 10000, 0, 255);
   bk = v;
+  sendOsc("/strike", v);
+}
 
-  String head = "/strike";
-  OscMessage osc = new OscMessage(head);
-  osc.add(v);
-  oscP5.send(osc, myRemoteLocation);
+int syncButton = 0;
+int buttonId = 0;
+
+void buttonEvent(int ch) {
+  if (syncButton == 0 && ch == '*') {
+    syncButton = 1;
+  } else if (syncButton == 1 && ch == '#') {
+    syncButton = 2;
+  } else if (syncButton == 2 && (
+    (ch > 47 && ch < 51)
+  )) {
+    buttonId = (ch - 48);
+    syncButton = 3;
+  } else if (syncButton == 3 && (ch == 'a' || ch == 'b')) {
+    if (ch == 'a') {
+      println("button #" + buttonId + ": on");
+      syncButton = 0;
+      sendOsc("/btn", buttonId, 1);
+    }
+    if (ch == 'b') {
+      println("button #" + buttonId + ": off");
+      syncButton = 0;
+      sendOsc("/btn", buttonId, 0);
+    }
+    syncButton = 0;
+  } else {
+    syncButton = 0;
+  }
 }
 
 void serialEvent(Serial port) {
+    // println("-------------");
     interval = millis();
     while (port.available() > 0) {
         int ch = port.read();
-
-        if (serialCount == 0 && ch == '#') {
-          println("message:");
-          println(port.read());
-        }
+        buttonEvent(ch);
 
         if (synced == 0 && ch != '$') return;   // initial synchronization - also used to resync/realign if needed
         synced = 1;
@@ -113,7 +136,6 @@ void serialEvent(Serial port) {
                 for (int i = 0; i < 6; i++) {
                   if (accel[i] >= 2) accel[i] = -4 + accel[i];
                 }
-                // derivative();
                 // debug();
             }
         }
@@ -182,7 +204,18 @@ void keyReleased() {
   }
 }
 
-void sendOsc() {
+void sendOsc(String h, float v) {
+  OscMessage osc = new OscMessage(h);
+  osc.add(v);
+  oscP5.send(osc, myRemoteLocation);
+}
+void sendOsc(String h, int i_1, int i_2) {
+  OscMessage osc = new OscMessage(h);
+  osc.add(i_1);
+  osc.add(i_2);
+  oscP5.send(osc, myRemoteLocation);
+}
+void sendAccelOsc() {
   String head = "/accel";
   OscMessage osc = new OscMessage(head);
   osc.add(accel[0]);

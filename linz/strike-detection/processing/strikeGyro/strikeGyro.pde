@@ -205,25 +205,25 @@ void keyReleased() {
 }
 
 void sendOsc(String h, float v) {
-  OscMessage osc = new OscMessage(h);
-  osc.add(v);
-  oscP5.send(osc, myRemoteLocation);
+  // OscMessage osc = new OscMessage(h);
+  // osc.add(v);
+  // oscP5.send(osc, myRemoteLocation);
 }
 void sendOsc(String h, int i_1, int i_2) {
-  OscMessage osc = new OscMessage(h);
-  osc.add(i_1);
-  osc.add(i_2);
-  oscP5.send(osc, myRemoteLocation);
+  // OscMessage osc = new OscMessage(h);
+  // osc.add(i_1);
+  // osc.add(i_2);
+  // oscP5.send(osc, myRemoteLocation);
 }
 void sendAccelOsc() {
-  String head = "/accel";
-  OscMessage osc = new OscMessage(head);
-  osc.add(accel[0]);
-  osc.add(accel[1]);
-  osc.add(accel[2]);
-  osc.add(motion[1]);
-  osc.add(accel[3] * 10000);
-  osc.add(accel[4] * 10000);
-  osc.add(accel[5] * 10000);
-  oscP5.send(osc, myRemoteLocation);
+  // String head = "/accel";
+  // OscMessage osc = new OscMessage(head);
+  // osc.add(accel[0]);
+  // osc.add(accel[1]);
+  // osc.add(accel[2]);
+  // osc.add(motion[1]);
+  // osc.add(accel[3] * 10000);
+  // osc.add(accel[4] * 10000);
+  // osc.add(accel[5] * 10000);
+  // oscP5.send(osc, myRemoteLocation);
 }

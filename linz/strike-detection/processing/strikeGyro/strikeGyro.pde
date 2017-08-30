@@ -36,9 +36,9 @@ void setup() {
     // Serial.list();
 
     // get the first available port (use EITHER this OR the specific port code below)
-    String portName = Serial.list()[3];
+    // String portName = Serial.list()[3];
+    String portName = "/dev/cu.VT-HC-05-SPPDev";
     println(portName);
-    // String portName = "/dev/cu.usbmodem1421";
     port = new Serial(this, portName, 115200);
     port.write('r');
 

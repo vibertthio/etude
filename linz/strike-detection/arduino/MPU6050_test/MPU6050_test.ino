@@ -49,10 +49,15 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 uint8_t teapotPacket[18] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
 // Buttons
-Button button_1(0x30, 2);
-Button button_2(0x31, 3);
-Button switch_1(0x32, 4);
-
+//Button button_1(0x30, 2);
+//Button button_2(0x31, 3);
+//Button switch_1(0x32, 4);
+//Button button_1(0x30, 9);
+//Button button_2(0x31, 3);
+//Button switch_1(0x32, 5);
+Button button_1(0x30, 11);
+Button button_2(0x31, 5);
+Button switch_1(0x32, 8);
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===

@@ -32,12 +32,12 @@ void init() {
 void setup() {
     // 300px square viewport using OpenGL rendering
     size(300, 300);
-    // println(Serial.list());
+    println(Serial.list());
     // Serial.list();
 
     // get the first available port (use EITHER this OR the specific port code below)
     // String portName = Serial.list()[3];
-    String portName = "/dev/cu.VT-HC-05-SPPDev";
+    String portName = "/dev/cu.VT-HC-05-2-DevB";
     println(portName);
     port = new Serial(this, portName, 115200);
     port.write('r');

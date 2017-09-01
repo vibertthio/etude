@@ -20,8 +20,18 @@ int time = 0;
 int count = 0;
 int limit = 2;
 int bang = 0;
+int sendAccelCount = 0;
 
 float bk = 0;
+
+String[] ports = {
+  "/dev/cu.VT-HC-05-SPPDev",
+  "/dev/tty.VT-HC-05-SPPDev",
+  "/dev/cu.VT-HC-05-2-DevB",
+  "/dev/tty.VT-HC-05-2-DevB",
+  "na",
+  "na",
+};
 
 void init() {
   motion[0] = 0;
@@ -34,17 +44,21 @@ void setup() {
     size(300, 300);
     println(Serial.list());
     // Serial.list();
-
-    // get the first available port (use EITHER this OR the specific port code below)
     // String portName = Serial.list()[3];
-    String portName = "/dev/cu.VT-HC-05-2-DevB";
-    println(portName);
-    port = new Serial(this, portName, 115200);
+    // println(portName);
+    try {
+      port = new Serial(this, ports[2], 115200);
+    } catch(Exception e) {
+      println("catch:");
+      e.printStackTrace();
+      port = new Serial(this, ports[3], 115200);
+    }
     port.write('r');
 
     // oscP5
     oscP5 = new OscP5(this,12000);
     myRemoteLocation = new NetAddress("169.254.114.53",3002);
+    // myRemoteLocation = new NetAddress("127.0.0.1",3002);
 }
 
 void draw() {
@@ -59,7 +73,10 @@ void draw() {
   bk -= bk * 0.1;
   background(bk);
   derivative();
-  sendAccelOsc();
+  if (sendAccelCount++ > 1) {
+    sendAccelOsc();
+    sendAccelCount = 0;
+  }
 }
 
 void trigger() {
@@ -226,4 +243,15 @@ void sendAccelOsc() {
   // osc.add(accel[4] * 10000);
   // osc.add(accel[5] * 10000);
   // oscP5.send(osc, myRemoteLocation);
+}
+
+/* incoming osc message are forwarded to the oscEvent method. */
+void oscEvent(OscMessage theOscMessage) {
+  if(theOscMessage.checkAddrPattern("/hdl")) {
+    if(theOscMessage.checkTypetag("i")) {
+      int value = theOscMessage.get(0).intValue();
+      value = floor(map(value, 0, 255, 0, 250));
+      port.write(value);
+    }
+  }
 }

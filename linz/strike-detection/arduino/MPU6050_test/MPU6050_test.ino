@@ -25,6 +25,7 @@ MPU6050 mpu;
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
+#define LED_OUTPUT 9
 bool blinkState = false;
 
 // MPU control/status vars
@@ -58,6 +59,9 @@ uint8_t teapotPacket[18] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00
 Button button_1(0x30, 11);
 Button button_2(0x31, 5);
 Button switch_1(0x32, 8);
+
+// Light
+
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
@@ -158,6 +162,13 @@ void setup() {
 // ================================================================
 // ===                    MAIN PROGRAM LOOP                     ===
 // ================================================================
+int value = 255;
+void ledOutput() {
+  if (Serial.available() > 0) {
+    value = Serial.read();
+    analogWrite(LED_OUTPUT, value);
+  }
+}
 
 void loop() {
     // if programming failed, don't try to do anything
@@ -171,6 +182,8 @@ void loop() {
     button_1.check();
     button_2.check();
     switch_1.check();
+    
+    ledOutput();
 
     // reset interrupt flag and get INT_STATUS byte
     mpuInterrupt = false;

@@ -25,7 +25,11 @@ MPU6050 mpu;
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
-#define LED_OUTPUT 9
+#define LED_OUTPUT_1 10
+#define LED_OUTPUT_2 11
+
+//#define LED_OUTPUT 10
+
 bool blinkState = false;
 
 // MPU control/status vars
@@ -53,12 +57,14 @@ uint8_t teapotPacket[18] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00
 //Button button_1(0x30, 2);
 //Button button_2(0x31, 3);
 //Button switch_1(0x32, 4);
-//Button button_1(0x30, 9);
-//Button button_2(0x31, 3);
-//Button switch_1(0x32, 5);
-Button button_1(0x30, 11);
-Button button_2(0x31, 5);
-Button switch_1(0x32, 8);
+
+Button button_1(0x30, 9);
+Button button_2(0x31, 3);
+Button switch_1(0x32, 5);
+
+//Button button_1(0x30, 11);
+//Button button_2(0x31, 5);
+//Button switch_1(0x32, 8);
 
 // Light
 
@@ -154,6 +160,9 @@ void setup() {
     // configure LED for output
     pinMode(LED_PIN, OUTPUT);
     // pinMode(buttonPin, INPUT);
+    pinMode(LED_OUTPUT_1, OUTPUT);
+    pinMode(LED_OUTPUT_2, OUTPUT);
+
 
 }
 
@@ -166,7 +175,8 @@ int value = 255;
 void ledOutput() {
   if (Serial.available() > 0) {
     value = Serial.read();
-    analogWrite(LED_OUTPUT, value);
+    analogWrite(LED_OUTPUT_1, value);
+    analogWrite(LED_OUTPUT_2, value);
   }
 }
 

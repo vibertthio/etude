@@ -47,11 +47,11 @@ void setup() {
     // String portName = Serial.list()[3];
     // println(portName);
     try {
-      port = new Serial(this, ports[2], 115200);
+      port = new Serial(this, ports[0], 115200);
     } catch(Exception e) {
       println("catch:");
       e.printStackTrace();
-      port = new Serial(this, ports[3], 115200);
+      port = new Serial(this, ports[1], 115200);
     }
     port.write('r');
 
@@ -212,6 +212,25 @@ boolean showValue = false;
 void keyPressed() {
   if (key == ' ') {
     showValue = true;
+  }
+
+  if (key == '1') {
+    port.write(0);
+  }
+  if (key == '2') {
+    port.write(50);
+  }
+  if (key == '3') {
+    port.write(100);
+  }
+  if (key == '4') {
+    port.write(150);
+  }
+  if (key == '5') {
+    port.write(200);
+  }
+  if (key == '6') {
+    port.write(250);
   }
 }
 

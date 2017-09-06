@@ -1091,8 +1091,9 @@ class Monitor {
     if (adjustingSpeed && mouseSense) {
       canvas.noStroke();
       canvas.rectMode(CORNER);
-      for (int i = 0; i < n; i++) {
-        color c = (loopStartSignColor * i / n) + (loopEndSignColor * (n-i) / n);
+      for (int i = 0; i <= n; i++) {
+        float pos = float(i) / float(n);
+        color c = lerpColor(loopStartSignColor, loopEndSignColor, pos);
         canvas.fill(c,80);
         canvas.rect(w_rendor * i / n, 0, w_rendor/n, h_rendor);
       }

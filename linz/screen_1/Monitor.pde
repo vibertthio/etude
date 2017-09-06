@@ -1091,7 +1091,7 @@ class Monitor {
   }
 
   void speedReaction () {
-    int n = 4;
+    int n = 5;
     if (adjustingSpeed && mouseSense) {
       canvas.noStroke();
       canvas.rectMode(CORNER);

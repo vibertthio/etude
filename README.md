@@ -1,6 +1,6 @@
 # Étude &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-:fire: :fire: rehabilitation + art + performance, a new approach of art therapy.
+:art: :video_game: rehabilitation + art + performance, a new approach of art therapy.
 
 ![demo](./assets/images/etude-01.jpg)
 
